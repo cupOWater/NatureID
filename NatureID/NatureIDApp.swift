@@ -6,12 +6,23 @@
 //
 
 import SwiftUI
+import FirebaseCore
 
 @main
 struct NatureIDApp: App {
+    @State var splashScreen : Bool = true
+    
+    init() {
+        FirebaseApp.configure()
+    }
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            if(splashScreen) {
+                SplashScreenView(splashScreen: $splashScreen)
+            }else{
+                ContentView()
+            }
+            
         }
     }
 }
