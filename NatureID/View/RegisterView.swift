@@ -118,14 +118,8 @@ struct RegisterView: View {
                     print("Upload Failed")
                 }
             }
-            
-            if(isLoading){
-                Color(.black)
-                    .edgesIgnoringSafeArea(.all)
-                    .opacity(0.3)
-                    .onTapGesture {}
-            }
         }
+        .disabled(isLoading)
     }
 }
 

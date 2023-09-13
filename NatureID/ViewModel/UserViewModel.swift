@@ -12,9 +12,23 @@ import FirebaseFirestore
 
 class UserViewModel : ObservableObject{
     @Published var user : User = User()
+    @Published var isLoggedIn : Bool
+    
     let imageManager = ImageManager()
-    var db = Firestore.firestore()
-    var auth = Auth.auth()
+    let db = Firestore.firestore()
+    let auth = Auth.auth()
+    
+    init() {
+        let currentUser = auth.currentUser
+        
+        if(currentUser == nil){
+            self.isLoggedIn = false
+        }else {
+            self.isLoggedIn = true
+            self.user.id = currentUser!.uid
+            self.user.email = currentUser!.email!
+        }
+    }
     
     func register(password : String, image : UIImage, completion: @escaping (String?) -> Void) {
         
@@ -42,7 +56,26 @@ class UserViewModel : ObservableObject{
                 completion(error!.localizedDescription)
                 return
             }
+            
+            // Replace with Firestore data when implemented
+            self.user.id = authResult?.user.uid ?? ""
+            
+            withAnimation {
+                self.isLoggedIn = true
+            }
             completion(nil)
+        }
+    }
+    
+    func logout() {
+        do {
+            try auth.signOut()
+            user = User()
+            withAnimation {
+                self.isLoggedIn = false
+            }
+        } catch {
+            print(error)
         }
     }
     
