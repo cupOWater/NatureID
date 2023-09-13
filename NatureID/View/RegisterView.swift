@@ -13,7 +13,7 @@ import PhotosUI
 struct RegisterView: View {
     @Environment(\.dismiss) private var dismiss
     
-    @StateObject var userVm : UserViewModel
+    @ObservedObject var userVm : UserViewModel
     @State private var isLoading = false
     @State private var password : String = ""
     @State private var pfpItem : PhotosPickerItem?
@@ -30,6 +30,7 @@ struct RegisterView: View {
                 Text("Register")
                     .font(.title)
                     .fontWeight(.bold)
+                    .padding(.vertical, 10)
                 
                 ZStack {
                     Image(uiImage: pfpImage!)
@@ -38,11 +39,7 @@ struct RegisterView: View {
                         .frame(width: 200, height: 200)
                         .background(.black)
                         .clipShape(Circle())
-                        .overlay {
-                            Circle()
-                                .stroke(lineWidth: 2)
-                                .foregroundColor(.gray)
-                        }
+                        .shadow(radius: 5)
                     
                     PhotosPicker(selection: $pfpItem) {
                         Circle()
@@ -69,7 +66,7 @@ struct RegisterView: View {
                     .background{
                         RoundedRectangle(cornerRadius: 10)
                             .fill(.black)
-                            .opacity(0.2)
+                            .opacity(0.1)
                     }
                 
                 SecureField("Password", text: $password)
@@ -78,7 +75,7 @@ struct RegisterView: View {
                     .background{
                         RoundedRectangle(cornerRadius: 10)
                             .fill(.black)
-                            .opacity(0.2)
+                            .opacity(0.1)
                     }
                 
                 Spacer()

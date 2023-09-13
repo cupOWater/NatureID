@@ -20,13 +20,13 @@
 		1FB0F84A2AB01AC3004AB459 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 1FB0F8492AB01AC3004AB459 /* FirebaseStorage */; };
 		1FB0F84C2AB01AC3004AB459 /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 1FB0F84B2AB01AC3004AB459 /* FirebaseStorageCombine-Community */; };
 		1FB0F84E2AB03457004AB459 /* NavbarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB0F84D2AB03457004AB459 /* NavbarButton.swift */; };
-		1FB0F8522AB069E1004AB459 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB0F8512AB069E1004AB459 /* LoginView.swift */; };
 		1FB0F8542AB06CA7004AB459 /* SplashScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB0F8532AB06CA7004AB459 /* SplashScreenView.swift */; };
 		1FB0F8582AB09EBC004AB459 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB0F8572AB09EBC004AB459 /* Post.swift */; };
 		1FB0F85A2AB09FC6004AB459 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB0F8592AB09FC6004AB459 /* Comment.swift */; };
 		1FB0F85C2AB1905D004AB459 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB0F85B2AB1905D004AB459 /* RegisterView.swift */; };
-		1FB0F85E2AB1A2D5004AB459 /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB0F85D2AB1A2D5004AB459 /* UserViewModel.swift */; };
-		1FB0F8632AB1B379004AB459 /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB0F8622AB1B379004AB459 /* ImageManager.swift */; };
+		1FB0F8672AB1EB52004AB459 /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB0F8652AB1EB52004AB459 /* ImageManager.swift */; };
+		1FB0F8682AB1EB52004AB459 /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB0F8662AB1EB52004AB459 /* UserViewModel.swift */; };
+		1FB0F86A2AB1EBBF004AB459 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB0F8692AB1EBBF004AB459 /* LoginView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,13 +38,13 @@
 		1FB0F83C2AB0166F004AB459 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		1FB0F83E2AB01863004AB459 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1FB0F84D2AB03457004AB459 /* NavbarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavbarButton.swift; sourceTree = "<group>"; };
-		1FB0F8512AB069E1004AB459 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		1FB0F8532AB06CA7004AB459 /* SplashScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenView.swift; sourceTree = "<group>"; };
 		1FB0F8572AB09EBC004AB459 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		1FB0F8592AB09FC6004AB459 /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		1FB0F85B2AB1905D004AB459 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
-		1FB0F85D2AB1A2D5004AB459 /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
-		1FB0F8622AB1B379004AB459 /* ImageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageManager.swift; sourceTree = "<group>"; };
+		1FB0F8652AB1EB52004AB459 /* ImageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageManager.swift; sourceTree = "<group>"; };
+		1FB0F8662AB1EB52004AB459 /* UserViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
+		1FB0F8692AB1EBBF004AB459 /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,9 +83,9 @@
 		1FB0F82A2AB01483004AB459 /* NatureID */ = {
 			isa = PBXGroup;
 			children = (
+				1FB0F8642AB1EB42004AB459 /* ViewModel */,
 				1FB0F83E2AB01863004AB459 /* GoogleService-Info.plist */,
 				1FB0F83B2AB014E1004AB459 /* View */,
-				1FB0F83A2AB014D6004AB459 /* ViewModel */,
 				1FB0F8392AB014BD004AB459 /* Model */,
 				1FB0F82B2AB01483004AB459 /* NatureIDApp.swift */,
 				1FB0F82D2AB01483004AB459 /* ContentView.swift */,
@@ -113,25 +113,24 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		1FB0F83A2AB014D6004AB459 /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				1FB0F85D2AB1A2D5004AB459 /* UserViewModel.swift */,
-				1FB0F8622AB1B379004AB459 /* ImageManager.swift */,
-			);
-			name = ViewModel;
-			path = "New Group1";
-			sourceTree = "<group>";
-		};
 		1FB0F83B2AB014E1004AB459 /* View */ = {
 			isa = PBXGroup;
 			children = (
 				1FB0F84D2AB03457004AB459 /* NavbarButton.swift */,
-				1FB0F8512AB069E1004AB459 /* LoginView.swift */,
 				1FB0F8532AB06CA7004AB459 /* SplashScreenView.swift */,
+				1FB0F8692AB1EBBF004AB459 /* LoginView.swift */,
 				1FB0F85B2AB1905D004AB459 /* RegisterView.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		1FB0F8642AB1EB42004AB459 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				1FB0F8652AB1EB52004AB459 /* ImageManager.swift */,
+				1FB0F8662AB1EB52004AB459 /* UserViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -217,15 +216,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				1FB0F85C2AB1905D004AB459 /* RegisterView.swift in Sources */,
+				1FB0F8682AB1EB52004AB459 /* UserViewModel.swift in Sources */,
+				1FB0F8672AB1EB52004AB459 /* ImageManager.swift in Sources */,
 				1FB0F82E2AB01483004AB459 /* ContentView.swift in Sources */,
 				1FB0F82C2AB01483004AB459 /* NatureIDApp.swift in Sources */,
-				1FB0F85E2AB1A2D5004AB459 /* UserViewModel.swift in Sources */,
 				1FB0F83D2AB0166F004AB459 /* User.swift in Sources */,
 				1FB0F85A2AB09FC6004AB459 /* Comment.swift in Sources */,
-				1FB0F8522AB069E1004AB459 /* LoginView.swift in Sources */,
 				1FB0F84E2AB03457004AB459 /* NavbarButton.swift in Sources */,
+				1FB0F86A2AB1EBBF004AB459 /* LoginView.swift in Sources */,
 				1FB0F8582AB09EBC004AB459 /* Post.swift in Sources */,
-				1FB0F8632AB1B379004AB459 /* ImageManager.swift in Sources */,
 				1FB0F8542AB06CA7004AB459 /* SplashScreenView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
