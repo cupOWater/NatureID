@@ -7,13 +7,11 @@
 
 import Foundation
 
-
 struct User : Codable {
-    var id : String
-    var bio : String
-    var email : String
-    var password : String
-    var userName : String
-    var imageUrl : String
-    var themeSetting : String // Auto, Light, Dark
+    var id : String = ""
+    var email : String = ""
+    var userName : String = ""
+    var photoUrl : String = ""
+    var bio : String = ""
+    var themeSetting : String = "Auto" // Auto, Light, Dark
 }
