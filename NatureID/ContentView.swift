@@ -29,7 +29,7 @@ struct ContentView: View {
                 Text("Home")
                     .tag("Home")
                 Text("Personal")
-                    .tag("Posts")
+                    .tag("Yours")
                 Text("About")
                     .tag("About")
                 Text("Setting")
@@ -43,9 +43,23 @@ struct ContentView: View {
                     .edgesIgnoringSafeArea(.all)
                 
                 HStack {
+                    // Show all posts in created order
+                    // show image and post description
+                    // Truncate if too long
+                    // Allow filtering based on
+                    // Search Description
+                    // Category
+                    
+                    // On Click, show post
+                    // Post can filter comments by vote
+                    // Show full post detail
                     NavbarButton(tag: $viewSelection, tagName: "Home", imgSysName: "house")
                     Spacer()
-                    NavbarButton(tag: $viewSelection, tagName: "Posts", imgSysName: "person")
+                    
+                    // Show only your posts
+                    // Same filtering options as above
+                    // (Advance) Use same view to view other users profiles
+                    NavbarButton(tag: $viewSelection, tagName: "Yours", imgSysName: "person")
                     Spacer()
                     
                     // MARK: Create post
@@ -71,13 +85,16 @@ struct ContentView: View {
                             .offset(y: -14)
                             .scaleEffect(1.5)
                     }
-
+                    
                     
                     Spacer()
+                    
+                    // Team detail, App detail
                     NavbarButton(tag: $viewSelection, tagName: "About", imgSysName: "info.circle")
+                    
                     Spacer()
+                    // Change personal details, theme mode, logout
                     NavbarButton(tag: $viewSelection, tagName: "Setting", imgSysName: "gearshape")
-
                 }
                 .padding(.top, 7)
                 .padding(.horizontal, 30)

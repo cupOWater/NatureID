@@ -22,6 +22,8 @@
 		1FB0F84E2AB03457004AB459 /* NavbarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB0F84D2AB03457004AB459 /* NavbarButton.swift */; };
 		1FB0F8522AB069E1004AB459 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB0F8512AB069E1004AB459 /* LoginView.swift */; };
 		1FB0F8542AB06CA7004AB459 /* SplashScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB0F8532AB06CA7004AB459 /* SplashScreenView.swift */; };
+		1FB0F8582AB09EBC004AB459 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB0F8572AB09EBC004AB459 /* Post.swift */; };
+		1FB0F85A2AB09FC6004AB459 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB0F8592AB09FC6004AB459 /* Comment.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +37,8 @@
 		1FB0F84D2AB03457004AB459 /* NavbarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavbarButton.swift; sourceTree = "<group>"; };
 		1FB0F8512AB069E1004AB459 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		1FB0F8532AB06CA7004AB459 /* SplashScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenView.swift; sourceTree = "<group>"; };
+		1FB0F8572AB09EBC004AB459 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
+		1FB0F8592AB09FC6004AB459 /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +101,8 @@
 			isa = PBXGroup;
 			children = (
 				1FB0F83C2AB0166F004AB459 /* User.swift */,
+				1FB0F8572AB09EBC004AB459 /* Post.swift */,
+				1FB0F8592AB09FC6004AB459 /* Comment.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -204,8 +210,10 @@
 				1FB0F82E2AB01483004AB459 /* ContentView.swift in Sources */,
 				1FB0F82C2AB01483004AB459 /* NatureIDApp.swift in Sources */,
 				1FB0F83D2AB0166F004AB459 /* User.swift in Sources */,
+				1FB0F85A2AB09FC6004AB459 /* Comment.swift in Sources */,
 				1FB0F8522AB069E1004AB459 /* LoginView.swift in Sources */,
 				1FB0F84E2AB03457004AB459 /* NavbarButton.swift in Sources */,
+				1FB0F8582AB09EBC004AB459 /* Post.swift in Sources */,
 				1FB0F8542AB06CA7004AB459 /* SplashScreenView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
