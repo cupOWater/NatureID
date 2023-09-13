@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     @State var viewSelection : String = "Home"
-
+    @EnvironmentObject var userVm : UserViewModel
     
     
     var body: some View {
@@ -32,8 +32,12 @@ struct ContentView: View {
                     .tag("Yours")
                 Text("About")
                     .tag("About")
-                Text("Setting")
-                    .tag("Setting")
+                Button(action: {
+                    userVm.logout()
+                }, label: {
+                    Text("Logout")
+                })
+                .tag("Setting")
             }.tabViewStyle(.page)
             
             
@@ -108,5 +112,6 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+            .environmentObject(UserViewModel())
     }
 }

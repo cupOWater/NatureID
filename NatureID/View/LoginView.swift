@@ -12,6 +12,7 @@ struct LoginView: View {
     @State private var password = ""
     @State private var errorMessage = ""
     @State private var showRegister = false
+    @State private var isLoading = false
     
     var body: some View {
         ZStack {
@@ -59,14 +60,13 @@ struct LoginView: View {
                 }
                 
                 Button {
-                    withAnimation {
-                        userVm.login(password: password) { errMsg in
-                            if(errMsg != nil){
-                                errorMessage = errMsg!
-                                
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 2){
-                                    errorMessage = ""
-                                }
+                    isLoading = true
+                    userVm.login(password: password) { errMsg in
+                        isLoading = false
+                        if(errMsg != nil){
+                            errorMessage = errMsg!
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 5){
+                                errorMessage = ""
                             }
                         }
                     }
@@ -88,6 +88,7 @@ struct LoginView: View {
             }
             .padding(50)
         }
+        .disabled(isLoading)
     }
 }
 
