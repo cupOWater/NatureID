@@ -27,6 +27,7 @@
 		1FB0F8672AB1EB52004AB459 /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB0F8652AB1EB52004AB459 /* ImageManager.swift */; };
 		1FB0F8682AB1EB52004AB459 /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB0F8662AB1EB52004AB459 /* UserViewModel.swift */; };
 		1FB0F86A2AB1EBBF004AB459 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB0F8692AB1EBBF004AB459 /* LoginView.swift */; };
+		E84FF4E42AB1FBE40097E3AD /* PostItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E84FF4E32AB1FBE40097E3AD /* PostItem.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,6 +46,7 @@
 		1FB0F8652AB1EB52004AB459 /* ImageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageManager.swift; sourceTree = "<group>"; };
 		1FB0F8662AB1EB52004AB459 /* UserViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		1FB0F8692AB1EBBF004AB459 /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		E84FF4E32AB1FBE40097E3AD /* PostItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostItem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +118,7 @@
 		1FB0F83B2AB014E1004AB459 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				E84FF4E32AB1FBE40097E3AD /* PostItem.swift */,
 				1FB0F84D2AB03457004AB459 /* NavbarButton.swift */,
 				1FB0F8532AB06CA7004AB459 /* SplashScreenView.swift */,
 				1FB0F8692AB1EBBF004AB459 /* LoginView.swift */,
@@ -221,6 +224,7 @@
 				1FB0F82E2AB01483004AB459 /* ContentView.swift in Sources */,
 				1FB0F82C2AB01483004AB459 /* NatureIDApp.swift in Sources */,
 				1FB0F83D2AB0166F004AB459 /* User.swift in Sources */,
+				E84FF4E42AB1FBE40097E3AD /* PostItem.swift in Sources */,
 				1FB0F85A2AB09FC6004AB459 /* Comment.swift in Sources */,
 				1FB0F84E2AB03457004AB459 /* NavbarButton.swift in Sources */,
 				1FB0F86A2AB1EBBF004AB459 /* LoginView.swift in Sources */,
