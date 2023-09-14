@@ -8,18 +8,24 @@
 // https://www.hackingwithswift.com/quick-start/swiftui/how-to-let-users-select-pictures-using-photospicker
 
 import SwiftUI
+import FirebaseAuth
+import FirebaseFirestore
+import FirebaseFirestoreSwift
 import PhotosUI
 
 struct RegisterView: View {
     @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject var session : SessionManager
     
-    @ObservedObject var userVm : UserViewModel
     @State private var isLoading = false
     @State private var email : String = ""
     @State private var userName : String = ""
     @State private var password : String = ""
     @State private var pfpItem : PhotosPickerItem?
     @State private var pfpImage = UIImage(named: "placeholder-person")
+    
+    let db = Firestore.firestore()
+    let auth = Auth.auth()
     
     @State var errorMessage = ""
     
@@ -94,7 +100,7 @@ struct RegisterView: View {
                 Button {
                     isLoading = true
                     if(pfpImage != nil){
-                        userVm.register(email: email, userName: userName, password: password, image: pfpImage!){errMsg in
+                        session.register(email: email, userName: userName, password: password, image: pfpImage!){errMsg in
                             isLoading = false
                             if(errMsg != nil){
                                 errorMessage = errMsg!
@@ -138,6 +144,7 @@ struct RegisterView: View {
 
 struct RegisterView_Previews: PreviewProvider {
     static var previews: some View {
-        RegisterView(userVm: UserViewModel())
+        RegisterView()
+            .environmentObject(SessionManager())
     }
 }

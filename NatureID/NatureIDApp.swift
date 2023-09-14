@@ -20,23 +20,23 @@ class AppDelegate : NSObject, UIApplicationDelegate{
 struct NatureIDApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
-    @StateObject var userVm = UserViewModel()
+    @StateObject var session = SessionManager()
     @State var splashScreen : Bool = true
-    
     
     var body: some Scene {
         WindowGroup {
             if(splashScreen) {
                 SplashScreenView(splashScreen: $splashScreen)
-            }else{
-                if(!userVm.isLoggedIn) {
-                    LoginView(userVm: userVm)
+                
+            }else if let isLogIn = session.isLoggedIn{
+                if(!isLogIn) {
+                    LoginView()
+                        .environmentObject(session)
                 }else {
                     ContentView()
-                        .environmentObject(userVm)
+                        .environmentObject(session)
                 }
             }
-            
         }
     }
 }

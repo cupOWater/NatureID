@@ -6,14 +6,17 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 struct LoginView: View {
-    @ObservedObject var userVm : UserViewModel
+    @EnvironmentObject var session : SessionManager
     @State private var email = ""
     @State private var password = ""
     @State private var errorMessage = ""
     @State private var showRegister = false
     @State private var isLoading = false
+    
+    let auth = Auth.auth()
     
     var body: some View {
         ZStack {
@@ -55,14 +58,14 @@ struct LoginView: View {
                         Text("Register Now!")
                     }
                     .sheet(isPresented: $showRegister, content: {
-                        RegisterView(userVm: userVm)
+                        RegisterView()
                     })
                 .padding(.top, 20)
                 }
                 
                 Button {
                     isLoading = true
-                    userVm.login(email: email, password: password) { errMsg in
+                    session.login(email: email, password: password) { errMsg in
                         isLoading = false
                         if(errMsg != nil){
                             errorMessage = errMsg!
@@ -93,8 +96,10 @@ struct LoginView: View {
     }
 }
 
+
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginView(userVm: UserViewModel())
+        LoginView()
+            .environmentObject(SessionManager())
     }
 }
