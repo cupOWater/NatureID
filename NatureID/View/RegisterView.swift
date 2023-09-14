@@ -16,6 +16,7 @@ struct RegisterView: View {
     @ObservedObject var userVm : UserViewModel
     @State private var isLoading = false
     @State private var email : String = ""
+    @State private var userName : String = ""
     @State private var password : String = ""
     @State private var pfpItem : PhotosPickerItem?
     @State private var pfpImage = UIImage(named: "placeholder-person")
@@ -70,6 +71,15 @@ struct RegisterView: View {
                             .opacity(0.1)
                     }
                 
+                TextField("Username", text: $userName)
+                    .padding(10)
+                    .textInputAutocapitalization(.never)
+                    .background{
+                        RoundedRectangle(cornerRadius: 10)
+                            .fill(.black)
+                            .opacity(0.1)
+                    }
+                
                 SecureField("Password", text: $password)
                     .padding(10)
                     .textInputAutocapitalization(.never)
@@ -84,7 +94,7 @@ struct RegisterView: View {
                 Button {
                     isLoading = true
                     if(pfpImage != nil){
-                        userVm.register(email: email, password: password, image: pfpImage!){errMsg in
+                        userVm.register(email: email, userName: userName, password: password, image: pfpImage!){errMsg in
                             isLoading = false
                             if(errMsg != nil){
                                 errorMessage = errMsg!

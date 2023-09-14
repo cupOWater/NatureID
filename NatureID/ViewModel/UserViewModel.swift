@@ -30,7 +30,12 @@ class UserViewModel : ObservableObject{
         }
     }
     
-    func register(email : String, password : String, image : UIImage, completion: @escaping (String?) -> Void) {
+    func register(email : String, userName : String, password : String, image : UIImage, completion: @escaping (String?) -> Void) {
+        
+        if(userName.isEmpty) {
+            completion("Please enter a username")
+            return
+        }
         
         // MARK: create new user
         auth.createUser(withEmail: email, password: password){ authResult, error in
