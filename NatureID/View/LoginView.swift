@@ -9,6 +9,7 @@ import SwiftUI
 
 struct LoginView: View {
     @ObservedObject var userVm : UserViewModel
+    @State private var email = ""
     @State private var password = ""
     @State private var errorMessage = ""
     @State private var showRegister = false
@@ -26,7 +27,7 @@ struct LoginView: View {
                 Text("NaturalID")
                     .font(.largeTitle)
                 
-                TextField("Email", text: $userVm.user.email)
+                TextField("Email", text: $email)
                     .padding(10)
                     .textInputAutocapitalization(.never)
                     .background{
@@ -61,7 +62,7 @@ struct LoginView: View {
                 
                 Button {
                     isLoading = true
-                    userVm.login(password: password) { errMsg in
+                    userVm.login(email: email, password: password) { errMsg in
                         isLoading = false
                         if(errMsg != nil){
                             errorMessage = errMsg!

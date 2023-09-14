@@ -15,6 +15,7 @@ struct RegisterView: View {
     
     @ObservedObject var userVm : UserViewModel
     @State private var isLoading = false
+    @State private var email : String = ""
     @State private var password : String = ""
     @State private var pfpItem : PhotosPickerItem?
     @State private var pfpImage = UIImage(named: "placeholder-person")
@@ -60,7 +61,7 @@ struct RegisterView: View {
                 Divider().padding(.vertical, 20)
                 
                 
-                TextField("Email", text: $userVm.user.email)
+                TextField("Email", text: $email)
                     .padding(10)
                     .textInputAutocapitalization(.never)
                     .background{
@@ -83,7 +84,7 @@ struct RegisterView: View {
                 Button {
                     isLoading = true
                     if(pfpImage != nil){
-                        userVm.register(password: password, image: pfpImage!){errMsg in
+                        userVm.register(email: email, password: password, image: pfpImage!){errMsg in
                             isLoading = false
                             if(errMsg != nil){
                                 errorMessage = errMsg!
@@ -109,9 +110,11 @@ struct RegisterView: View {
             .padding(.horizontal, 25)
             .onChange(of: pfpItem) { _ in
                 Task {
+                    isLoading = true
                     if let data = try? await pfpItem?.loadTransferable(type: Data.self) {
                         if let uiImage = UIImage(data: data) {
                             pfpImage = uiImage
+                            isLoading = false
                             return
                         }
                     }
