@@ -124,6 +124,7 @@
 		1FB0F83B2AB014E1004AB459 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				E84FF4E32AB1FBE40097E3AD /* PostItem.swift */,
 				1FB0F84D2AB03457004AB459 /* NavbarButton.swift */,
 				1FB0F8532AB06CA7004AB459 /* SplashScreenView.swift */,
 				1FB0F8692AB1EBBF004AB459 /* LoginView.swift */,
@@ -235,6 +236,7 @@
 				1FB0F82E2AB01483004AB459 /* ContentView.swift in Sources */,
 				1FB0F82C2AB01483004AB459 /* NatureIDApp.swift in Sources */,
 				1FB0F83D2AB0166F004AB459 /* User.swift in Sources */,
+				E84FF4E42AB1FBE40097E3AD /* PostItem.swift in Sources */,
 				1FB0F85A2AB09FC6004AB459 /* Comment.swift in Sources */,
 				1FB0F86C2AB2F154004AB459 /* UserView.swift in Sources */,
 				1FB0F84E2AB03457004AB459 /* NavbarButton.swift in Sources */,
