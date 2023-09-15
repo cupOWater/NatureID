@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import FirebaseFirestore
+import FirebaseFirestoreSwift
 
 class CommentViewModel: ObservableObject{
     @Published var comment: Comment = Comment()
