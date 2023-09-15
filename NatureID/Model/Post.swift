@@ -9,7 +9,7 @@ import Foundation
 import FirebaseFirestore
 
 struct Post : Codable{
-    var id : String?
+    var id : UUID?
     var user : DocumentReference
     var imageUrl : String = ""
     var description : String = ""
