@@ -31,8 +31,10 @@
 		1FB0F86C2AB2F154004AB459 /* UserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB0F86B2AB2F154004AB459 /* UserView.swift */; };
 		1FB0F8732AB2FC0C004AB459 /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB0F8722AB2FC0C004AB459 /* UserViewModel.swift */; };
 		B4B9DFB62AB43F7000529332 /* CommentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B9DFB52AB43F7000529332 /* CommentViewModel.swift */; };
+		B4B9DFB82AB4565B00529332 /* PostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B9DFB72AB4565B00529332 /* PostViewModel.swift */; };
 		E8C5BD622AB447C50098D14D /* PostItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8C5BD612AB447C50098D14D /* PostItem.swift */; };
 		E8C5BD642AB449650098D14D /* DarkModeSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8C5BD632AB449640098D14D /* DarkModeSwitch.swift */; };
+		E8C5BD662AB4502F0098D14D /* AddCommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8C5BD652AB4502F0098D14D /* AddCommentView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,8 +57,10 @@
 		1FB0F86B2AB2F154004AB459 /* UserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserView.swift; sourceTree = "<group>"; };
 		1FB0F8722AB2FC0C004AB459 /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		B4B9DFB52AB43F7000529332 /* CommentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentViewModel.swift; sourceTree = "<group>"; };
+		B4B9DFB72AB4565B00529332 /* PostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewModel.swift; sourceTree = "<group>"; };
 		E8C5BD612AB447C50098D14D /* PostItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostItem.swift; sourceTree = "<group>"; };
 		E8C5BD632AB449640098D14D /* DarkModeSwitch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DarkModeSwitch.swift; sourceTree = "<group>"; };
+		E8C5BD652AB4502F0098D14D /* AddCommentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCommentView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,6 +140,7 @@
 				1FB0F86B2AB2F154004AB459 /* UserView.swift */,
 				10F6E54E2AB359C400216103 /* CommentView.swift */,
 				E8C5BD632AB449640098D14D /* DarkModeSwitch.swift */,
+				E8C5BD652AB4502F0098D14D /* AddCommentView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -147,6 +152,7 @@
 				1FB0F8662AB1EB52004AB459 /* SessionManager.swift */,
 				1FB0F8722AB2FC0C004AB459 /* UserViewModel.swift */,
 				B4B9DFB52AB43F7000529332 /* CommentViewModel.swift */,
+				B4B9DFB72AB4565B00529332 /* PostViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -239,6 +245,7 @@
 				1FB0F8672AB1EB52004AB459 /* ImageManager.swift in Sources */,
 				B4B9DFB62AB43F7000529332 /* CommentViewModel.swift in Sources */,
 				10F6E54F2AB359C400216103 /* CommentView.swift in Sources */,
+				B4B9DFB82AB4565B00529332 /* PostViewModel.swift in Sources */,
 				1FB0F82E2AB01483004AB459 /* ContentView.swift in Sources */,
 				1FB0F82C2AB01483004AB459 /* NatureIDApp.swift in Sources */,
 				1FB0F83D2AB0166F004AB459 /* User.swift in Sources */,
@@ -249,6 +256,7 @@
 				1FB0F86A2AB1EBBF004AB459 /* LoginView.swift in Sources */,
 				1FB0F8582AB09EBC004AB459 /* Post.swift in Sources */,
 				E8C5BD622AB447C50098D14D /* PostItem.swift in Sources */,
+				E8C5BD662AB4502F0098D14D /* AddCommentView.swift in Sources */,
 				1FB0F8542AB06CA7004AB459 /* SplashScreenView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
