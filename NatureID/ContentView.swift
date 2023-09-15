@@ -11,7 +11,6 @@ struct ContentView: View {
     @State var viewSelection : String = "Home"
     @EnvironmentObject var session : SessionManager
     
-    
     var body: some View {
         ZStack {
             Color("background")

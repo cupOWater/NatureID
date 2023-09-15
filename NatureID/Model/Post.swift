@@ -6,13 +6,17 @@
 //
 
 import Foundation
+import FirebaseFirestore
 
 struct Post : Codable{
-    var id : String
-    var userId : String
-    var imageUrl : String
-    var description : String
-    var category : String // Plant, Animal, Fungus, Others
-    var createdAt : Date
-    var comments : [Comment]
+    var id : String?
+    var user : DocumentReference
+    var imageUrl : String = ""
+    var description : String = ""
+    var category : String = "Others" // Plant, Animal, Fungus, Others
+    var createdAt : Date = Date.now
+    
+    init(userId : String){
+        self.user = Firestore.firestore().document(userId)
+    }
 }
