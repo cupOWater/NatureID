@@ -15,7 +15,7 @@ struct CommentView: View {
     @State var isVotedDown : Bool = false
     
     var body: some View {
-        VStack{
+        VStack(alignment: .leading){
             HStack{
                 Image("placeholder-person")
                     .resizable()
@@ -31,9 +31,11 @@ struct CommentView: View {
             
             Text("\(commentVM.comment.content!)")
                 .multilineTextAlignment(.leading)
-                .padding(3)
+                .padding(.vertical, 3)
+                .padding(.horizontal, 18)
             
             HStack{
+                Spacer()
                 Button{
                     if isVotedUp{
                         commentVM.downVote()
@@ -67,7 +69,7 @@ struct CommentView: View {
                     Image(systemName: isVotedDown ? "hand.thumbsdown.fill" : "hand.thumbsdown")
                         .foregroundColor(isVotedDown ? Color("quaternary") : .black)
                 }
-            }.offset(x:140)
+            }.padding(.trailing, 15)
                
         }
     }
