@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		10F6E54D2AB358F700216103 /* CommentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10F6E54C2AB358F700216103 /* CommentViewModel.swift */; };
 		10F6E54F2AB359C400216103 /* CommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10F6E54E2AB359C400216103 /* CommentView.swift */; };
 		1FB0F82C2AB01483004AB459 /* NatureIDApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB0F82B2AB01483004AB459 /* NatureIDApp.swift */; };
 		1FB0F82E2AB01483004AB459 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB0F82D2AB01483004AB459 /* ContentView.swift */; };
@@ -34,7 +33,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		10F6E54C2AB358F700216103 /* CommentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentViewModel.swift; sourceTree = "<group>"; };
 		10F6E54E2AB359C400216103 /* CommentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentView.swift; sourceTree = "<group>"; };
 		1FB0F8282AB01483004AB459 /* NatureID.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NatureID.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FB0F82B2AB01483004AB459 /* NatureIDApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NatureIDApp.swift; sourceTree = "<group>"; };
@@ -140,7 +138,6 @@
 				1FB0F8652AB1EB52004AB459 /* ImageManager.swift */,
 				1FB0F8662AB1EB52004AB459 /* SessionManager.swift */,
 				1FB0F8722AB2FC0C004AB459 /* UserViewModel.swift */,
-				10F6E54C2AB358F700216103 /* CommentViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -240,7 +237,6 @@
 				1FB0F8732AB2FC0C004AB459 /* UserViewModel.swift in Sources */,
 				1FB0F86A2AB1EBBF004AB459 /* LoginView.swift in Sources */,
 				1FB0F8582AB09EBC004AB459 /* Post.swift in Sources */,
-				10F6E54D2AB358F700216103 /* CommentViewModel.swift in Sources */,
 				1FB0F8542AB06CA7004AB459 /* SplashScreenView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
