@@ -8,8 +8,9 @@
 import Foundation
 
 struct Comment : Codable {
-    var id : String
-    var content : String
-    var createdAt : Date
-    var vote : Int
+    var id = UUID()
+    var content : String? = "User comment blablabaeufhuehfleuhrnicluehlukeukhk oiruhgkuehnrughietu ouerlkuthynviuwhaeunntieiufynr"
+    var createdAt : Date? 
+    var vote : Int = 0
+    var user : User = User(userName:"User Name")
 }

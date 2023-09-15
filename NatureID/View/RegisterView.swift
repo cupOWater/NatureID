@@ -8,16 +8,24 @@
 // https://www.hackingwithswift.com/quick-start/swiftui/how-to-let-users-select-pictures-using-photospicker
 
 import SwiftUI
+import FirebaseAuth
+import FirebaseFirestore
+import FirebaseFirestoreSwift
 import PhotosUI
 
 struct RegisterView: View {
     @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject var session : SessionManager
     
-    @ObservedObject var userVm : UserViewModel
     @State private var isLoading = false
+    @State private var email : String = ""
+    @State private var userName : String = ""
     @State private var password : String = ""
     @State private var pfpItem : PhotosPickerItem?
     @State private var pfpImage = UIImage(named: "placeholder-person")
+    
+    let db = Firestore.firestore()
+    let auth = Auth.auth()
     
     @State var errorMessage = ""
     
@@ -60,7 +68,16 @@ struct RegisterView: View {
                 Divider().padding(.vertical, 20)
                 
                 
-                TextField("Email", text: $userVm.user.email)
+                TextField("Email", text: $email)
+                    .padding(10)
+                    .textInputAutocapitalization(.never)
+                    .background{
+                        RoundedRectangle(cornerRadius: 10)
+                            .fill(.black)
+                            .opacity(0.1)
+                    }
+                
+                TextField("Username", text: $userName)
                     .padding(10)
                     .textInputAutocapitalization(.never)
                     .background{
@@ -83,7 +100,7 @@ struct RegisterView: View {
                 Button {
                     isLoading = true
                     if(pfpImage != nil){
-                        userVm.register(password: password, image: pfpImage!){errMsg in
+                        session.register(email: email, userName: userName, password: password, image: pfpImage!){errMsg in
                             isLoading = false
                             if(errMsg != nil){
                                 errorMessage = errMsg!
@@ -109,9 +126,11 @@ struct RegisterView: View {
             .padding(.horizontal, 25)
             .onChange(of: pfpItem) { _ in
                 Task {
+                    isLoading = true
                     if let data = try? await pfpItem?.loadTransferable(type: Data.self) {
                         if let uiImage = UIImage(data: data) {
                             pfpImage = uiImage
+                            isLoading = false
                             return
                         }
                     }
@@ -125,6 +144,7 @@ struct RegisterView: View {
 
 struct RegisterView_Previews: PreviewProvider {
     static var previews: some View {
-        RegisterView(userVm: UserViewModel())
+        RegisterView()
+            .environmentObject(SessionManager())
     }
 }

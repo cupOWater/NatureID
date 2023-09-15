@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		10F6E54F2AB359C400216103 /* CommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10F6E54E2AB359C400216103 /* CommentView.swift */; };
 		1FB0F82C2AB01483004AB459 /* NatureIDApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB0F82B2AB01483004AB459 /* NatureIDApp.swift */; };
 		1FB0F82E2AB01483004AB459 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB0F82D2AB01483004AB459 /* ContentView.swift */; };
 		1FB0F8302AB01488004AB459 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1FB0F82F2AB01488004AB459 /* Assets.xcassets */; };
@@ -25,12 +26,15 @@
 		1FB0F85A2AB09FC6004AB459 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB0F8592AB09FC6004AB459 /* Comment.swift */; };
 		1FB0F85C2AB1905D004AB459 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB0F85B2AB1905D004AB459 /* RegisterView.swift */; };
 		1FB0F8672AB1EB52004AB459 /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB0F8652AB1EB52004AB459 /* ImageManager.swift */; };
-		1FB0F8682AB1EB52004AB459 /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB0F8662AB1EB52004AB459 /* UserViewModel.swift */; };
+		1FB0F8682AB1EB52004AB459 /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB0F8662AB1EB52004AB459 /* SessionManager.swift */; };
 		1FB0F86A2AB1EBBF004AB459 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB0F8692AB1EBBF004AB459 /* LoginView.swift */; };
-		E84FF4E42AB1FBE40097E3AD /* PostItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E84FF4E32AB1FBE40097E3AD /* PostItem.swift */; };
+		1FB0F86C2AB2F154004AB459 /* UserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB0F86B2AB2F154004AB459 /* UserView.swift */; };
+		1FB0F8732AB2FC0C004AB459 /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB0F8722AB2FC0C004AB459 /* UserViewModel.swift */; };
+		B4B9DFB62AB43F7000529332 /* CommentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B9DFB52AB43F7000529332 /* CommentViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		10F6E54E2AB359C400216103 /* CommentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentView.swift; sourceTree = "<group>"; };
 		1FB0F8282AB01483004AB459 /* NatureID.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NatureID.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FB0F82B2AB01483004AB459 /* NatureIDApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NatureIDApp.swift; sourceTree = "<group>"; };
 		1FB0F82D2AB01483004AB459 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -44,9 +48,11 @@
 		1FB0F8592AB09FC6004AB459 /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		1FB0F85B2AB1905D004AB459 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
 		1FB0F8652AB1EB52004AB459 /* ImageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageManager.swift; sourceTree = "<group>"; };
-		1FB0F8662AB1EB52004AB459 /* UserViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
+		1FB0F8662AB1EB52004AB459 /* SessionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionManager.swift; sourceTree = "<group>"; };
 		1FB0F8692AB1EBBF004AB459 /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
-		E84FF4E32AB1FBE40097E3AD /* PostItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostItem.swift; sourceTree = "<group>"; };
+		1FB0F86B2AB2F154004AB459 /* UserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserView.swift; sourceTree = "<group>"; };
+		1FB0F8722AB2FC0C004AB459 /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
+		B4B9DFB52AB43F7000529332 /* CommentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,6 +129,8 @@
 				1FB0F8532AB06CA7004AB459 /* SplashScreenView.swift */,
 				1FB0F8692AB1EBBF004AB459 /* LoginView.swift */,
 				1FB0F85B2AB1905D004AB459 /* RegisterView.swift */,
+				1FB0F86B2AB2F154004AB459 /* UserView.swift */,
+				10F6E54E2AB359C400216103 /* CommentView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -131,7 +139,9 @@
 			isa = PBXGroup;
 			children = (
 				1FB0F8652AB1EB52004AB459 /* ImageManager.swift */,
-				1FB0F8662AB1EB52004AB459 /* UserViewModel.swift */,
+				1FB0F8662AB1EB52004AB459 /* SessionManager.swift */,
+				1FB0F8722AB2FC0C004AB459 /* UserViewModel.swift */,
+				B4B9DFB52AB43F7000529332 /* CommentViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -219,14 +229,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				1FB0F85C2AB1905D004AB459 /* RegisterView.swift in Sources */,
-				1FB0F8682AB1EB52004AB459 /* UserViewModel.swift in Sources */,
+				1FB0F8682AB1EB52004AB459 /* SessionManager.swift in Sources */,
 				1FB0F8672AB1EB52004AB459 /* ImageManager.swift in Sources */,
+				B4B9DFB62AB43F7000529332 /* CommentViewModel.swift in Sources */,
+				10F6E54F2AB359C400216103 /* CommentView.swift in Sources */,
 				1FB0F82E2AB01483004AB459 /* ContentView.swift in Sources */,
 				1FB0F82C2AB01483004AB459 /* NatureIDApp.swift in Sources */,
 				1FB0F83D2AB0166F004AB459 /* User.swift in Sources */,
 				E84FF4E42AB1FBE40097E3AD /* PostItem.swift in Sources */,
 				1FB0F85A2AB09FC6004AB459 /* Comment.swift in Sources */,
+				1FB0F86C2AB2F154004AB459 /* UserView.swift in Sources */,
 				1FB0F84E2AB03457004AB459 /* NavbarButton.swift in Sources */,
+				1FB0F8732AB2FC0C004AB459 /* UserViewModel.swift in Sources */,
 				1FB0F86A2AB1EBBF004AB459 /* LoginView.swift in Sources */,
 				1FB0F8582AB09EBC004AB459 /* Post.swift in Sources */,
 				1FB0F8542AB06CA7004AB459 /* SplashScreenView.swift in Sources */,

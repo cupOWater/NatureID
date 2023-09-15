@@ -10,9 +10,9 @@ import SwiftUI
 import FirebaseStorage
 
 class ImageManager {
-    let storage = Storage.storage()
+    static let storage = Storage.storage()
     
-    func upload(image : UIImage, name : String, completion: @escaping (URL?) -> Void){
+    static func upload(image : UIImage, name : String, completion: @escaping (URL?) -> Void){
         let imageName = name + ".jpg"
         
         let storageRef = storage.reference().child("image/" + imageName)
