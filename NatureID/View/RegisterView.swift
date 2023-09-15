@@ -17,7 +17,6 @@ struct RegisterView: View {
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject var session : SessionManager
     
-    @State private var isLoading = false
     @State private var email : String = ""
     @State private var userName : String = ""
     @State private var password : String = ""
@@ -65,6 +64,19 @@ struct RegisterView: View {
                     }
                     .offset(x: 65, y: 80)
                 }
+                .onChange(of: pfpItem) { _ in
+                    Task {
+                        session.isLoading = true
+                        if let data = try? await pfpItem?.loadTransferable(type: Data.self) {
+                            if let uiImage = UIImage(data: data) {
+                                pfpImage = uiImage
+                                session.isLoading = false
+                                return
+                            }
+                        }
+                        print("Upload Failed")
+                    }
+                }
                 Divider().padding(.vertical, 20)
                 
                 
@@ -98,10 +110,8 @@ struct RegisterView: View {
                 Spacer()
                 Text(errorMessage)
                 Button {
-                    isLoading = true
                     if(pfpImage != nil){
                         session.register(email: email, userName: userName, password: password, image: pfpImage!){errMsg in
-                            isLoading = false
                             if(errMsg != nil){
                                 errorMessage = errMsg!
                             }else{
@@ -124,21 +134,9 @@ struct RegisterView: View {
                 }
             }
             .padding(.horizontal, 25)
-            .onChange(of: pfpItem) { _ in
-                Task {
-                    isLoading = true
-                    if let data = try? await pfpItem?.loadTransferable(type: Data.self) {
-                        if let uiImage = UIImage(data: data) {
-                            pfpImage = uiImage
-                            isLoading = false
-                            return
-                        }
-                    }
-                    print("Upload Failed")
-                }
-            }
+            
         }
-        .disabled(isLoading)
+        .disabled(session.isLoading)
     }
 }
 

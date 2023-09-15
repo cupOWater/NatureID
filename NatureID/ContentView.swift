@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     @State var viewSelection : String = "Home"
+    @StateObject var userVM = UserViewModel()
     @EnvironmentObject var session : SessionManager
     
     var body: some View {
@@ -21,12 +22,13 @@ struct ContentView: View {
                     Text("Home")
                         .tag("Home")
                     // Text("User")
-                    UserView(userVm: UserViewModel(id: session.userVm?.user.id ?? ""))
+                    UserView(user: session.user ?? User())
                         .tag("Yours")
                     Text("About")
                         .tag("About")
                     Button(action: {
                         session.logout()
+                        viewSelection = "Home"
                     }, label: {
                         Text("Logout")
                     })

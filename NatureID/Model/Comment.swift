@@ -13,5 +13,4 @@ struct Comment : Codable {
     var createdAt : Date? 
     var vote : Int = 0
     var user : User = User(userName:"User Name")
-    var postId : String
 }

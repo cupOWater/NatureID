@@ -58,6 +58,6 @@ struct PostItem_Previews: PreviewProvider {
     static var previews: some View {
         PostItem(userName: "test name",
                  userImgUrl: "placeholder-person",
-                 post: Post(id: "1", userId: "1", imageUrl: "placeholder-person", description: "Hey guys, what's this", category: "anything", createdAt: Date.now, comments: []))
+                 post: Post())
     }
 }

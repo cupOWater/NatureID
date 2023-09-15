@@ -14,7 +14,6 @@ struct LoginView: View {
     @State private var password = ""
     @State private var errorMessage = ""
     @State private var showRegister = false
-    @State private var isLoading = false
     
     let auth = Auth.auth()
     
@@ -64,9 +63,7 @@ struct LoginView: View {
                 }
                 
                 Button {
-                    isLoading = true
                     session.login(email: email, password: password) { errMsg in
-                        isLoading = false
                         if(errMsg != nil){
                             errorMessage = errMsg!
                             DispatchQueue.main.asyncAfter(deadline: .now() + 5){
@@ -92,7 +89,7 @@ struct LoginView: View {
             }
             .padding(50)
         }
-        .disabled(isLoading)
+        .disabled(session.isLoading)
     }
 }
 
