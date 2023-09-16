@@ -27,9 +27,8 @@ struct NatureIDApp: App {
         WindowGroup {
             if(splashScreen) {
                 SplashScreenView(splashScreen: $splashScreen)
-                
-            }else if let isLogIn = session.isLoggedIn{
-                if(!isLogIn) {
+            }else {
+                if session.user == nil{
                     LoginView()
                         .environmentObject(session)
                 }else {
@@ -40,3 +39,4 @@ struct NatureIDApp: App {
         }
     }
 }
+

@@ -10,7 +10,7 @@ import SwiftUI
 let placeHolderImg = "https://firebasestorage.googleapis.com/v0/b/natureid-e46ed.appspot.com/o/image%2Fplaceholder-person.jpg?alt=media&token=1c54206f-4c2e-410b-833b-cae158c5d6af"
 
 struct UserView: View {
-    @StateObject var userVm : UserViewModel
+    var user : User
     
     var body: some View {
         ZStack {
@@ -19,8 +19,8 @@ struct UserView: View {
             
             
             VStack {
-                VStack {
-                    AsyncImage(url: URL(string: userVm.user.photoUrl ?? placeHolderImg)){image in
+                VStack (alignment: .leading) {
+                    AsyncImage(url: URL(string: user.photoUrl ?? placeHolderImg)){image in
                         image.image?
                             .resizable()
                             .scaledToFit()
@@ -28,13 +28,17 @@ struct UserView: View {
                             .clipShape(Circle())
                             .shadow(radius: 5)
                     }.frame(height: 140)
-                    Text(userVm.user.userName ?? "")
+                    Text(user.userName ?? "")
                         .font(.largeTitle)
-                    Text(userVm.user.email ?? "")
+                    Text(user.email ?? "")
                         .font(.caption)
                         .opacity(0.6)
+                    Text(user.bio)
+                        .font(.callout)
+                        .padding(.top, 5)
                 }
-                .padding(.horizontal, 10)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.horizontal, 30)
                 
                 Divider()
                 
@@ -47,6 +51,6 @@ struct UserView: View {
 
 struct UserView_Previews: PreviewProvider {
     static var previews: some View {
-        UserView(userVm: UserViewModel(id: "HYBXaYx5c4NCCPOhvyqSajRQ9tt2"))
+        UserView(user: User(email: "oden@rmen.com", userName: "Bob Odenkirk", bio: "Hello, I am Bob Odenkirk, you may know me through shows like Breaking Bad and Better Call Saul. :)))"))
     }
 }

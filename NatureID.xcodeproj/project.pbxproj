@@ -248,6 +248,7 @@
 				1FB0F8672AB1EB52004AB459 /* ImageManager.swift in Sources */,
 				B4B9DFB62AB43F7000529332 /* CommentViewModel.swift in Sources */,
 				10F6E54F2AB359C400216103 /* CommentView.swift in Sources */,
+				B4B9DFB82AB4565B00529332 /* PostViewModel.swift in Sources */,
 				1FB0F82E2AB01483004AB459 /* ContentView.swift in Sources */,
 				1FB0F82C2AB01483004AB459 /* NatureIDApp.swift in Sources */,
 				1FB0F83D2AB0166F004AB459 /* User.swift in Sources */,
