@@ -30,7 +30,7 @@ struct PostFormView: View {
             VStack{
                 //MARK: - VIEW HEADER
                 HStack{
-                    AsyncImage(url: URL(string: user.photoUrl ?? placeHolderImg)){image in
+                    AsyncImage(url: URL(string: user.photoUrl)){image in
                         image.image?
                             .resizable()
                             .scaledToFit()
@@ -38,7 +38,7 @@ struct PostFormView: View {
                             .clipShape(Circle())
                     }
                     
-                    Text(user.userName ?? "")
+                    Text(user.userName)
                         .font(.headline)
                     Spacer()
                     

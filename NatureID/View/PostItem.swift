@@ -16,14 +16,14 @@ struct PostItem: View {
     var body: some View {
         VStack{
             HStack{
-                AsyncImage(url: URL(string: user.photoUrl ?? placeHolderImg)){image in
+                AsyncImage(url: URL(string: user.photoUrl)){image in
                     image.image?
                         .resizable()
                         .scaledToFit()
                         .frame(width: 50)
                         .clipShape(Circle())
                 }
-                Text(user.userName ?? "")
+                Text(user.userName)
                     .font(.headline)
                 Spacer()
                 Image(systemName: "ellipsis")

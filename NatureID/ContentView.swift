@@ -67,7 +67,7 @@ struct ContentView: View {
                             
                             // MARK: Create post
                             NavigationLink{
-                                PostFormView(user: session.user ?? User())
+                                PostFormView(user: session.user )
                             } label: {
                                 Circle()
                                     .fill(Color(.white))
