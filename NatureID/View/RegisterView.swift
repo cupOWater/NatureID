@@ -33,6 +33,10 @@ struct RegisterView: View {
             Color("background")
                 .edgesIgnoringSafeArea(.all)
             
+            if(session.isLoading){
+                LoadingView()
+            }
+            
             VStack {
                 Text("Register")
                     .font(.title)
@@ -79,33 +83,15 @@ struct RegisterView: View {
                 }
                 Divider().padding(.vertical, 20)
                 
+                TextField("Username", text: $userName)
+                    .modifier(TextFieldStyle())
                 
                 TextField("Email", text: $email)
-                    .padding(10)
-                    .textInputAutocapitalization(.never)
-                    .background{
-                        RoundedRectangle(cornerRadius: 10)
-                            .fill(.black)
-                            .opacity(0.1)
-                    }
+                    .modifier(TextFieldStyle())
                 
-                TextField("Username", text: $userName)
-                    .padding(10)
-                    .textInputAutocapitalization(.never)
-                    .background{
-                        RoundedRectangle(cornerRadius: 10)
-                            .fill(.black)
-                            .opacity(0.1)
-                    }
                 
                 SecureField("Password", text: $password)
-                    .padding(10)
-                    .textInputAutocapitalization(.never)
-                    .background{
-                        RoundedRectangle(cornerRadius: 10)
-                            .fill(.black)
-                            .opacity(0.1)
-                    }
+                    .modifier(TextFieldStyle())
                 
                 Spacer()
                 Text(errorMessage)
@@ -131,11 +117,12 @@ struct RegisterView: View {
                             .foregroundColor(.white)
                             .padding(20)
                     }
-                }
+                }.opacity(session.isLoading ? 0.5 : 1)
             }
             .padding(.horizontal, 25)
             
         }
+        .interactiveDismissDisabled(session.isLoading)
         .disabled(session.isLoading)
     }
 }

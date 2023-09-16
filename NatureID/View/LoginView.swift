@@ -21,6 +21,9 @@ struct LoginView: View {
         ZStack {
             Color("background")
                 .edgesIgnoringSafeArea(.all)
+            if(session.isLoading){
+                LoadingView()
+            }
             VStack {
                 Image(systemName: "figure.roll")
                     .resizable()
@@ -30,22 +33,10 @@ struct LoginView: View {
                     .font(.largeTitle)
                 
                 TextField("Email", text: $email)
-                    .padding(10)
-                    .textInputAutocapitalization(.never)
-                    .background{
-                        RoundedRectangle(cornerRadius: 10)
-                            .fill(.black)
-                            .opacity(0.1)
-                    }
+                    .modifier(TextFieldStyle())
                 
                 SecureField("Password", text: $password)
-                    .padding(10)
-                    .textInputAutocapitalization(.never)
-                    .background{
-                        RoundedRectangle(cornerRadius: 10)
-                            .fill(.black)
-                            .opacity(0.1)
-                    }
+                    .modifier(TextFieldStyle())
                 
                 // Show register view
                 
@@ -59,7 +50,7 @@ struct LoginView: View {
                     .sheet(isPresented: $showRegister, content: {
                         RegisterView()
                     })
-                .padding(.top, 20)
+                    .padding(.top, 20)
                 }
                 
                 Button {
@@ -83,11 +74,13 @@ struct LoginView: View {
                             .padding(20)
                     }
                 }
+                .opacity(session.isLoading ? 0.5 : 1)
+                .padding(.top, -7)
                 
                 Text(errorMessage)
                     .foregroundColor(.gray)
             }
-            .padding(50)
+            .padding(25)
         }
         .disabled(session.isLoading)
     }

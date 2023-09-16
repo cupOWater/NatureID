@@ -23,9 +23,11 @@ struct ContentView: View {
 //                        Text("Home")
                         HomeView()
                             .tag("Home")
+
                         // Text("User")
-                        UserView(user: session.user ?? User())
+                        UserView(user: session.user)
                             .tag("Yours")
+                            
                         Text("About")
                             .tag("About")
                         Button(action: {
