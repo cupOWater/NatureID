@@ -10,13 +10,10 @@ import FirebaseFirestore
 
 struct Post : Codable{
     var id : String?
-    var user : DocumentReference
+    var userId : String = ""
     var imageUrl : String = ""
     var description : String = ""
     var category : String = "Others" // Plant, Animal, Fungus, Others
     var createdAt : Date = Date.now
-    
-    init(userId : String){
-        self.user = Firestore.firestore().document(userId)
-    }
+    var comments : [Comment] = []
 }
