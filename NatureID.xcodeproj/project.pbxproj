@@ -33,6 +33,8 @@
 		B4B9DFB62AB43F7000529332 /* CommentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B9DFB52AB43F7000529332 /* CommentViewModel.swift */; };
 		E859EA792AB543C1009EFB16 /* PostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E859EA782AB543C1009EFB16 /* PostViewModel.swift */; };
 		E859EA7B2AB54CF4009EFB16 /* PostFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E859EA7A2AB54CF4009EFB16 /* PostFormView.swift */; };
+		E859EA7D2AB5973B009EFB16 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E859EA7C2AB5973B009EFB16 /* HomeView.swift */; };
+		E859EA7F2AB5E448009EFB16 /* PostDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = E859EA7E2AB5E448009EFB16 /* PostDetail.swift */; };
 		E8C5BD622AB447C50098D14D /* PostItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8C5BD612AB447C50098D14D /* PostItem.swift */; };
 		E8C5BD642AB449650098D14D /* DarkModeSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8C5BD632AB449640098D14D /* DarkModeSwitch.swift */; };
 		E8C5BD662AB4502F0098D14D /* AddCommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8C5BD652AB4502F0098D14D /* AddCommentView.swift */; };
@@ -60,6 +62,8 @@
 		B4B9DFB52AB43F7000529332 /* CommentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentViewModel.swift; sourceTree = "<group>"; };
 		E859EA782AB543C1009EFB16 /* PostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewModel.swift; sourceTree = "<group>"; };
 		E859EA7A2AB54CF4009EFB16 /* PostFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostFormView.swift; sourceTree = "<group>"; };
+		E859EA7C2AB5973B009EFB16 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		E859EA7E2AB5E448009EFB16 /* PostDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetail.swift; sourceTree = "<group>"; };
 		E8C5BD612AB447C50098D14D /* PostItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostItem.swift; sourceTree = "<group>"; };
 		E8C5BD632AB449640098D14D /* DarkModeSwitch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DarkModeSwitch.swift; sourceTree = "<group>"; };
 		E8C5BD652AB4502F0098D14D /* AddCommentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCommentView.swift; sourceTree = "<group>"; };
@@ -144,6 +148,8 @@
 				E8C5BD632AB449640098D14D /* DarkModeSwitch.swift */,
 				E8C5BD652AB4502F0098D14D /* AddCommentView.swift */,
 				E859EA7A2AB54CF4009EFB16 /* PostFormView.swift */,
+				E859EA7C2AB5973B009EFB16 /* HomeView.swift */,
+				E859EA7E2AB5E448009EFB16 /* PostDetail.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -242,13 +248,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E859EA7F2AB5E448009EFB16 /* PostDetail.swift in Sources */,
 				E8C5BD642AB449650098D14D /* DarkModeSwitch.swift in Sources */,
 				1FB0F85C2AB1905D004AB459 /* RegisterView.swift in Sources */,
 				1FB0F8682AB1EB52004AB459 /* SessionManager.swift in Sources */,
 				1FB0F8672AB1EB52004AB459 /* ImageManager.swift in Sources */,
 				B4B9DFB62AB43F7000529332 /* CommentViewModel.swift in Sources */,
 				10F6E54F2AB359C400216103 /* CommentView.swift in Sources */,
-				B4B9DFB82AB4565B00529332 /* PostViewModel.swift in Sources */,
 				1FB0F82E2AB01483004AB459 /* ContentView.swift in Sources */,
 				1FB0F82C2AB01483004AB459 /* NatureIDApp.swift in Sources */,
 				1FB0F83D2AB0166F004AB459 /* User.swift in Sources */,
@@ -258,6 +264,7 @@
 				1FB0F8732AB2FC0C004AB459 /* UserViewModel.swift in Sources */,
 				1FB0F86A2AB1EBBF004AB459 /* LoginView.swift in Sources */,
 				1FB0F8582AB09EBC004AB459 /* Post.swift in Sources */,
+				E859EA7D2AB5973B009EFB16 /* HomeView.swift in Sources */,
 				E8C5BD622AB447C50098D14D /* PostItem.swift in Sources */,
 				E8C5BD662AB4502F0098D14D /* AddCommentView.swift in Sources */,
 				1FB0F8542AB06CA7004AB459 /* SplashScreenView.swift in Sources */,

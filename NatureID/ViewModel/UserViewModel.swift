@@ -40,4 +40,13 @@ class UserViewModel : ObservableObject {
         }
     }
     
+    func getUserById(id: String) -> User{
+        let users = self.users.filter({$0.id == id})
+        if(users.isEmpty){
+            return User()
+        }else {
+            return users[0]
+        }
+    }
+    
 }

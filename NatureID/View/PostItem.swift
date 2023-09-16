@@ -7,20 +7,23 @@
 
 import SwiftUI
 
+let postPlaceHolderImg = "https://firebasestorage.googleapis.com/v0/b/natureid-e46ed.appspot.com/o/image%2F360_F_268556012_c1WBaKFN5rjRxR2eyV33znK4qnYeKZjm.jpg?alt=media&token=ad08602e-1120-446d-8925-c42c901fb561"
+
 struct PostItem: View {
-    var userName: String
-    var userImgUrl: String
+    var user: User
     var post: Post
     
     var body: some View {
-        VStack(alignment: .leading){
+        VStack{
             HStack{
-                Image(userImgUrl)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 50)
-                    .clipShape(Circle())
-                Text(userName)
+                AsyncImage(url: URL(string: user.photoUrl ?? placeHolderImg)){image in
+                    image.image?
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 50)
+                        .clipShape(Circle())
+                }
+                Text(user.userName ?? "")
                     .font(.headline)
                 Spacer()
                 Image(systemName: "ellipsis")
@@ -29,10 +32,13 @@ struct PostItem: View {
                 
             }
             .padding(.horizontal)
-
-            Image(post.imageUrl)
-                .resizable()
-                .scaledToFit()
+            .padding(.bottom, 1)
+            
+            AsyncImage(url: URL(string: post.imageUrl)){image in
+                image.image?
+                    .resizable()
+                    .scaledToFit()
+            }
             
             HStack{
                 Text(post.createdAt, format: .dateTime.day().month().year())
@@ -44,20 +50,25 @@ struct PostItem: View {
                     .font(.footnote)
             }
             
-            Text("[\(post.category)] \(post.description)")
-                .padding(.leading)
-                .padding(.top, 2)
-                .font(.body)
+            VStack(alignment: .leading){
+                Text("[\(post.category)] \(post.description)")
+                    .padding(.leading)
+                    .padding(.top, 2)
+                    .font(.body)
+                    .lineLimit(2)
+                HStack{Spacer()}
+            }
         }
         .padding(.vertical)
-        .background(Color("background50"))
+        .background(Color("post-background"))
+        .frame(maxWidth: 700)
+        .cornerRadius(10)
     }
 }
 
 struct PostItem_Previews: PreviewProvider {
     static var previews: some View {
-        PostItem(userName: "test name",
-                 userImgUrl: "placeholder-person",
+        PostItem(user: User(),
                  post: Post(userId: "1"))
     }
 }

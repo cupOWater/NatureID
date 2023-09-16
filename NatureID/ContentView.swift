@@ -13,93 +13,94 @@ struct ContentView: View {
     @EnvironmentObject var session : SessionManager
     
     var body: some View {
-        ZStack {
-            Color("background")
-                .edgesIgnoringSafeArea(.all)
-            VStack {
-                // MARK: Tab View
-                TabView(selection: $viewSelection) {
-                    Text("Home")
-                        .tag("Home")
-                    // Text("User")
-                    UserView(user: session.user ?? User())
-                        .tag("Yours")
-                    Text("About")
-                        .tag("About")
-                    Button(action: {
-                        session.logout()
-                        viewSelection = "Home"
-                    }, label: {
-                        Text("Logout")
-                    })
-                    .tag("Setting")
-                }.tabViewStyle(.page)
-                
-                
-                // MARK: Nav Buttons
-                ZStack {
-                    Color("primary")
-                        .edgesIgnoringSafeArea(.all)
+        NavigationView{
+            ZStack {
+                Color("background")
+                    .edgesIgnoringSafeArea(.all)
+                VStack {
+                    // MARK: Tab View
+                    TabView(selection: $viewSelection) {
+//                        Text("Home")
+                        HomeView()
+                            .tag("Home")
+                        // Text("User")
+                        UserView(user: session.user ?? User())
+                            .tag("Yours")
+                        Text("About")
+                            .tag("About")
+                        Button(action: {
+                            session.logout()
+                            viewSelection = "Home"
+                        }, label: {
+                            Text("Logout")
+                        })
+                        .tag("Setting")
+                    }.tabViewStyle(.page)
                     
-                    HStack {
-                        // Show all posts in created order
-                        // show image and post description
-                        // Truncate if too long
-                        // Allow filtering based on
-                        // Search Description
-                        // Category
+                    
+                    // MARK: Nav Buttons
+                    ZStack {
+                        Color("primary")
+                            .edgesIgnoringSafeArea(.all)
                         
-                        // On Click, show post
-                        // Post can filter comments by vote
-                        // Show full post detail
-                        NavbarButton(tag: $viewSelection, tagName: "Home", imgSysName: "house")
-                        Spacer()
-                        
-                        // Show only your posts
-                        // Same filtering options as above
-                        // (Advance) Use same view to view other users profiles
-                        NavbarButton(tag: $viewSelection, tagName: "Yours", imgSysName: "person")
-                        Spacer()
-                        
-                        // MARK: Create post
-                        // Show create post sheet
-                        Button {
+                        HStack {
+                            // Show all posts in created order
+                            // show image and post description
+                            // Truncate if too long
+                            //   Allow filtering based on
+                            //   Search Description
+                            //   Category
                             
-                        } label: {
-                            Circle()
-                                .fill(Color(.white))
-                                .overlay {
-                                    Circle()
-                                        .stroke(lineWidth: 5)
-                                        .foregroundColor(Color("primary"))
-                                    
-                                    ZStack {
-                                        Image(systemName: "plus")
-                                            .resizable()
-                                            .padding(10)
-                                            .fontWeight(.bold)
+                            // On Click, show post
+                            // Post can filter comments by vote
+                            // Show full post detail
+                            NavbarButton(tag: $viewSelection, tagName: "Home", imgSysName: "house")
+                            Spacer()
+                            
+                            // Show only your posts
+                            // Same filtering options as above
+                            // (Advance) Use same view to view other users profiles
+                            NavbarButton(tag: $viewSelection, tagName: "Yours", imgSysName: "person")
+                            Spacer()
+                            
+                            // MARK: Create post
+                            NavigationLink{
+                                PostFormView(user: session.user ?? User())
+                            } label: {
+                                Circle()
+                                    .fill(Color(.white))
+                                    .overlay {
+                                        Circle()
+                                            .stroke(lineWidth: 5)
                                             .foregroundColor(Color("primary"))
+                                        
+                                        ZStack {
+                                            Image(systemName: "plus")
+                                                .resizable()
+                                                .padding(10)
+                                                .fontWeight(.bold)
+                                                .foregroundColor(Color("primary"))
+                                        }
                                     }
-                                }
-                                .offset(y: -14)
-                                .scaleEffect(1.5)
+                                    .offset(y: -14)
+                                    .scaleEffect(1.5)
+                            }
+                            
+                            Spacer()
+                            
+                            // Team detail, App detail
+                            NavbarButton(tag: $viewSelection, tagName: "About", imgSysName: "info.circle")
+                            
+                            Spacer()
+                            // Change personal details, theme mode, logout
+                            NavbarButton(tag: $viewSelection, tagName: "Setting", imgSysName: "gearshape")
                         }
-                        
-                        
-                        Spacer()
-                        
-                        // Team detail, App detail
-                        NavbarButton(tag: $viewSelection, tagName: "About", imgSysName: "info.circle")
-                        
-                        Spacer()
-                        // Change personal details, theme mode, logout
-                        NavbarButton(tag: $viewSelection, tagName: "Setting", imgSysName: "gearshape")
+                        .padding(.top, 7)
+                        .padding(.horizontal, 30)
                     }
-                    .padding(.top, 7)
-                    .padding(.horizontal, 30)
+                    .padding(.bottom, 20)
+                    .frame(height: 5)
                 }
-                .padding(.bottom, 20)
-                .frame(height: 5)
             }
         }
     }
