@@ -7,9 +7,8 @@
 
 import SwiftUI
 
-let placeHolderImg = "https://firebasestorage.googleapis.com/v0/b/natureid-e46ed.appspot.com/o/image%2Fplaceholder-person.jpg?alt=media&token=1c54206f-4c2e-410b-833b-cae158c5d6af"
-
 struct UserView: View {
+    @EnvironmentObject var session : SessionManager
     var user : User
     
     var body: some View {
@@ -20,17 +19,34 @@ struct UserView: View {
             
             VStack {
                 VStack (alignment: .leading) {
-                    AsyncImage(url: URL(string: user.photoUrl ?? placeHolderImg)){image in
-                        image.image?
+                    if(session.user.id ?? "" == user.id){
+                        HStack {
+                            Spacer()
+                            NavigationLink {
+                                UserEditView(editUser: user)
+                            } label: {
+                                Image(systemName: "square.and.pencil")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .fontWeight(.bold)
+                                    .frame(width: 30)
+                            }
+                        }
+                    }
+                    AsyncImage(url: URL(string: user.photoUrl)){image in
+                        image
                             .resizable()
-                            .scaledToFit()
-                            .background(.black)
-                            .clipShape(Circle())
-                            .shadow(radius: 5)
-                    }.frame(height: 140)
-                    Text(user.userName ?? "")
+                            .onAppear{
+                                print(user.photoUrl)
+                            }
+                    }placeholder: {
+                        ProgressView()
+                    }
+                    .modifier(ProfilePhotoStyle())
+                    
+                    Text(user.userName)
                         .font(.largeTitle)
-                    Text(user.email ?? "")
+                    Text(user.email)
                         .font(.caption)
                         .opacity(0.6)
                     Text(user.bio)
@@ -51,6 +67,7 @@ struct UserView: View {
 
 struct UserView_Previews: PreviewProvider {
     static var previews: some View {
-        UserView(user: User(email: "oden@rmen.com", userName: "Bob Odenkirk", bio: "Hello, I am Bob Odenkirk, you may know me through shows like Breaking Bad and Better Call Saul. :)))"))
+        UserView(user: User(email: "oden@rmen.com", userName: "Bob Odenkirk", photoUrl: "https://firebasestorage.googleapis.com/v0/b/natureid-e46ed.appspot.com/o/image%2F9JFEHhnIM1aaBDskfXvFMOSWZ4b2.jpg?alt=media&token=8529cbef-d718-41ad-b8af-e66b121dbc74", bio: "Hello, I am Bob Odenkirk, you may know me through shows like Breaking Bad and Better Call Saul. :)))"))
+            .environmentObject(SessionManager())
     }
 }

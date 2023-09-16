@@ -39,7 +39,7 @@ struct PostItem: View {
                     .padding(.leading)
                     .font(.footnote)
                 Spacer()
-                Text("\() comments")
+                Text("\(post.comments.count) comments")
                     .padding(.trailing)
                     .font(.footnote)
             }

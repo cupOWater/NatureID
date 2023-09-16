@@ -28,12 +28,14 @@ struct NatureIDApp: App {
             if(splashScreen) {
                 SplashScreenView(splashScreen: $splashScreen)
             }else {
-                if session.user == nil{
+                if session.user.id == nil{
                     LoginView()
                         .environmentObject(session)
+
                 }else {
                     ContentView()
                         .environmentObject(session)
+
                 }
             }
         }
