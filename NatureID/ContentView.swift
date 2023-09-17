@@ -66,7 +66,7 @@ struct ContentView: View {
                             
                             // MARK: Create post
                             NavigationLink{
-                                PostFormView(user: session.user )
+                                PostFormView(user: session.user)
                             } label: {
                                 Circle()
                                     .fill(Color(.white))
@@ -96,7 +96,7 @@ struct ContentView: View {
                             // Change personal details, theme mode, logout
                             NavbarButton(tag: $viewSelection, tagName: "Setting", imgSysName: "gearshape")
                         }
-                        .padding(.top, 7)
+                        .padding(.top, 14)
                         .padding(.horizontal, 30)
                     }
                     .padding(.bottom, 20)

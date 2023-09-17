@@ -1,27 +1,35 @@
 //
-//  PostFormView.swift
+//  PostEditView.swift
 //  NatureID
 //
-//  Created by Tran Trung on 16/09/2023.
+//  Created by Tran Trung on 17/09/2023.
 //
 
 import SwiftUI
 import _PhotosUI_SwiftUI
 
-var postTypes = ["Plant", "Animal", "Fungus", "Others"]
-
-struct PostFormView: View {
+struct PostEditView: View {
     @Environment(\.dismiss) private var dismiss
 
     @StateObject private var postVM = PostViewModel()
-    @State private var category = "Plant"
-    @State private var description = ""
+    @State private var category: String
+    @State private var description: String
     @State private var imageItem: PhotosPickerItem?
     @State private var image = UIImage(named: "placeholder-post")
     @State private var errorMsg = ""
-    @State private var isSaved = false
-
+    @State private var isEdited = false
+    
     var user: User
+    var post: Post
+    
+    init(user: User, post: Post){
+        self.user = user
+        self.post = post
+        
+        self._category = State(wrappedValue: post.category)
+        self._description = State(wrappedValue: post.description)
+    }
+    
     
     var body: some View {
         ZStack{
@@ -61,29 +69,23 @@ struct PostFormView: View {
                 .padding(.horizontal)
                 
                 //MARK: - VIEW BODY
-                PhotosPicker(selection: $imageItem, matching: .images){
-                    Image(uiImage: image!)
+                AsyncImage(url: URL(string: post.imageUrl)){image in
+                    image
                         .resizable()
                         .scaledToFit()
-                }
-                .onChange(of: imageItem) { _ in
-                    Task {
-                        if let data = try? await imageItem?.loadTransferable(type: Data.self) {
-                            if let uiImage = UIImage(data: data) {
-                                image = uiImage
-                                return
-                            }
-                        }
-                    }
+                } placeholder: {
+                    Image("placeholder-post")
+                        .resizable()
+                        .scaledToFit()
                 }
                 
                 //MARK: Preview elements
                 HStack{
-                    Text(Date.now, format: .dateTime.day().month().year())
+                    Text(post.createdAt, format: .dateTime.day().month().year())
                         .padding(.leading)
                         .font(.footnote)
                     Spacer()
-                    Text("0 comments")
+                    Text("\(post.comments.count) comments")
                         .padding(.trailing)
                         .font(.footnote)
                 }
@@ -104,32 +106,23 @@ struct PostFormView: View {
                 }
 
                 Button {
-                    isSaved = true
-                    if(image != nil){
-                        postVM.createPost(desription: description, category: category, image: image!, userId: user.id!){errMsg in
-                            if(errMsg != nil){
-                                print("error")
-                                errorMsg = errMsg!
-                            }else{
-                                dismiss()
-                            }
-                        }
-                        
+                    isEdited = true
+                    postVM.updatePostById(post: post, description: description, category: category){ success in
+                        dismiss()
                     }
-                    
                 } label: {
                     ZStack {
                         Capsule()
                             .fill(Color("primary"))
                             .frame(height: 50)
                             .padding(.horizontal)
-                        Text("Post")
+                        Text("Update")
                             .font(.system(size: 25))
                             .fontWeight(.bold)
                             .foregroundColor(.white)
                             .padding(20)
                     }
-                }.disabled(isSaved)
+                }.disabled(isEdited)
             }
             .padding(.vertical)
             .background(Color("post-background"))
@@ -139,8 +132,8 @@ struct PostFormView: View {
     }
 }
 
-struct PostFormView_Previews: PreviewProvider {
+struct PostEditView_Previews: PreviewProvider {
     static var previews: some View {
-        PostFormView(user: User(id: "testId", userName: "Bob Odenkirk", photoUrl: "https://firebasestorage.googleapis.com/v0/b/natureid-e46ed.appspot.com/o/image%2Fplaceholder-person.jpg?alt=media&token=1c54206f-4c2e-410b-833b-cae158c5d6af"))
+        PostEditView(user: User(id: "testId", userName: "Bob Odenkirk", photoUrl: "https://firebasestorage.googleapis.com/v0/b/natureid-e46ed.appspot.com/o/image%2Fplaceholder-person.jpg?alt=media&token=1c54206f-4c2e-410b-833b-cae158c5d6af"), post: Post())
     }
 }
