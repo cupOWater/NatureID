@@ -30,21 +30,20 @@ struct ContentView: View {
                             
                         Text("About")
                             .tag("About")
-                        Button(action: {
-                            session.logout()
-                            viewSelection = "Home"
-                        }, label: {
-                            Text("Logout")
-                        })
-                        .tag("Setting")
+                        
+                        SettingView(viewSelection: $viewSelection)
+                            .tag("Setting")
                     }.tabViewStyle(.page)
                     
                     
                     // MARK: Nav Buttons
                     ZStack {
-                        Color("primary")
-                            .edgesIgnoringSafeArea(.all)
                         
+                        RoundedRectangle(cornerRadius: 20)
+                            .fill(
+                                Color("primary")
+                            )
+                            .edgesIgnoringSafeArea(.all)
                         HStack {
                             // Show all posts in created order
                             // show image and post description
@@ -101,7 +100,7 @@ struct ContentView: View {
                         .padding(.horizontal, 30)
                     }
                     .padding(.bottom, 20)
-                    .frame(height: 5)
+                    .frame(maxWidth: 500, maxHeight: 5)
                 }
             }
         }

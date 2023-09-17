@@ -33,14 +33,13 @@ struct UserView: View {
                             }
                         }
                     }
+                    
                     AsyncImage(url: URL(string: user.photoUrl)){image in
                         image
                             .resizable()
-                            .onAppear{
-                                print(user.photoUrl)
-                            }
-                    }placeholder: {
-                        ProgressView()
+                    } placeholder: {
+                        Image("placeholder-person")
+                            .resizable()
                     }
                     .modifier(ProfilePhotoStyle())
                     
@@ -67,7 +66,7 @@ struct UserView: View {
 
 struct UserView_Previews: PreviewProvider {
     static var previews: some View {
-        UserView(user: User(email: "oden@rmen.com", userName: "Bob Odenkirk", photoUrl: "https://firebasestorage.googleapis.com/v0/b/natureid-e46ed.appspot.com/o/image%2F9JFEHhnIM1aaBDskfXvFMOSWZ4b2.jpg?alt=media&token=8529cbef-d718-41ad-b8af-e66b121dbc74", bio: "Hello, I am Bob Odenkirk, you may know me through shows like Breaking Bad and Better Call Saul. :)))"))
+        UserView(user: User(email: "oden@rmen.com", userName: "Bob Odenkirk", bio: "Hello, I am Bob Odenkirk, you may know me through shows like Breaking Bad and Better Call Saul. :)))"))
             .environmentObject(SessionManager())
     }
 }

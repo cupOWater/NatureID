@@ -92,8 +92,8 @@ struct RegisterView: View {
                 
                 SecureField("Password", text: $password)
                     .modifier(TextFieldStyle())
+                    .padding(.bottom, 20)
                 
-                Spacer()
                 Text(errorMessage)
                 Button {
                     if(pfpImage != nil){
@@ -120,6 +120,7 @@ struct RegisterView: View {
                 }.opacity(session.isLoading ? 0.5 : 1)
             }
             .padding(.horizontal, 25)
+            .frame(maxWidth: 400)
             
         }
         .interactiveDismissDisabled(session.isLoading)

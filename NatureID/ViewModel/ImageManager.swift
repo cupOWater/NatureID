@@ -3,11 +3,24 @@
 //  NatureID
 //
 //  Created by MacNCheese on 13/09/2023.
-//
+//  https://designcode.io/swiftui-advanced-handbook-compress-a-uiimage
 
 
 import SwiftUI
 import FirebaseStorage
+
+extension UIImage {
+    func aspectFittedToHeight(_ newHeight: CGFloat) -> UIImage {
+        let scale = newHeight / self.size.height
+        let newWidth = self.size.width * scale
+        let newSize = CGSize(width: newWidth, height: newHeight)
+        let renderer = UIGraphicsImageRenderer(size: newSize)
+
+        return renderer.image { _ in
+            self.draw(in: CGRect(origin: .zero, size: newSize))
+        }
+    }
+}
 
 class ImageManager {
     static let storage = Storage.storage()
@@ -16,7 +29,9 @@ class ImageManager {
         let imageName = name + ".jpg"
         
         let storageRef = storage.reference().child("image/" + imageName)
-        let data = image.jpegData(compressionQuality: 0.5)
+        
+        let resized = image.aspectFittedToHeight(300)
+        let data = resized.jpegData(compressionQuality: 0.2)
         let metadata = StorageMetadata()
         metadata.contentType = "image/jpg"
         if let data = data {
