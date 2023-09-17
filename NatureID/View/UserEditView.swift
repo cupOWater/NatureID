@@ -46,8 +46,9 @@ struct UserEditView: View {
                         AsyncImage(url: URL(string: editUser.photoUrl)){image in
                             image
                                 .resizable()
-                        }placeholder: {
-                            ProgressView()
+                        } placeholder: {
+                            Image("placeholder-person")
+                                .resizable()
                         }
                         .modifier(ProfilePhotoStyle())
                     } else {
@@ -94,6 +95,11 @@ struct UserEditView: View {
                     .padding(.bottom, -5)
                 TextField("User Name", text: $editUser.userName)
                     .modifier(TextFieldStyle())
+                if(!validate()){
+                    Text("Empty Username")
+                        .foregroundColor(.red)
+                        .frame(alignment: .trailing)
+                }
                 
                 // MARK: Bio Field
                 Text("Biography")
@@ -106,8 +112,10 @@ struct UserEditView: View {
                 HStack {
                     Spacer()
                     Button{
-                        session.updateUser(user: editUser, image: pfpImage) { success in
-                            dismiss()
+                        if(validate()){
+                            session.updateUser(user: editUser, image: pfpImage) { success in
+                                dismiss()
+                            }
                         }
                     }label: {
                         Text("Save")
@@ -139,9 +147,9 @@ struct UserEditView: View {
                 }
                 .opacity(session.isLoading ? 0.5 : 1)
                 .padding(.top, 40)
-                Spacer()
             }
             .padding(.horizontal, 25)
+            .frame(maxWidth: 430)
         }
         .navigationBarBackButtonHidden()
         .interactiveDismissDisabled(session.isLoading)
