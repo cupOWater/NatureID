@@ -12,63 +12,132 @@ let postPlaceHolderImg = "https://firebasestorage.googleapis.com/v0/b/natureid-e
 struct PostItem: View {
     var user: User
     var post: Post
+    var isShowMenu: Bool
+    var isDetailed: Bool
+    
+    @Binding var isDeleting: Bool
+    @Binding var deletingPostId: String
+
+    @StateObject var userVM: UserViewModel
     
     var body: some View {
-        VStack{
-            HStack{
-                AsyncImage(url: URL(string: user.photoUrl)){image in
-                    image.image?
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 50)
-                        .clipShape(Circle())
+        ZStack{
+            VStack{
+                //MARK: - POST HEADER
+                HStack{
+                    AsyncImage(url: URL(string: user.photoUrl)){image in
+                        image.image?
+                            .resizable()
+                            .clipShape(Circle())
+                            .frame(width: 50, height: 50)
+                            .scaledToFit()
+                    }
+                    
+                    Text(user.userName)
+                        .font(.headline)
+                    Spacer()
+                    if(isShowMenu){
+                        Menu {
+                            NavigationLink {
+                                PostEditView(user: user, post: post)
+                            } label: {
+                                Label("Edit", systemImage: "square.and.pencil")
+                            }
+                            
+                            Button {
+                                deletingPostId = post.id
+                                isDeleting.toggle()
+                            } label: {
+                                Label("Delete", systemImage: "trash")
+                            }
+                        } label: {
+                            Image(systemName: "ellipsis")
+                                .rotationEffect(Angle(degrees: 90))
+                                .font(.title2)
+                        }
+                        .buttonStyle(PlainButtonStyle())
+                        
+                        
+                    }
                 }
-                Text(user.userName)
-                    .font(.headline)
-                Spacer()
-                Image(systemName: "ellipsis")
-                    .rotationEffect(Angle(degrees: 90))
-                    .font(.title2)
+                .padding(.horizontal)
+                .padding(.bottom, 1)
                 
+                //MARK: - POST BODY
+                if(isDetailed){
+                    AsyncImage(url: URL(string: post.imageUrl)){image in
+                        image.image?
+                            .resizable()
+                            .scaledToFit()
+                    }
+                    
+                    HStack{
+                        Text(post.createdAt, format: .dateTime.day().month().year())
+                            .padding(.leading)
+                            .font(.footnote)
+                        Spacer()
+                        Text("\(post.comments.count) comments")
+                            .padding(.trailing)
+                            .font(.footnote)
+                    }
+                    
+                    VStack(alignment: .leading){
+                        Text("[\(post.category)] \(post.description)")
+                            .padding(.leading)
+                            .padding(.top, 2)
+                            .font(.body)
+                            .lineLimit(2)
+                        HStack{Spacer()}
+                    }
+                } else {
+                    NavigationLink {
+                        PostDetail(postId: post.id, userVM: self.userVM)
+                    } label: {
+                        VStack{
+                            AsyncImage(url: URL(string: post.imageUrl)){image in
+                                image.image?
+                                    .resizable()
+                                    .scaledToFit()
+                            }
+                            
+                            HStack{
+                                Text(post.createdAt, format: .dateTime.day().month().year())
+                                    .padding(.leading)
+                                    .font(.footnote)
+                                Spacer()
+                                Text("\(post.comments.count) comments")
+                                    .padding(.trailing)
+                                    .font(.footnote)
+                            }
+                            
+                            VStack(alignment: .leading){
+                                Text("[\(post.category)] \(post.description)")
+                                    .padding(.leading)
+                                    .padding(.top, 2)
+                                    .font(.body)
+                                    .lineLimit(2)
+                                HStack{Spacer()}
+                            }
+                        }
+                    }
+                }
             }
-            .padding(.horizontal)
-            .padding(.bottom, 1)
-            
-            AsyncImage(url: URL(string: post.imageUrl)){image in
-                image.image?
-                    .resizable()
-                    .scaledToFit()
-            }
-            
-            HStack{
-                Text(post.createdAt, format: .dateTime.day().month().year())
-                    .padding(.leading)
-                    .font(.footnote)
-                Spacer()
-                Text("\(post.comments.count) comments")
-                    .padding(.trailing)
-                    .font(.footnote)
-            }
-            
-            VStack(alignment: .leading){
-                Text("[\(post.category)] \(post.description)")
-                    .padding(.leading)
-                    .padding(.top, 2)
-                    .font(.body)
-                    .lineLimit(2)
-                HStack{Spacer()}
-            }
+            .padding(.vertical)
+            .background(Color("post-background"))
+            .frame(maxWidth: 700)
+            .cornerRadius(10)
         }
-        .padding(.vertical)
-        .background(Color("post-background"))
-        .frame(maxWidth: 700)
-        .cornerRadius(10)
     }
 }
 
 struct PostItem_Previews: PreviewProvider {
     static var previews: some View {
         PostItem(user: User(),
-                 post: Post(userId: "1"))
+                 post: Post(userId: "1"),
+                 isShowMenu: true,
+                 isDetailed: true,
+                 isDeleting: .constant(false),
+                 deletingPostId: .constant("test"),
+                 userVM: UserViewModel())
     }
 }
