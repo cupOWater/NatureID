@@ -41,7 +41,7 @@ struct HomeView: View {
         }
         
         if(!selectedFilterChips.isEmpty){
-            postList = postVM.posts.filter{ selectedFilterChips.contains($0.category.lowercased())
+            postList = postList.filter{ selectedFilterChips.contains($0.category.lowercased())
             }
         }
         
