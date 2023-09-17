@@ -9,6 +9,7 @@ import Foundation
 import FirebaseAuth
 import FirebaseFirestore
 import FirebaseFirestoreSwift
+import LocalAuthentication
 
 class SessionManager : ObservableObject{
     @Published var user : User = User()
@@ -88,6 +89,31 @@ class SessionManager : ObservableObject{
             }
             completion("Error logging in")
         }
+    }
+    
+    // MARK: FaceID Authentication
+    func faceIDAuth(email : String, password : String, completion: @escaping (String?) -> Void) {
+        let context = LAContext()
+        var error : NSError?
+        
+        if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
+            context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: "To Login") { success, authError in
+                if (authError != nil) {
+                    print(authError!)
+                    completion(authError?.localizedDescription)
+                    return
+                }
+                if(success) {
+                    DispatchQueue.main.async {
+                        self.login(email: email, password: password) { errorMsg in
+                            completion(errorMsg)
+                        }
+                    }
+                } else {
+                    completion("Authentication Failed")
+                }
+            }
+        } else {completion("FaceID not available")}
     }
     
     // MARK: Logout of AUTH
