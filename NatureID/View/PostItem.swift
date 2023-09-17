@@ -82,7 +82,7 @@ struct PostItem: View {
                     }
                     
                     VStack(alignment: .leading){
-                        Text("[\(post.category)] \(post.description)")
+                        Text("[\(post.category.uppercased())] \(post.description)")
                             .padding(.leading)
                             .padding(.top, 2)
                             .font(.body)
@@ -111,7 +111,7 @@ struct PostItem: View {
                             }
                             
                             VStack(alignment: .leading){
-                                Text("[\(post.category)] \(post.description)")
+                                Text("[\(post.category.uppercased())] \(post.description)")
                                     .padding(.leading)
                                     .padding(.top, 2)
                                     .font(.body)
