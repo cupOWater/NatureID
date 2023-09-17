@@ -89,4 +89,11 @@ class PostViewModel : ObservableObject {
                 }
             }
     }
+    
+    func addComment(){
+        
+    }
+//    func commentUpVote(commentID){
+//        post.comments
+//    }
 }

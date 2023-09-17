@@ -8,31 +8,30 @@
 import SwiftUI
 
 struct AddCommentView: View {
-    
-    @State var comment:String = ""
+    @State var comment : Comment
+    @State var commentText:String = ""
     var body: some View {
         HStack{
-            TextField("Add comment",text: $comment)
-            Button{
+            TextField("Add comment",text: $commentText)
                 
+                .textFieldStyle(.roundedBorder)
+            Button{
+                comment.content = commentText
+                //add comment function
             }label:{
                 Text("Post")
                     .foregroundColor(.white)
-                    .background(Color("primary"))
-                    .cornerRadius(8)
-                    
+                    .padding(8)
             }
-           
-            
+            .background(Color("primary"))
+            .cornerRadius(13)
         }
-        .background(.gray)
-        
-        
+        .padding()
     }
 }
 
 struct AddCommentView_Previews: PreviewProvider {
     static var previews: some View {
-        AddCommentView()
+        AddCommentView(comment: Comment())
     }
 }
