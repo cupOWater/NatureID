@@ -89,4 +89,39 @@ class PostViewModel : ObservableObject {
                 }
             }
     }
+    
+    // Update post by id
+    func updatePostById(post: Post, description: String, category: String, completion: @escaping (Bool) -> Void) {
+        var updatePost = post
+        updatePost.category = category
+        updatePost.description = description
+        
+        do {
+            try db.collection("posts").document(updatePost.id).setData(from: updatePost) { error in
+                if(error != nil){
+                    print(error!)
+                    completion(false)
+                    return
+                }else {
+                    completion(true)
+                }
+            }
+        } catch {
+            print(error)
+            completion(false)
+        }
+    }
+    
+    // Delete post by id
+    func deletePostById(postId: String, completion: @escaping (Bool) -> Void) {
+        db.collection("posts").document(postId).delete(){ error in
+            if(error != nil){
+                print(error!)
+                completion(false)
+                return
+            }else {
+                completion(true)
+            }
+        }
+    }
 }

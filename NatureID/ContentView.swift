@@ -13,7 +13,7 @@ struct ContentView: View {
     @EnvironmentObject var session : SessionManager
     
     var body: some View {
-        NavigationView{
+        NavigationStack{
             ZStack {
                 Color("background")
                     .edgesIgnoringSafeArea(.all)
@@ -97,7 +97,7 @@ struct ContentView: View {
                             // Change personal details, theme mode, logout
                             NavbarButton(tag: $viewSelection, tagName: "Setting", imgSysName: "gearshape")
                         }
-                        .padding(.top, 7)
+                        .padding(.top, 14)
                         .padding(.horizontal, 30)
                     }
                     .padding(.bottom, 20)
