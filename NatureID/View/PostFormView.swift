@@ -32,7 +32,13 @@ struct PostFormView: View {
                 //MARK: - VIEW HEADER
                 HStack{
                     AsyncImage(url: URL(string: user.photoUrl)){image in
-                        image.image?
+                        image
+                            .resizable()
+                            .clipShape(Circle())
+                            .frame(width: 50, height: 50)
+                            .scaledToFit()
+                    } placeholder: {
+                        Image("placeholder-person")
                             .resizable()
                             .clipShape(Circle())
                             .frame(width: 50, height: 50)
