@@ -26,7 +26,13 @@ struct PostItem: View {
                 //MARK: - POST HEADER
                 HStack{
                     AsyncImage(url: URL(string: user.photoUrl)){image in
-                        image.image?
+                        image
+                            .resizable()
+                            .clipShape(Circle())
+                            .frame(width: 50, height: 50)
+                            .scaledToFit()
+                    } placeholder: {
+                        Image("placeholder-person")
                             .resizable()
                             .clipShape(Circle())
                             .frame(width: 50, height: 50)
@@ -66,7 +72,11 @@ struct PostItem: View {
                 //MARK: - POST BODY
                 if(isDetailed){
                     AsyncImage(url: URL(string: post.imageUrl)){image in
-                        image.image?
+                        image
+                            .resizable()
+                            .scaledToFit()
+                    } placeholder: {
+                        Image("placeholder-post")
                             .resizable()
                             .scaledToFit()
                     }
@@ -95,7 +105,11 @@ struct PostItem: View {
                     } label: {
                         VStack{
                             AsyncImage(url: URL(string: post.imageUrl)){image in
-                                image.image?
+                                image
+                                    .resizable()
+                                    .scaledToFit()
+                            } placeholder: {
+                                Image("placeholder-post")
                                     .resizable()
                                     .scaledToFit()
                             }

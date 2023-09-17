@@ -40,7 +40,13 @@ struct PostEditView: View {
                 //MARK: - VIEW HEADER
                 HStack{
                     AsyncImage(url: URL(string: user.photoUrl)){image in
-                        image.image?
+                        image
+                            .resizable()
+                            .clipShape(Circle())
+                            .frame(width: 50, height: 50)
+                            .scaledToFit()
+                    } placeholder: {
+                        Image("placeholder-person")
                             .resizable()
                             .clipShape(Circle())
                             .frame(width: 50, height: 50)
@@ -64,7 +70,11 @@ struct PostEditView: View {
                 
                 //MARK: - VIEW BODY
                 AsyncImage(url: URL(string: post.imageUrl)){image in
-                    image.image?
+                    image
+                        .resizable()
+                        .scaledToFit()
+                } placeholder: {
+                    Image("placeholder-post")
                         .resizable()
                         .scaledToFit()
                 }
