@@ -64,7 +64,7 @@ struct CommentView: View {
                     Image(systemName: isVotedUp ? "hand.thumbsup.fill" : "hand.thumbsup")
                         .foregroundColor(isVotedUp ? Color("primary") : .black)
                 }
-                Text("\(postVM.post.comments.first{$0.id == comment.id}!.vote)")
+                Text("0")
                 Button{
                     if isVotedDown{
                         postVM.commentUpVote(commentId:comment.id , completion: {success in

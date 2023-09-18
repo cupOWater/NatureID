@@ -110,7 +110,7 @@ class PostViewModel : ObservableObject {
         
     }
     //up vote comment
-    func commentUpVote(commentId: UUID, completion: @escaping (Bool) -> Void){
+    func commentUpVote(commentId: String, completion: @escaping (Bool) -> Void){
         var commentToUpdate = self.post.comments.first{$0.id == commentId}
         commentToUpdate!.vote += 1
         
@@ -133,7 +133,7 @@ class PostViewModel : ObservableObject {
         }
     }
     //down vote comment
-    func commentDownVote(commentId: UUID, completion: @escaping (Bool) -> Void){
+    func commentDownVote(commentId: String, completion: @escaping (Bool) -> Void){
         var commentToUpdate = self.post.comments.first{$0.id == commentId}
         commentToUpdate!.vote -= 1
         
@@ -155,6 +155,7 @@ class PostViewModel : ObservableObject {
             completion(false)
         }
     }
+    //add voted user
     // Update post by id
     func updatePostById(post: Post, description: String, category: String, completion: @escaping (Bool) -> Void) {
         var updatePost = post
