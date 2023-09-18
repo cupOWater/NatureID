@@ -13,7 +13,6 @@ struct AddCommentView: View {
     var body: some View {
         HStack{
             TextField("Add comment",text: $commentText)
-                
                 .textFieldStyle(.roundedBorder)
             Button{
                 comment.content = commentText
