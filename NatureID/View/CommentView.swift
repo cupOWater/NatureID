@@ -21,7 +21,7 @@ struct CommentView: View {
                     .resizable()
                     .cornerRadius(100)
                     .frame(width: 32, height:32)
-                Text((commentVM.comment.user.userName)!)
+                Text((commentVM.comment.user.userName))
                     .foregroundColor(.gray)
                 Spacer()
                 Text("23/09/2023")

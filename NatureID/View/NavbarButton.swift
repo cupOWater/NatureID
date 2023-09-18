@@ -31,7 +31,7 @@ struct NavbarButton: View {
                         
                 }
                 .opacity(tag == tagName ? 1 : 0.7)
-        }.frame(width: 40)
+        }.frame(width: 50)
             
     }
 }

@@ -2,44 +2,53 @@
 //  SettingView.swift
 //  NatureID
 //
-//  Created by Khoi Tran Minh on 15/09/2023.
+//  Created by MacNCheese on 17/09/2023.
 //
 
 import SwiftUI
 
 struct SettingView: View {
+    @Binding var viewSelection : String
+    @EnvironmentObject var session : SessionManager
+    @AppStorage("faceIdEnabled") var faceIdEnabled = false
+    @AppStorage("faceIdEmail") var faceIdEmail = ""
+    @AppStorage("faceIdPwd") var faceIdPwd = ""
+    
     var body: some View {
-        VStack{
-            
-            Image("logo")
-                .resizable()
-                .frame(width: 200, height:150)
-                .padding(.vertical, 6)
-            
-            IsDarkMode()
-                .padding(.horizontal,5)
-                .padding(.vertical, 10)
-            Spacer()
-            
-            ZStack{
-                
+        ZStack {
+            Color("background")
+                .edgesIgnoringSafeArea(.all)
+            VStack {
+                List {
+                    Section(content: {
+                        Button("Disable FaceID") {
+                            faceIdEnabled = false
+                            faceIdPwd = ""
+                            faceIdEmail = ""
+                        }
+                        .disabled(!faceIdEnabled)
+                    },
+                            header: {Text("Face ID Authentication")},
+                            footer: {
+                        Text("To enable, login with the Use FaceID option enabled.")
+                    })
                     
-                RoundedRectangle(cornerRadius: 50)
-                    .fill(Color("tertiary"))
-                    
-                Text("LOG OUT")
-                    .fontWeight(.bold)
-                
-                    
-            } .frame(width:250, height:50)
-            
-            
+                    Button(action: {
+                        viewSelection = "Home"
+                        session.logout()
+                    }, label: {
+                        Text("Logout")
+                    })
+                }
+                .scrollContentBackground(.hidden)
+            }
         }
     }
 }
 
 struct SettingView_Previews: PreviewProvider {
     static var previews: some View {
-        SettingView()
+        SettingView(viewSelection: .constant("Setting"))
+            .environmentObject(SessionManager())
     }
 }

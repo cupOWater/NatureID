@@ -10,40 +10,43 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 
 class UserViewModel : ObservableObject {
-    @Published var user : User = User()
-    let db = Firestore.firestore()
+    @Published var users = [User]()
+    private let db = Firestore.firestore()
     
-    init( id : String = ""){
-        if(id == "") {
-            return
-        }
-        getUser(id: id) { user in
-            if let user = user {
-                self.user = user
-            }
-        }
+    init(){
+        getUsers()
     }
     
-    func getUser(id : String, completion: @escaping (User?) -> Void) {
-        let docRef = db.collection("user").document(id)
-        docRef.getDocument { document, error in
-            if error != nil {
+    func getUsers(){
+        db.collection("user").addSnapshotListener { querySnapshot, error in
+            if(error != nil) {
                 print(error!.localizedDescription)
-                completion(nil)
                 return
             }
             
-            if let document = document {
-                do {
-                    let user = try document.data(as: User.self)
-                    completion(user)
-                }
-                catch {
-                    print(error)
-                    completion(nil)
-                    return
-                }
+            guard let documents = querySnapshot?.documents else {
+                print("No user")
+                return
+            }
+            
+            do {
+                self.users = try documents.map({ (queryDocumentSnapshot) -> User in
+                    let user = try queryDocumentSnapshot.data(as: User.self)
+                    return user
+                })
+            } catch {
+                print(error.localizedDescription)
             }
         }
     }
+    
+    func getUserById(id: String) -> User{
+        let users = self.users.filter({$0.id == id})
+        if(users.isEmpty){
+            return User()
+        }else {
+            return users[0]
+        }
+    }
+    
 }

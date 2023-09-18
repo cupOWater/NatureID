@@ -9,12 +9,16 @@ import SwiftUI
 import FirebaseAuth
 
 struct LoginView: View {
+    @AppStorage("faceIdEnabled") var faceIdEnabled = false
+    @AppStorage("faceIdEmail") var faceIdEmail = ""
+    @AppStorage("faceIdPwd") var faceIdPwd = ""
+    
     @EnvironmentObject var session : SessionManager
     @State private var email = ""
     @State private var password = ""
     @State private var errorMessage = ""
     @State private var showRegister = false
-    @State private var isLoading = false
+    @State private var enableFaceId = false
     
     let auth = Auth.auth()
     
@@ -22,31 +26,22 @@ struct LoginView: View {
         ZStack {
             Color("background")
                 .edgesIgnoringSafeArea(.all)
+            if(session.isLoading){
+                LoadingView()
+            }
             VStack {
                 Image(systemName: "figure.roll")
                     .resizable()
-                .scaledToFit()
-                .frame(width: 120)
+                    .scaledToFit()
+                    .frame(width: 120)
                 Text("NaturalID")
                     .font(.largeTitle)
                 
                 TextField("Email", text: $email)
-                    .padding(10)
-                    .textInputAutocapitalization(.never)
-                    .background{
-                        RoundedRectangle(cornerRadius: 10)
-                            .fill(.black)
-                            .opacity(0.1)
-                    }
+                    .modifier(TextFieldStyle())
                 
                 SecureField("Password", text: $password)
-                    .padding(10)
-                    .textInputAutocapitalization(.never)
-                    .background{
-                        RoundedRectangle(cornerRadius: 10)
-                            .fill(.black)
-                            .opacity(0.1)
-                    }
+                    .modifier(TextFieldStyle())
                 
                 // Show register view
                 
@@ -60,17 +55,21 @@ struct LoginView: View {
                     .sheet(isPresented: $showRegister, content: {
                         RegisterView()
                     })
-                .padding(.top, 20)
+                    .padding(.top, 20)
                 }
                 
                 Button {
-                    isLoading = true
                     session.login(email: email, password: password) { errMsg in
-                        isLoading = false
                         if(errMsg != nil){
                             errorMessage = errMsg!
                             DispatchQueue.main.asyncAfter(deadline: .now() + 5){
                                 errorMessage = ""
+                            }
+                        } else {
+                            if(!faceIdEnabled && enableFaceId){
+                                faceIdEnabled = true
+                                faceIdEmail = email
+                                faceIdPwd = password
                             }
                         }
                     }
@@ -86,20 +85,56 @@ struct LoginView: View {
                             .padding(20)
                     }
                 }
+                .opacity(session.isLoading ? 0.5 : 1)
+                .padding(.top, -7)
                 
-                Text(errorMessage)
-                    .foregroundColor(.gray)
+                HStack{
+                    if(faceIdEnabled){
+                        Button{
+                            session.faceIDAuth(email: faceIdEmail, password: faceIdPwd) { errMsg in
+                                if(errMsg != nil){
+                                    errorMessage = errMsg!
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 5){
+                                        errorMessage = ""
+                                    }
+                                }
+                            }
+                        } label: {
+                            HStack {
+                                Image(systemName: "faceid")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 30)
+                                Text("Use FaceID")
+                                    .opacity(0.8)
+                                    .fontWeight(.bold)
+                            }
+                        }
+                        }else {
+                            Spacer()
+                            Toggle(isOn: $enableFaceId) {
+                                Text("Use FaceID")
+                                    .opacity(0.8)
+                                    .fontWeight(.bold)
+                            }
+                            .frame(maxWidth: 150)
+                        }
+                    }
+                    
+                    Text(errorMessage)
+                        .foregroundColor(.gray)
+                }
+                .frame(maxWidth: 400)
+                .padding(25)
             }
-            .padding(50)
+            .disabled(session.isLoading)
         }
-        .disabled(isLoading)
     }
-}
-
-
-struct LoginView_Previews: PreviewProvider {
-    static var previews: some View {
-        LoginView()
-            .environmentObject(SessionManager())
+    
+    
+    struct LoginView_Previews: PreviewProvider {
+        static var previews: some View {
+            LoginView()
+                .environmentObject(SessionManager())
+        }
     }
-}
