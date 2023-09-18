@@ -10,9 +10,12 @@ import UIKit
 
 struct CommentView: View {
     
-    @StateObject var commentVM : CommentViewModel = CommentViewModel()
+//    @StateObject var commentVM : CommentViewModel = CommentViewModel()
+    @StateObject var postVM : PostViewModel = PostViewModel()
     @State var isVotedUp : Bool = false
     @State var isVotedDown : Bool = false
+    
+    var comment : Comment = Comment()
     
     var body: some View {
         VStack(alignment: .leading){
@@ -21,7 +24,7 @@ struct CommentView: View {
                     .resizable()
                     .cornerRadius(100)
                     .frame(width: 32, height:32)
-                Text((commentVM.comment.user.userName))
+                Text("User name")
                     .foregroundColor(.gray)
                 Spacer()
                 Text("23/09/2023")
@@ -29,7 +32,7 @@ struct CommentView: View {
             }
             .padding(.horizontal, 15.0)
             
-            Text("\(commentVM.comment.content!)")
+            Text("\((postVM.post.comments.first{$0.id == comment.id}?.content)!)")
                 .multilineTextAlignment(.leading)
                 .padding(.vertical, 3)
                 .padding(.horizontal, 18)
@@ -38,31 +41,49 @@ struct CommentView: View {
                 Spacer()
                 Button{
                     if isVotedUp{
-                        commentVM.downVote()
+                        postVM.commentDownVote(commentId:comment.id , completion: {success in
+                            if success
+                            {print("downvoted")}
+                        })
                         isVotedUp.toggle()
                     }else{
                         if isVotedDown{
-                            commentVM.upVote()
+                            postVM.commentUpVote(commentId:comment.id , completion: {success in
+                                if success
+                                {print("upvoted")}
+                            })
                             isVotedDown.toggle()
                         }
-                        commentVM.upVote()
+                        postVM.commentUpVote(commentId:comment.id , completion: {success in
+                            if success
+                            {print("upvoted")}
+                        })
                         isVotedUp.toggle()
                     }
                 }label:{
                     Image(systemName: isVotedUp ? "hand.thumbsup.fill" : "hand.thumbsup")
                         .foregroundColor(isVotedUp ? Color("primary") : .black)
                 }
-                Text("\(commentVM.comment.vote)")
+                Text("\(postVM.post.comments.first{$0.id == comment.id}!.vote)")
                 Button{
                     if isVotedDown{
-                        commentVM.upVote()
+                        postVM.commentUpVote(commentId:comment.id , completion: {success in
+                            if success
+                            {print("upvoted")}
+                        })
                         isVotedDown.toggle()
                     }else{
                         if isVotedUp{
-                            commentVM.downVote()
+                            postVM.commentDownVote(commentId:comment.id , completion: {success in
+                                if success
+                                {print("downvoted")}
+                            })
                             isVotedUp.toggle()
                         }
-                        commentVM.downVote()
+                        postVM.commentDownVote(commentId:comment.id , completion: {success in
+                            if success
+                            {print("downvoted")}
+                        })
                         isVotedDown.toggle()
                     }
                 }label:{

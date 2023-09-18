@@ -89,13 +89,72 @@ class PostViewModel : ObservableObject {
                 }
             }
     }
-    
-    func addComment(){
+    //add new comment
+    func addComment(content:String, userId:String, completion: @escaping (Bool) -> Void){
+        let newComment = Comment(content: content,postId: self.post.id)
+        self.post.comments.append(newComment)
+        do {
+            try db.collection("posts").document(self.post.id).setData(from: self.post) { error in
+                if(error != nil){
+                    print(error!)
+                    completion(false)
+                    return
+                }else {
+                    completion(true)
+                }
+            }
+        } catch {
+            print(error)
+            completion(false)
+        }
         
     }
-//    func commentUpVote(commentID){
-//        post.comments
-//    }
+    //up vote comment
+    func commentUpVote(commentId: UUID, completion: @escaping (Bool) -> Void){
+        var commentToUpdate = self.post.comments.first{$0.id == commentId}
+        commentToUpdate!.vote += 1
+        
+        if let i = self.post.comments.firstIndex(where: {$0.id == commentId}){
+            self.post.comments[i] = commentToUpdate!
+        }
+        do {
+            try db.collection("posts").document(self.post.id).setData(from: self.post) { error in
+                if(error != nil){
+                    print(error!)
+                    completion(false)
+                    return
+                }else {
+                    completion(true)
+                }
+            }
+        } catch {
+            print(error)
+            completion(false)
+        }
+    }
+    //down vote comment
+    func commentDownVote(commentId: UUID, completion: @escaping (Bool) -> Void){
+        var commentToUpdate = self.post.comments.first{$0.id == commentId}
+        commentToUpdate!.vote -= 1
+        
+        if let i = self.post.comments.firstIndex(where: {$0.id == commentId}){
+            self.post.comments[i] = commentToUpdate!
+        }
+        do {
+            try db.collection("posts").document(self.post.id).setData(from: self.post) { error in
+                if(error != nil){
+                    print(error!)
+                    completion(false)
+                    return
+                }else {
+                    completion(true)
+                }
+            }
+        } catch {
+            print(error)
+            completion(false)
+        }
+    }
     // Update post by id
     func updatePostById(post: Post, description: String, category: String, completion: @escaping (Bool) -> Void) {
         var updatePost = post
