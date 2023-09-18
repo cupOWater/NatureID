@@ -33,10 +33,10 @@
 		1FB0F86A2AB1EBBF004AB459 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB0F8692AB1EBBF004AB459 /* LoginView.swift */; };
 		1FB0F86C2AB2F154004AB459 /* UserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB0F86B2AB2F154004AB459 /* UserView.swift */; };
 		1FB0F8732AB2FC0C004AB459 /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB0F8722AB2FC0C004AB459 /* UserViewModel.swift */; };
+		1FB0F8752AB56AF5004AB459 /* UserEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB0F8742AB56AF5004AB459 /* UserEditView.swift */; };
 		285E99E02AB4427900908CC3 /* DarkMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 285E99DF2AB4427900908CC3 /* DarkMode.swift */; };
 		285E99E22AB442A200908CC3 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 285E99E12AB442A200908CC3 /* SettingView.swift */; };
 		28B0FF422AB44628007DCE13 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28B0FF412AB44628007DCE13 /* AboutView.swift */; };
-		1FB0F8752AB56AF5004AB459 /* UserEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB0F8742AB56AF5004AB459 /* UserEditView.swift */; };
 		B4B9DFB62AB43F7000529332 /* CommentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B9DFB52AB43F7000529332 /* CommentViewModel.swift */; };
 		E859EA792AB543C1009EFB16 /* PostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E859EA782AB543C1009EFB16 /* PostViewModel.swift */; };
 		E859EA7B2AB54CF4009EFB16 /* PostFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E859EA7A2AB54CF4009EFB16 /* PostFormView.swift */; };
@@ -73,10 +73,10 @@
 		1FB0F8692AB1EBBF004AB459 /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		1FB0F86B2AB2F154004AB459 /* UserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserView.swift; sourceTree = "<group>"; };
 		1FB0F8722AB2FC0C004AB459 /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
+		1FB0F8742AB56AF5004AB459 /* UserEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEditView.swift; sourceTree = "<group>"; };
 		285E99DF2AB4427900908CC3 /* DarkMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DarkMode.swift; sourceTree = "<group>"; };
 		285E99E12AB442A200908CC3 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		28B0FF412AB44628007DCE13 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
-		1FB0F8742AB56AF5004AB459 /* UserEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEditView.swift; sourceTree = "<group>"; };
 		B4B9DFB52AB43F7000529332 /* CommentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentViewModel.swift; sourceTree = "<group>"; };
 		E859EA782AB543C1009EFB16 /* PostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewModel.swift; sourceTree = "<group>"; };
 		E859EA7A2AB54CF4009EFB16 /* PostFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostFormView.swift; sourceTree = "<group>"; };
@@ -169,11 +169,10 @@
 		1FB0F83B2AB014E1004AB459 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				28B0FF412AB44628007DCE13 /* AboutView.swift */,
 				E8C5BD652AB4502F0098D14D /* AddCommentView.swift */,
 				10F6E54E2AB359C400216103 /* CommentView.swift */,
 				285E99DF2AB4427900908CC3 /* DarkMode.swift */,
-				285E99E12AB442A200908CC3 /* SettingView.swift */,
-				28B0FF412AB44628007DCE13 /* AboutView.swift */,
 				E8C5BD632AB449640098D14D /* DarkModeSwitch.swift */,
 				E8BB31AC2AB748150075D203 /* FilterChip.swift */,
 				E859EA7C2AB5973B009EFB16 /* HomeView.swift */,
@@ -187,6 +186,7 @@
 				E8C5BD612AB447C50098D14D /* PostItem.swift */,
 				1FB0F85B2AB1905D004AB459 /* RegisterView.swift */,
 				E8BB31AA2AB73E6E0075D203 /* SearchBar.swift */,
+				285E99E12AB442A200908CC3 /* SettingView.swift */,
 				1F01F2932AB6C23F00A02B86 /* SettingView.swift */,
 				1FB0F8532AB06CA7004AB459 /* SplashScreenView.swift */,
 				1FB0F8742AB56AF5004AB459 /* UserEditView.swift */,

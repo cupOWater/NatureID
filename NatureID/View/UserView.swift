@@ -9,7 +9,48 @@ import SwiftUI
 
 struct UserView: View {
     @EnvironmentObject var session : SessionManager
+    
+    @StateObject var postVM: PostViewModel
+    @StateObject var userVM = UserViewModel()
+    @State var isDeleting = false
+    @State var deletingId = ""
+    @State var deleteModalAnimation = false
+    @State var searchText = ""
+    @State var filters = [false, false, false, false]
+    
+    init(user: User){
+        self.user = user
+        
+        self._postVM = StateObject(wrappedValue: PostViewModel())
+        postVM.getAllPost()
+    }
+    
     var user : User
+    
+    func postFilter() -> [Post]{
+        
+        var postList = postVM.posts
+        postList = postList.filter{$0.userId == user.id}
+        
+        if(!searchText.isEmpty){
+            postList = postVM.posts.filter{ $0.description.lowercased().contains(searchText.lowercased())}
+        }
+
+        var selectedFilterChips:[String] = []
+
+        for (index, element) in self.filters.enumerated() {
+            if(element){
+                selectedFilterChips.append(postTypes[index].lowercased())
+            }
+        }
+
+        if(!selectedFilterChips.isEmpty){
+            postList = postList.filter{ selectedFilterChips.contains($0.category.lowercased())
+            }
+        }
+        
+        return postList
+    }
     
     var body: some View {
         ZStack {
@@ -17,7 +58,7 @@ struct UserView: View {
                 .edgesIgnoringSafeArea(.all)
             
             
-            VStack {
+            ScrollView {
                 VStack (alignment: .leading) {
                     if(session.user.id ?? "" == user.id){
                         HStack {
@@ -58,7 +99,32 @@ struct UserView: View {
                 Divider()
                 
                 // MARK: Show User's Posts here
-                Spacer()
+                VStack{
+                    SearchBar(searchInput: $searchText)
+                        .padding(.top)
+                        .frame(height: 80)
+                    
+                    HStack{
+                        FilterChip(isSelected: $filters[0], value: postTypes[0])
+                        FilterChip(isSelected: $filters[1], value: postTypes[1])
+                        FilterChip(isSelected: $filters[2], value: postTypes[2])
+                        FilterChip(isSelected: $filters[3], value: postTypes[3])
+                    }
+                    .padding(.horizontal, 18)
+                    .padding(.bottom, 10)
+                    
+                    ForEach(postFilter()) { post in
+                        PostItem(user: user,
+                                 post: post,
+                                 isShowMenu: (post.userId == session.user.id),
+                                 isDetailed: false,
+                                 isDeleting: $isDeleting,
+                                 deletingPostId: $deletingId,
+                                 userVM: userVM)
+                        .padding(.bottom, 8)
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                }
             }
         }
     }
