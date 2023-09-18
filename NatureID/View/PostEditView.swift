@@ -11,7 +11,8 @@ import _PhotosUI_SwiftUI
 struct PostEditView: View {
     @Environment(\.dismiss) private var dismiss
 
-    @StateObject private var postVM = PostViewModel()
+    @ObservedObject var postVM: PostViewModel
+    
     @State private var category: String
     @State private var description: String
     @State private var imageItem: PhotosPickerItem?
@@ -22,9 +23,10 @@ struct PostEditView: View {
     var user: User
     var post: Post
     
-    init(user: User, post: Post){
+    init(user: User, post: Post, postVM: PostViewModel){
         self.user = user
         self.post = post
+        self._postVM = ObservedObject(wrappedValue: postVM)
         
         self._category = State(wrappedValue: post.category)
         self._description = State(wrappedValue: post.description)
@@ -134,6 +136,6 @@ struct PostEditView: View {
 
 struct PostEditView_Previews: PreviewProvider {
     static var previews: some View {
-        PostEditView(user: User(id: "testId", userName: "Bob Odenkirk", photoUrl: "https://firebasestorage.googleapis.com/v0/b/natureid-e46ed.appspot.com/o/image%2Fplaceholder-person.jpg?alt=media&token=1c54206f-4c2e-410b-833b-cae158c5d6af"), post: Post())
+        PostEditView(user: User(id: "testId", userName: "Bob Odenkirk", photoUrl: "https://firebasestorage.googleapis.com/v0/b/natureid-e46ed.appspot.com/o/image%2Fplaceholder-person.jpg?alt=media&token=1c54206f-4c2e-410b-833b-cae158c5d6af"), post: Post(), postVM: PostViewModel())
     }
 }

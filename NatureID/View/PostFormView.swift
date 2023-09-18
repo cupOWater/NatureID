@@ -13,7 +13,8 @@ var postTypes = ["Plant", "Animal", "Fungus", "Others"]
 struct PostFormView: View {
     @Environment(\.dismiss) private var dismiss
 
-    @StateObject private var postVM = PostViewModel()
+    @ObservedObject var postVM: PostViewModel
+    
     @State private var category = "Plant"
     @State private var description = ""
     @State private var imageItem: PhotosPickerItem?
@@ -141,6 +142,6 @@ struct PostFormView: View {
 
 struct PostFormView_Previews: PreviewProvider {
     static var previews: some View {
-        PostFormView(user: User(id: "testId", userName: "Bob Odenkirk", photoUrl: "https://firebasestorage.googleapis.com/v0/b/natureid-e46ed.appspot.com/o/image%2Fplaceholder-person.jpg?alt=media&token=1c54206f-4c2e-410b-833b-cae158c5d6af"))
+        PostFormView(postVM: PostViewModel(), user: User(id: "testId", userName: "Bob Odenkirk", photoUrl: "https://firebasestorage.googleapis.com/v0/b/natureid-e46ed.appspot.com/o/image%2Fplaceholder-person.jpg?alt=media&token=1c54206f-4c2e-410b-833b-cae158c5d6af"))
     }
 }

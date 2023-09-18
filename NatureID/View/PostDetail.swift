@@ -11,20 +11,22 @@ struct PostDetail: View {
     @EnvironmentObject var session : SessionManager
     @Environment(\.dismiss) private var dismiss
     
-    @StateObject var postVM: PostViewModel
-    @StateObject var userVM: UserViewModel
+    @ObservedObject var postVM: PostViewModel
+    @ObservedObject var userVM: UserViewModel
     
     @State var isDeleting = false
     @State var deletingId = ""
     @State var deleteModalAnimation = false
+    @State var post: Post
     
     var postId: String
     
-    init(postId: String, postVM: PostViewModel = PostViewModel(), userVM: UserViewModel) {
+    init(postId: String, postVM: PostViewModel, userVM: UserViewModel) {
         self.postId = postId
-        self._postVM = StateObject(wrappedValue: postVM)
-        self._userVM = StateObject(wrappedValue: userVM)
-        postVM.getPostById(id: postId)
+
+        self._postVM = ObservedObject(wrappedValue: postVM)
+        self._userVM = ObservedObject(wrappedValue: userVM)
+        self._post = State(wrappedValue: postVM.getPostById(id: postId))
     }
     
     var body: some View {
@@ -35,13 +37,14 @@ struct PostDetail: View {
             ScrollView{
                 VStack{
                     // MARK: POST - COMMENT
-                    PostItem(user: userVM.getUserById(id: postVM.post.userId),
-                             post: postVM.post,
+                    PostItem(user: userVM.getUserById(id: post.userId),
+                             post: post,
                              isShowMenu: (postVM.post.userId == session.user.id),
                              isDetailed: true,
                              isDeleting: $isDeleting,
                              deletingPostId: $deletingId,
-                             userVM: userVM)
+                             userVM: userVM,
+                             postVM: postVM)
                 }
             }
             
@@ -49,7 +52,8 @@ struct PostDetail: View {
             if(isDeleting){
                 PostDeleteModal(postId: $deletingId,
                                 deleteConfirmModal: $isDeleting,
-                                deleteConfirmAnimation: $deleteModalAnimation)
+                                deleteConfirmAnimation: $deleteModalAnimation,
+                                postVM: postVM)
                     .onDisappear{
                         if(deletingId != ""){
                             dismiss()
@@ -62,7 +66,7 @@ struct PostDetail: View {
 
 struct PostDetail_Previews: PreviewProvider {
     static var previews: some View {
-        PostDetail(postId: "D5EFDFCC-9146-4D5E-9B3D-B5DF7A54113C", userVM: UserViewModel())
+        PostDetail(postId: "", postVM: PostViewModel(), userVM: UserViewModel())
             .environmentObject(SessionManager())
     }
 }

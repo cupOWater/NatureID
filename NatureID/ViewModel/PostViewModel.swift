@@ -13,6 +13,10 @@ class PostViewModel : ObservableObject {
     @Published var posts = [Post]()
     @Published var post = Post()
     private var db = Firestore.firestore()
+    
+    init() {
+        getAllPost()
+    }
         
     // Create new post function
     func createPost(desription: String, category: String, image: UIImage, userId: String, completion: @escaping (String?) -> Void){
@@ -73,21 +77,13 @@ class PostViewModel : ObservableObject {
     }
     
     // Get post by id
-    func getPostById(id: String){
-        db.collection("posts").document(id)
-            .addSnapshotListener { documentSnapshot, error in
-                guard let document = documentSnapshot else {
-                print("Error fetching document: \(error!)")
-                return
-                }
-                
-                do {
-                    let data = try document.data(as: Post.self)
-                    self.post = data
-                } catch {
-                    print(error.localizedDescription)
-                }
-            }
+    func getPostById(id: String) -> Post{
+        let posts = self.posts.filter({$0.id == id})
+        if(posts.isEmpty){
+            return Post()
+        }else {
+            return posts[0]
+        }
     }
     
     // Update post by id

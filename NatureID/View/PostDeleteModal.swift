@@ -12,7 +12,7 @@ struct PostDeleteModal: View {
     @Binding var deleteConfirmModal: Bool
     @Binding var deleteConfirmAnimation: Bool
     
-    @StateObject var postVM = PostViewModel()
+    @ObservedObject var postVM: PostViewModel
     
     @State var isDeleted = false
 
@@ -97,6 +97,6 @@ struct PostDeleteModal: View {
 
 struct PostDeleteModal_Previews: PreviewProvider {
     static var previews: some View {
-        PostDeleteModal(postId: .constant("test"), deleteConfirmModal: .constant(true), deleteConfirmAnimation: .constant(true))
+        PostDeleteModal(postId: .constant("test"), deleteConfirmModal: .constant(true), deleteConfirmAnimation: .constant(true), postVM: PostViewModel())
     }
 }

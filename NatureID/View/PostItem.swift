@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-let postPlaceHolderImg = "https://firebasestorage.googleapis.com/v0/b/natureid-e46ed.appspot.com/o/image%2F360_F_268556012_c1WBaKFN5rjRxR2eyV33znK4qnYeKZjm.jpg?alt=media&token=ad08602e-1120-446d-8925-c42c901fb561"
-
 struct PostItem: View {
     var user: User
     var post: Post
@@ -18,7 +16,8 @@ struct PostItem: View {
     @Binding var isDeleting: Bool
     @Binding var deletingPostId: String
 
-    @StateObject var userVM: UserViewModel
+    @ObservedObject var userVM: UserViewModel
+    @ObservedObject var postVM: PostViewModel
     
     var body: some View {
         ZStack{
@@ -45,7 +44,7 @@ struct PostItem: View {
                     if(isShowMenu){
                         Menu {
                             NavigationLink {
-                                PostEditView(user: user, post: post)
+                                PostEditView(user: user, post: post, postVM: postVM)
                             } label: {
                                 Label("Edit", systemImage: "square.and.pencil")
                             }
@@ -101,7 +100,7 @@ struct PostItem: View {
                     }
                 } else {
                     NavigationLink {
-                        PostDetail(postId: post.id, userVM: self.userVM)
+                        PostDetail(postId: post.id, postVM: self.postVM, userVM: self.userVM)
                     } label: {
                         VStack{
                             AsyncImage(url: URL(string: post.imageUrl)){image in
@@ -152,6 +151,6 @@ struct PostItem_Previews: PreviewProvider {
                  isDetailed: true,
                  isDeleting: .constant(false),
                  deletingPostId: .constant("test"),
-                 userVM: UserViewModel())
+                 userVM: UserViewModel(), postVM: PostViewModel())
     }
 }

@@ -10,30 +10,24 @@ import SwiftUI
 struct UserView: View {
     @EnvironmentObject var session : SessionManager
     
-    @StateObject var postVM: PostViewModel
-    @StateObject var userVM = UserViewModel()
+    @ObservedObject var postVM: PostViewModel
+    @ObservedObject var userVM: UserViewModel
     @State var isDeleting = false
     @State var deletingId = ""
     @State var deleteModalAnimation = false
     @State var searchText = ""
     @State var filters = [false, false, false, false]
-    
-    init(user: User){
-        self.user = user
         
-        self._postVM = StateObject(wrappedValue: PostViewModel())
-        postVM.getAllPost()
-    }
-    
     var user : User
     
+    //Func to filter user's posts, apply searching and filtering
     func postFilter() -> [Post]{
         
         var postList = postVM.posts
         postList = postList.filter{$0.userId == user.id}
         
         if(!searchText.isEmpty){
-            postList = postVM.posts.filter{ $0.description.lowercased().contains(searchText.lowercased())}
+            postList = postList.filter{ $0.description.lowercased().contains(searchText.lowercased())}
         }
 
         var selectedFilterChips:[String] = []
@@ -98,7 +92,7 @@ struct UserView: View {
                 
                 Divider()
                 
-                // MARK: Show User's Posts here
+                // MARK: - USER POSTS
                 VStack{
                     SearchBar(searchInput: $searchText)
                         .padding(.top)
@@ -120,11 +114,20 @@ struct UserView: View {
                                  isDetailed: false,
                                  isDeleting: $isDeleting,
                                  deletingPostId: $deletingId,
-                                 userVM: userVM)
+                                 userVM: userVM, postVM: postVM)
                         .padding(.bottom, 8)
                     }
                     .buttonStyle(PlainButtonStyle())
                 }
+            }.padding(.bottom, 60)
+
+            
+            //MARK: - DELETE MODAL
+            if(isDeleting){
+                PostDeleteModal(postId: $deletingId,
+                                deleteConfirmModal: $isDeleting,
+                                deleteConfirmAnimation: $deleteModalAnimation,
+                                postVM: self.postVM)
             }
         }
     }
@@ -132,7 +135,9 @@ struct UserView: View {
 
 struct UserView_Previews: PreviewProvider {
     static var previews: some View {
-        UserView(user: User(email: "oden@rmen.com", userName: "Bob Odenkirk", bio: "Hello, I am Bob Odenkirk, you may know me through shows like Breaking Bad and Better Call Saul. :)))"))
+        UserView(postVM: PostViewModel(),
+                 userVM: UserViewModel(),
+                 user: User(email: "oden@rmen.com", userName: "Bob Odenkirk", bio: "Hello, I am Bob Odenkirk, you may know me through shows like Breaking Bad and Better Call Saul. :)))"))
             .environmentObject(SessionManager())
     }
 }
