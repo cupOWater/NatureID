@@ -9,15 +9,52 @@ import SwiftUI
 
 struct UserView: View {
     @EnvironmentObject var session : SessionManager
+    
+    @ObservedObject var postVM: PostViewModel
+    @ObservedObject var userVM: UserViewModel
+    @State var isDeleting = false
+    @State var deletingId = ""
+    @State var deleteModalAnimation = false
+    @State var searchText = ""
+    @State var filters = [false, false, false, false]
+    @State var unidentifiedFilter = false
+
     var user : User
+    
+    //Func to filter user's posts, apply searching and filtering
+    func postFilter() -> [Post]{
+        var postList = postVM.posts
+        postList = postList.filter{$0.userId == user.id}
+        
+        if(unidentifiedFilter){
+            postList = postList.filter{!$0.isIdentified}
+        }
+        
+        if(!searchText.isEmpty){
+            postList = postList.filter{ $0.description.lowercased().contains(searchText.lowercased())}
+        }
+
+        var selectedFilterChips:[String] = []
+        for (index, element) in self.filters.enumerated() {
+            if(element){
+                selectedFilterChips.append(postTypes[index].lowercased())
+            }
+        }
+
+        if(!selectedFilterChips.isEmpty){
+            postList = postList.filter{ selectedFilterChips.contains($0.category.lowercased())
+            }
+        }
+        return postList
+    }
     
     var body: some View {
         ZStack {
             Color("background")
                 .edgesIgnoringSafeArea(.all)
             
-            
-            VStack {
+            ScrollView {
+                // MARK: - USER INFO
                 VStack (alignment: .leading) {
                     if(session.user.id ?? "" == user.id){
                         HStack {
@@ -57,8 +94,59 @@ struct UserView: View {
                 
                 Divider()
                 
-                // MARK: Show User's Posts here
-                Spacer()
+                // MARK: - USER POSTS
+                VStack{
+                    //Search bar
+                    SearchBar(searchInput: $searchText)
+                        .padding(.top)
+                        .frame(height: 80)
+                    
+                    //Filter chips
+                    HStack{
+                        FilterChip(isSelected: $filters[0], value: postTypes[0])
+                        FilterChip(isSelected: $filters[1], value: postTypes[1])
+                        FilterChip(isSelected: $filters[2], value: postTypes[2])
+                        FilterChip(isSelected: $filters[3], value: postTypes[3])
+                    }
+                    .padding(.horizontal, 18)
+                    .padding(.bottom, 10)
+                    
+                    //Unidentified filter
+                    HStack{
+                        Spacer()
+                        Text("Unidentified")
+                        Button {
+                            unidentifiedFilter.toggle()
+                        } label: {
+                            Image(systemName: unidentifiedFilter ? "checkmark.square" : "square")
+                                .foregroundColor(Color("quaternary"))
+                                .font(.system(size: 30))
+                                .bold()
+                        }
+                        .padding(.trailing, 18)
+                    }.padding(.bottom, -6)
+                    
+                    //Post List
+                    ForEach(postFilter()) { post in
+                        PostItem(user: user,
+                                 post: post,
+                                 isShowMenu: (post.userId == session.user.id),
+                                 isDetailed: false,
+                                 isDeleting: $isDeleting,
+                                 deletingPostId: $deletingId,
+                                 userVM: userVM, postVM: postVM)
+                        .padding(.bottom, 8)
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                }.padding(.bottom, 60)
+            }
+            
+            //MARK: - DELETE MODAL
+            if(isDeleting){
+                PostDeleteModal(postId: $deletingId,
+                                deleteConfirmModal: $isDeleting,
+                                deleteConfirmAnimation: $deleteModalAnimation,
+                                postVM: self.postVM)
             }
         }
     }
@@ -66,7 +154,9 @@ struct UserView: View {
 
 struct UserView_Previews: PreviewProvider {
     static var previews: some View {
-        UserView(user: User(email: "oden@rmen.com", userName: "Bob Odenkirk", bio: "Hello, I am Bob Odenkirk, you may know me through shows like Breaking Bad and Better Call Saul. :)))"))
+        UserView(postVM: PostViewModel(),
+                 userVM: UserViewModel(),
+                 user: User(email: "oden@rmen.com", userName: "Bob Odenkirk", bio: "Hello, I am Bob Odenkirk, you may know me through shows like Breaking Bad and Better Call Saul. :)))"))
             .environmentObject(SessionManager())
     }
 }

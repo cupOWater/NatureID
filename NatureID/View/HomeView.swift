@@ -10,55 +10,52 @@ import SwiftUI
 struct HomeView: View {
     @EnvironmentObject var session : SessionManager
     
-    @StateObject var postVM: PostViewModel
-    @StateObject var userVM: UserViewModel
+    @ObservedObject var postVM: PostViewModel
+    @ObservedObject var userVM: UserViewModel
     @State var isDeleting = false
     @State var deletingId = ""
     @State var deleteModalAnimation = false
     @State var searchText = ""
     @State var filters = [false, false, false, false]
-
-    init(postVM: PostViewModel = PostViewModel(), userVM: UserViewModel = UserViewModel()) {
-        self._postVM = StateObject(wrappedValue: postVM)
-        self._userVM = StateObject(wrappedValue: userVM)
-        postVM.getAllPost()
-    }
+    @State var unidentifiedFilter = false
     
+    //Func to apply searching and filtering
     func postFilter() -> [Post]{
-        
         var postList = postVM.posts
         
+        if(unidentifiedFilter){
+            postList = postList.filter{!$0.isIdentified}
+        }
+        
         if(!searchText.isEmpty){
-            postList = postVM.posts.filter{ $0.description.lowercased().contains(searchText.lowercased())}
+            postList = postList.filter{ $0.description.lowercased().contains(searchText.lowercased())}
         }
         
         var selectedFilterChips:[String] = []
-        
         for (index, element) in self.filters.enumerated() {
             if(element){
                 selectedFilterChips.append(postTypes[index].lowercased())
             }
         }
-        
         if(!selectedFilterChips.isEmpty){
             postList = postList.filter{ selectedFilterChips.contains($0.category.lowercased())
             }
         }
-        
-        
-        print(selectedFilterChips)
         
         return postList
     }
     
     var body: some View {
         ZStack{
+            //MARK: - HOME VIEW
             ScrollView{
                 VStack{
+                    //Search bar
                     SearchBar(searchInput: $searchText)
                         .padding(.top)
                         .frame(height: 80)
                     
+                    //Filter chips
                     HStack{
                         FilterChip(isSelected: $filters[0], value: postTypes[0])
                         FilterChip(isSelected: $filters[1], value: postTypes[1])
@@ -68,6 +65,22 @@ struct HomeView: View {
                     .padding(.horizontal, 18)
                     .padding(.bottom, 10)
                     
+                    //Unidentified filter
+                    HStack{
+                        Spacer()
+                        Text("Unidentified")
+                        Button {
+                            unidentifiedFilter.toggle()
+                        } label: {
+                            Image(systemName: unidentifiedFilter ? "checkmark.square" : "square")
+                                .foregroundColor(Color("quaternary"))
+                                .font(.system(size: 30))
+                                .bold()
+                        }
+                        .padding(.trailing, 18)
+                    }.padding(.bottom, -6)
+                    
+                    //Post List
                     ForEach(postFilter()) { post in
                         PostItem(user: userVM.getUserById(id: post.userId),
                                  post: post,
@@ -75,17 +88,20 @@ struct HomeView: View {
                                  isDetailed: false,
                                  isDeleting: $isDeleting,
                                  deletingPostId: $deletingId,
-                                 userVM: userVM)
+                                 userVM: userVM,
+                                 postVM: postVM)
                         .padding(.bottom, 8)
                     }
                     .buttonStyle(PlainButtonStyle())
-                }
+                }.padding(.bottom, 60)
             }
-            .padding(.bottom, 60)
             
             //MARK: - DELETE MODAL
             if(isDeleting){
-                PostDeleteModal(postId: $deletingId, deleteConfirmModal: $isDeleting, deleteConfirmAnimation: $deleteModalAnimation)
+                PostDeleteModal(postId: $deletingId,
+                                deleteConfirmModal: $isDeleting,
+                                deleteConfirmAnimation: $deleteModalAnimation,
+                                postVM: self.postVM)
             }
         }
     }
@@ -93,7 +109,7 @@ struct HomeView: View {
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView()
+        HomeView(postVM: PostViewModel(), userVM: UserViewModel())
             .environmentObject(SessionManager())
 
     }

@@ -11,9 +11,12 @@ import FirebaseFirestore
 
 class PostViewModel : ObservableObject {
     @Published var posts = [Post]()
-    @Published var post = Post()
     private var db = Firestore.firestore()
     
+    init() {
+        getAllPost()
+    }
+        
     // Create new post function
     func createPost(desription: String, category: String, image: UIImage, userId: String, completion: @escaping (String?) -> Void){
         var newPost = Post()
@@ -73,21 +76,13 @@ class PostViewModel : ObservableObject {
     }
     
     // Get post by id
-    func getPostById(id: String){
-        db.collection("posts").document(id)
-            .addSnapshotListener { documentSnapshot, error in
-                guard let document = documentSnapshot else {
-                    print("Error fetching document: \(error!)")
-                    return
-                }
-                
-                do {
-                    let data = try document.data(as: Post.self)
-                    self.post = data
-                } catch {
-                    print(error.localizedDescription)
-                }
-            }
+    func getPostById(id: String) -> Post{
+        let posts = self.posts.filter({$0.id == id})
+        if(posts.isEmpty){
+            return Post()
+        }else {
+            return posts[0]
+        }
     }
     //add new comment
     func addComment(content:String, userId:String, completion: @escaping (Bool) -> Void){
@@ -201,7 +196,7 @@ class PostViewModel : ObservableObject {
         }
     }
     // Update post by id
-    func updatePostById(post: Post, description: String, category: String, completion: @escaping (Bool) -> Void) {
+    func updatePost(post: Post, description: String, category: String, completion: @escaping (Bool) -> Void) {
         var updatePost = post
         updatePost.category = category
         updatePost.description = description
@@ -232,6 +227,27 @@ class PostViewModel : ObservableObject {
             }else {
                 completion(true)
             }
+        }
+    }
+    
+    // Update post identified status
+    func updatePostIdentified(post: Post, status: Bool, completion: @escaping (Bool) -> Void){
+        var updatePost = post
+        updatePost.isIdentified = status
+        
+        do {
+            try db.collection("posts").document(updatePost.id).setData(from: updatePost) { error in
+                if(error != nil){
+                    print(error!)
+                    completion(false)
+                    return
+                }else {
+                    completion(true)
+                }
+            }
+        } catch {
+            print(error)
+            completion(false)
         }
     }
 }

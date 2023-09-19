@@ -7,9 +7,11 @@
 
 import SwiftUI
 
+
 struct ContentView: View {
     @State var viewSelection : String = "Home"
     @StateObject var userVM = UserViewModel()
+    @StateObject var postVM = PostViewModel()
     @EnvironmentObject var session : SessionManager
     
     var body: some View {
@@ -21,14 +23,17 @@ struct ContentView: View {
                     // MARK: Tab View
                     TabView(selection: $viewSelection) {
 //                        Text("Home")
-                        HomeView()
+                        HomeView(postVM: postVM, userVM: userVM)
                             .tag("Home")
 
                         // Text("User")
-                        UserView(user: session.user)
+                        UserView(postVM: self.postVM,
+                                 userVM: self.userVM,
+                                 user: session.user)
                             .tag("Yours")
                             
-                        Text("About")
+//                        Text("About")
+                        AboutView()
                             .tag("About")
                         
                         SettingView(viewSelection: $viewSelection)
@@ -66,7 +71,7 @@ struct ContentView: View {
                             
                             // MARK: Create post
                             NavigationLink{
-                                PostFormView(user: session.user)
+                                PostFormView(postVM: self.postVM, user: session.user)
                             } label: {
                                 Circle()
                                     .fill(Color(.white))

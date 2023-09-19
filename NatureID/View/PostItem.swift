@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-let postPlaceHolderImg = "https://firebasestorage.googleapis.com/v0/b/natureid-e46ed.appspot.com/o/image%2F360_F_268556012_c1WBaKFN5rjRxR2eyV33znK4qnYeKZjm.jpg?alt=media&token=ad08602e-1120-446d-8925-c42c901fb561"
-
 struct PostItem: View {
     var user: User
     var post: Post
@@ -18,13 +16,15 @@ struct PostItem: View {
     @Binding var isDeleting: Bool
     @Binding var deletingPostId: String
 
-    @StateObject var userVM: UserViewModel
+    @ObservedObject var userVM: UserViewModel
+    @ObservedObject var postVM: PostViewModel
     
     var body: some View {
         ZStack{
             VStack{
                 //MARK: - POST HEADER
                 HStack{
+                    //Post's user img - name
                     AsyncImage(url: URL(string: user.photoUrl)){image in
                         image
                             .resizable()
@@ -42,10 +42,17 @@ struct PostItem: View {
                     Text(user.userName)
                         .font(.headline)
                     Spacer()
+                    if(post.isIdentified){
+                        Image(systemName: "checkmark.seal")
+                            .foregroundColor(.green)
+                            .font(.system(size: 30))
+                    }
+                    
+                    //Post option menu
                     if(isShowMenu){
                         Menu {
                             NavigationLink {
-                                PostEditView(user: user, post: post)
+                                PostEditView(user: user, post: post, postVM: postVM)
                             } label: {
                                 Label("Edit", systemImage: "square.and.pencil")
                             }
@@ -56,10 +63,22 @@ struct PostItem: View {
                             } label: {
                                 Label("Delete", systemImage: "trash")
                             }
+                            
+                            Button {
+                                postVM.updatePostIdentified(post: self.post,
+                                                            status: !post.isIdentified){success in
+                                    
+                                }
+                            } label: {
+                                Label(post.isIdentified ? "Unidentified" : "Identified",
+                                      systemImage: "checkmark.seal")
+                            }
                         } label: {
                             Image(systemName: "ellipsis")
                                 .rotationEffect(Angle(degrees: 90))
                                 .font(.title2)
+                                .padding(5)
+                                .padding(.vertical, 15)
                         }
                         .buttonStyle(PlainButtonStyle())
                         
@@ -101,7 +120,9 @@ struct PostItem: View {
                     }
                 } else {
                     NavigationLink {
-                        PostDetail(postId: post.id, userVM: self.userVM)
+                        PostDetail(postVM: self.postVM,
+                                   userVM: self.userVM,
+                                   post: self.post)
                     } label: {
                         VStack{
                             AsyncImage(url: URL(string: post.imageUrl)){image in
@@ -147,11 +168,11 @@ struct PostItem: View {
 struct PostItem_Previews: PreviewProvider {
     static var previews: some View {
         PostItem(user: User(),
-                 post: Post(userId: "1"),
+                 post: Post(userId: "1", isIdentified: true),
                  isShowMenu: true,
                  isDetailed: true,
                  isDeleting: .constant(false),
                  deletingPostId: .constant("test"),
-                 userVM: UserViewModel())
+                 userVM: UserViewModel(), postVM: PostViewModel())
     }
 }

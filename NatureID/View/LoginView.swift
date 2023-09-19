@@ -23,93 +23,95 @@ struct LoginView: View {
     let auth = Auth.auth()
     
     var body: some View {
-        ZStack {
-            Color("background")
-                .edgesIgnoringSafeArea(.all)
-            if(session.isLoading){
-                LoadingView()
-            }
-            VStack {
-                Image(systemName: "figure.roll")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 120)
-                Text("NaturalID")
-                    .font(.largeTitle)
-                
-                TextField("Email", text: $email)
-                    .modifier(TextFieldStyle())
-                
-                SecureField("Password", text: $password)
-                    .modifier(TextFieldStyle())
-                
-                // Show register view
-                
-                HStack {
-                    Spacer()
-                    Button {
-                        showRegister = true
-                    } label: {
-                        Text("Register Now!")
-                    }
-                    .sheet(isPresented: $showRegister, content: {
-                        RegisterView()
-                    })
-                    .padding(.top, 20)
+        NavigationStack {
+            ZStack {
+                Color("background")
+                    .edgesIgnoringSafeArea(.all)
+                if(session.isLoading){
+                    LoadingView()
                 }
                 
-                Button {
-                    session.login(email: email, password: password) { errMsg in
-                        if(errMsg != nil){
-                            errorMessage = errMsg!
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 5){
-                                errorMessage = ""
-                            }
-                        } else {
-                            if(!faceIdEnabled && enableFaceId){
-                                faceIdEnabled = true
-                                faceIdEmail = email
-                                faceIdPwd = password
-                            }
+                VStack {
+                    Image(systemName: "figure.roll")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 120)
+                    Text("NaturalID")
+                        .font(.largeTitle)
+                    
+                    TextField("Email", text: $email)
+                        .modifier(TextFieldStyle())
+                    
+                    SecureField("Password", text: $password)
+                        .modifier(TextFieldStyle())
+                    
+                    // Show register view
+                    
+                    HStack {
+                        Spacer()
+                        NavigationLink {
+                            RegisterView()
+                        } label: {
+                            Text("Register Now!")
                         }
+                        .sheet(isPresented: $showRegister, content: {
+                            RegisterView()
+                        })
+                        .padding(.top, 20)
                     }
-                } label: {
-                    ZStack {
-                        Capsule()
-                            .fill(Color("primary"))
-                            .frame(height: 60)
-                        Text("Login")
-                            .font(.system(size: 25))
-                            .fontWeight(.bold)
-                            .foregroundColor(.white)
-                            .padding(20)
-                    }
-                }
-                .opacity(session.isLoading ? 0.5 : 1)
-                .padding(.top, -7)
-                
-                HStack{
-                    if(faceIdEnabled){
-                        Button{
-                            session.faceIDAuth(email: faceIdEmail, password: faceIdPwd) { errMsg in
-                                if(errMsg != nil){
-                                    errorMessage = errMsg!
-                                    DispatchQueue.main.asyncAfter(deadline: .now() + 5){
-                                        errorMessage = ""
-                                    }
+                    
+                    Button {
+                        session.login(email: email, password: password) { errMsg in
+                            if(errMsg != nil){
+                                errorMessage = errMsg!
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 5){
+                                    errorMessage = ""
+                                }
+                            } else {
+                                if(!faceIdEnabled && enableFaceId){
+                                    faceIdEnabled = true
+                                    faceIdEmail = email
+                                    faceIdPwd = password
                                 }
                             }
-                        } label: {
-                            HStack {
-                                Image(systemName: "faceid")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 30)
-                                Text("Use FaceID")
-                                    .opacity(0.8)
-                                    .fontWeight(.bold)
-                            }
                         }
+                    } label: {
+                        ZStack {
+                            Capsule()
+                                .fill(Color("primary"))
+                                .frame(height: 60)
+                            Text("Login")
+                                .font(.system(size: 25))
+                                .fontWeight(.bold)
+                                .foregroundColor(.white)
+                                .padding(20)
+                        }
+                    }
+                    .opacity(session.isLoading ? 0.5 : 1)
+                    .padding(.top, -7)
+                    
+                    HStack{
+                        if(faceIdEnabled){
+                            Button{
+                                session.faceIDAuth(email: faceIdEmail, password: faceIdPwd) { errMsg in
+                                    if(errMsg != nil){
+                                        errorMessage = errMsg!
+                                        DispatchQueue.main.asyncAfter(deadline: .now() + 5){
+                                            errorMessage = ""
+                                        }
+                                    }
+                                }
+                            } label: {
+                                HStack {
+                                    Image(systemName: "faceid")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 30)
+                                    Text("Use FaceID")
+                                        .opacity(0.8)
+                                        .fontWeight(.bold)
+                                }
+                            }
                         }else {
                             Spacer()
                             Toggle(isOn: $enableFaceId) {
@@ -127,14 +129,15 @@ struct LoginView: View {
                 .frame(maxWidth: 400)
                 .padding(25)
             }
-            .disabled(session.isLoading)
         }
+        .disabled(session.isLoading)
     }
-    
-    
-    struct LoginView_Previews: PreviewProvider {
-        static var previews: some View {
-            LoginView()
-                .environmentObject(SessionManager())
-        }
+}
+
+
+struct LoginView_Previews: PreviewProvider {
+    static var previews: some View {
+        LoginView()
+            .environmentObject(SessionManager())
     }
+}
