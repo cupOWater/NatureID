@@ -109,56 +109,11 @@ class PostViewModel : ObservableObject {
         }
         
     }
-    //up vote comment
-    func commentUpVote(commentId: String, completion: @escaping (Bool) -> Void){
-        var commentToUpdate = self.post.comments.first{$0.id == commentId}
-        commentToUpdate!.vote += 1
-        
-        if let i = self.post.comments.firstIndex(where: {$0.id == commentId}){
-            self.post.comments[i] = commentToUpdate!
-        }
-        do {
-            try db.collection("posts").document(self.post.id).setData(from: self.post) { error in
-                if(error != nil){
-                    print(error!)
-                    completion(false)
-                    return
-                }else {
-                    completion(true)
-                }
-            }
-        } catch {
-            print(error)
-            completion(false)
-        }
-    }
-    //down vote comment
-    func commentDownVote(commentId: String, completion: @escaping (Bool) -> Void){
-        var commentToUpdate = self.post.comments.first{$0.id == commentId}
-        commentToUpdate!.vote -= 1
-        
-        if let i = self.post.comments.firstIndex(where: {$0.id == commentId}){
-            self.post.comments[i] = commentToUpdate!
-        }
-        do {
-            try db.collection("posts").document(self.post.id).setData(from: self.post) { error in
-                if(error != nil){
-                    print(error!)
-                    completion(false)
-                    return
-                }else {
-                    completion(true)
-                }
-            }
-        } catch {
-            print(error)
-            completion(false)
-        }
-    }
+    
     //add up voted users
     func addUpVotedUser(user:User, commentId:String,completion: @escaping (Bool) -> Void){
         var commentToUpdate = self.post.comments.first{$0.id == commentId}
-        commentToUpdate?.upVotedUsers?.append(user)
+        commentToUpdate.upVotedUserIds.append(user.id)
         if let i = self.post.comments.firstIndex(where: {$0.id == commentId}){
             self.post.comments[i] = commentToUpdate!
             do {

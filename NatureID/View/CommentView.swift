@@ -12,42 +12,51 @@ struct CommentView: View {
     
     @ObservedObject var postVM : PostViewModel
     @EnvironmentObject var session : SessionManager
-    @State var isVotedUp : Bool
-    @State var isVotedDown : Bool
-    @State var vote:Int 
     
-    @Binding var comment : Comment
+    @State var isVotedUp : Bool = false
+    @State var isVotedDown : Bool = false
+    @State var vote : Int = 0
     
-    init() {
-        if comment.upVotedUsers?.first(where: {$0.id != session.user.id}) == nil {
+    var comment : Comment
+    
+    init(postVM: PostViewModel, comment: Comment) {
+        self._postVM = ObservedObject(wrappedValue: postVM)
+        self.comment = comment
+        
+        if comment.upVotedUserIds.first(where: {$0 != session.user.id}) == nil {
             self._isVotedUp = State(wrappedValue:false)
         }else{
             self._isVotedUp = State(wrappedValue:true)
         }
         
-        if comment.downVotedUsers?.first(where: {$0.id != session.user.id}) == nil {
+        if comment.downVotedUserIds.first(where: {$0 != session.user.id}) == nil {
             self._isVotedDown = State(wrappedValue:false)
         }else{
             self._isVotedDown = State(wrappedValue:true)
         }
-        self._vote = State(wrappedValue: (comment.upVotedUsers!.count - comment.downVotedUsers!.count))
+        
+        self._vote = State(wrappedValue: (comment.upVotedUserIds.count - comment.downVotedUserIds.count))
     }
-    
-    
+      
     
     var body: some View {
         VStack(alignment: .leading){
             HStack{
-//                Image("\(session.user.photoUrl)")
-                Image("placeholder-person")
-                    .resizable()
-                    .cornerRadius(100)
-                    .frame(width: 32, height:32)
-//                Text("\(session.user.userName)")
-                Text("User name")
+                AsyncImage(url: URL(string: session.user.photoUrl)){image in
+                    image
+                        .resizable()
+                        .cornerRadius(100)
+                        .frame(width: 32, height:32)
+                } placeholder: {
+                    Image("placeholder-person")
+                        .resizable()
+                        .cornerRadius(100)
+                        .frame(width: 32, height:32)
+                }
+                Text("\(session.user.userName)")
                     .foregroundColor(.gray)
                 Spacer()
-                Text("\(comment.createdAt.formatted(.dateTime.day().month().year()))")
+                Text(comment.createdAt, format: .dateTime.day().month().year())
                     .foregroundColor(.gray)
             }
             .padding(.horizontal, 15.0)
@@ -65,7 +74,7 @@ struct CommentView: View {
                             if success
                             {print("downvoted")}
                         })
-                        postVM.removeUpVotedUser(user: session.user, commentId: comment.id, completion: {success in
+                        postVM.removeUpVotedUser(userId: session.user.id, commentId: comment.id, completion: {success in
                             if success
                             {print("upVote user removed")}
                         })
@@ -142,6 +151,7 @@ struct CommentView: View {
 
 struct CommentView_Previews: PreviewProvider {
     static var previews: some View {
-        CommentView(postVM: PostViewModel(),comment:Comment())
+        CommentView(postVM: PostViewModel(),
+                    comment: Comment())
     }
 }

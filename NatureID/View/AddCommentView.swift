@@ -8,16 +8,18 @@
 import SwiftUI
 
 struct AddCommentView: View {
+    @EnvironmentObject var session : SessionManager
     
-    @State var commentText:String = ""
+    @State var commentText : String = ""
     @ObservedObject var postVM : PostViewModel
-    var user : User = User()
+        
     var body: some View {
         HStack{
             TextField("Add comment",text: $commentText)
                 .textFieldStyle(.roundedBorder)
             Button{
-                postVM.addComment(content: commentText, userId: user.id!,completion: {success in
+                postVM.addComment(content: commentText,
+                                  userId: session.user.id) {success in
                     if success{
                         print("comment added")
                     }
