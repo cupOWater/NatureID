@@ -9,10 +9,13 @@ import SwiftUI
 
 struct SettingView: View {
     @Binding var viewSelection : String
+    @Environment(\.colorScheme) var colorScheme
+    
     @EnvironmentObject var session : SessionManager
     @AppStorage("faceIdEnabled") var faceIdEnabled = false
     @AppStorage("faceIdEmail") var faceIdEmail = ""
     @AppStorage("faceIdPwd") var faceIdPwd = ""
+    @State var isAutomatic = false
     
     var body: some View {
         ZStack {
@@ -20,6 +23,34 @@ struct SettingView: View {
                 .edgesIgnoringSafeArea(.all)
             VStack {
                 List {
+                    Section {
+                        HStack {
+                            Toggle("Automatic", isOn: $isAutomatic)
+                                .onChange(of: isAutomatic) { newValue in
+                                    if(newValue){
+                                        session.updateUserTheme(theme: "Auto")
+                                    }else {
+                                        if(colorScheme == .dark){
+                                            session.updateUserTheme(theme: "Dark")
+                                        }else {
+                                            session.updateUserTheme(theme: "Light")
+                                        }
+                                    }
+                                }
+                        }
+                        if (!isAutomatic) {
+                            HStack {
+                                Text("Theme Mode")
+                                Spacer()
+                                DarkModeSwitch()
+                            }.padding(.trailing, -2)
+                        }
+                    } header: {
+                        Text("Theme Setting")
+                    }
+
+                    
+                    
                     Section(content: {
                         Button("Disable FaceID") {
                             faceIdEnabled = false
@@ -41,6 +72,11 @@ struct SettingView: View {
                     })
                 }
                 .scrollContentBackground(.hidden)
+            }
+            .onAppear{
+                if(session.user.themeSetting == "Auto"){
+                    isAutomatic = true
+                }else {isAutomatic = false}
             }
         }
     }

@@ -74,11 +74,10 @@ struct RegisterView: View {
                         if let data = try? await pfpItem?.loadTransferable(type: Data.self) {
                             if let uiImage = UIImage(data: data) {
                                 pfpImage = uiImage
-                                session.isLoading = false
-                                return
                             }
                         }
-                        print("Upload Failed")
+                        print("Hello")
+                        session.isLoading = false
                     }
                 }
                 Divider().padding(.vertical, 20)

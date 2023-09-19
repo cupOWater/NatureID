@@ -16,7 +16,7 @@ struct FilterChip: View {
         Text(value).lineLimit(1)
             .frame(minWidth: 50, maxWidth: 120)
             .fontWeight(.medium)
-            .foregroundColor(!isSelected ? .black : .white)
+            .foregroundColor(!isSelected ? Color("quinary") : .white)
             .padding(.vertical, 6)
             .padding(.horizontal, 10)
             .background(isSelected ? Color("quinary") : Color("quaternary"))

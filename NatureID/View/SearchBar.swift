@@ -20,7 +20,7 @@ struct SearchBar: View {
                 .padding(.vertical, 10)
                 .padding(.leading, 36)
                 .padding(.trailing, 36)
-                .background(Color(.systemGray4))
+                .background(Color("textFieldBG"))
                 .cornerRadius(12)
                 .overlay(
                     HStack {

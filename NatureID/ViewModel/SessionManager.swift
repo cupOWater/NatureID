@@ -24,6 +24,7 @@ class SessionManager : ObservableObject{
                 self.getUser(id: user.uid)
             }else {
                 self.user = User()
+                
                 self.isLoading = false
             }
         }
@@ -155,6 +156,7 @@ class SessionManager : ObservableObject{
             do {
                 guard let doc = try docSnapshot?.data(as: User.self) else {return}
                 self.user = doc
+                
             }catch {
                 print(error.localizedDescription)
             }
@@ -207,6 +209,19 @@ class SessionManager : ObservableObject{
             print(error)
             completion(false)
             self.isLoading = false
+        }
+    }
+    
+    // MARK: Update Theme Setting
+    func updateUserTheme(theme : String){
+        if(user.id == nil){return}
+        // Set the themeSetting string to param value
+        db.collection("user").document(user.id!).updateData([
+            "themeSetting" : theme
+        ]) { error in
+            if(error != nil){
+                print(error!)
+            }
         }
     }
 }
