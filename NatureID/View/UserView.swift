@@ -17,21 +17,24 @@ struct UserView: View {
     @State var deleteModalAnimation = false
     @State var searchText = ""
     @State var filters = [false, false, false, false]
-        
+    @State var unidentifiedFilter = false
+
     var user : User
     
     //Func to filter user's posts, apply searching and filtering
     func postFilter() -> [Post]{
-        
         var postList = postVM.posts
         postList = postList.filter{$0.userId == user.id}
+        
+        if(unidentifiedFilter){
+            postList = postList.filter{!$0.isIdentified}
+        }
         
         if(!searchText.isEmpty){
             postList = postList.filter{ $0.description.lowercased().contains(searchText.lowercased())}
         }
 
         var selectedFilterChips:[String] = []
-
         for (index, element) in self.filters.enumerated() {
             if(element){
                 selectedFilterChips.append(postTypes[index].lowercased())
@@ -42,7 +45,6 @@ struct UserView: View {
             postList = postList.filter{ selectedFilterChips.contains($0.category.lowercased())
             }
         }
-        
         return postList
     }
     
@@ -51,8 +53,8 @@ struct UserView: View {
             Color("background")
                 .edgesIgnoringSafeArea(.all)
             
-            
             ScrollView {
+                // MARK: - USER INFO
                 VStack (alignment: .leading) {
                     if(session.user.id ?? "" == user.id){
                         HStack {
@@ -94,10 +96,12 @@ struct UserView: View {
                 
                 // MARK: - USER POSTS
                 VStack{
+                    //Search bar
                     SearchBar(searchInput: $searchText)
                         .padding(.top)
                         .frame(height: 80)
                     
+                    //Filter chips
                     HStack{
                         FilterChip(isSelected: $filters[0], value: postTypes[0])
                         FilterChip(isSelected: $filters[1], value: postTypes[1])
@@ -107,6 +111,22 @@ struct UserView: View {
                     .padding(.horizontal, 18)
                     .padding(.bottom, 10)
                     
+                    //Unidentified filter
+                    HStack{
+                        Spacer()
+                        Text("Unidentified")
+                        Button {
+                            unidentifiedFilter.toggle()
+                        } label: {
+                            Image(systemName: unidentifiedFilter ? "checkmark.square" : "square")
+                                .foregroundColor(Color("quaternary"))
+                                .font(.system(size: 30))
+                                .bold()
+                        }
+                        .padding(.trailing, 18)
+                    }.padding(.bottom, -6)
+                    
+                    //Post List
                     ForEach(postFilter()) { post in
                         PostItem(user: user,
                                  post: post,
@@ -118,9 +138,8 @@ struct UserView: View {
                         .padding(.bottom, 8)
                     }
                     .buttonStyle(PlainButtonStyle())
-                }
-            }.padding(.bottom, 60)
-
+                }.padding(.bottom, 60)
+            }
             
             //MARK: - DELETE MODAL
             if(isDeleting){

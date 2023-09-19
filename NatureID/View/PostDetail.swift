@@ -17,17 +17,8 @@ struct PostDetail: View {
     @State var isDeleting = false
     @State var deletingId = ""
     @State var deleteModalAnimation = false
-    @State var post: Post
     
-    var postId: String
-    
-    init(postId: String, postVM: PostViewModel, userVM: UserViewModel) {
-        self.postId = postId
-
-        self._postVM = ObservedObject(wrappedValue: postVM)
-        self._userVM = ObservedObject(wrappedValue: userVM)
-        self._post = State(wrappedValue: postVM.getPostById(id: postId))
-    }
+    var post: Post
     
     var body: some View {
         ZStack{
@@ -39,7 +30,7 @@ struct PostDetail: View {
                     // MARK: POST - COMMENT
                     PostItem(user: userVM.getUserById(id: post.userId),
                              post: post,
-                             isShowMenu: (postVM.post.userId == session.user.id),
+                             isShowMenu: (post.userId == session.user.id),
                              isDetailed: true,
                              isDeleting: $isDeleting,
                              deletingPostId: $deletingId,
@@ -66,7 +57,9 @@ struct PostDetail: View {
 
 struct PostDetail_Previews: PreviewProvider {
     static var previews: some View {
-        PostDetail(postId: "", postVM: PostViewModel(), userVM: UserViewModel())
+        PostDetail(postVM: PostViewModel(),
+                   userVM: UserViewModel(),
+                   post: Post())
             .environmentObject(SessionManager())
     }
 }

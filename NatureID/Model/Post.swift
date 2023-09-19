@@ -16,4 +16,5 @@ struct Post : Codable, Identifiable{
     var category : String = "Others" // Plant, Animal, Fungus, Others
     var createdAt : Date = Date.now
     var comments : [Comment] = []
+    var isIdentified : Bool = false
 }

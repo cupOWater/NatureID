@@ -109,7 +109,7 @@ struct PostEditView: View {
 
                 Button {
                     isEdited = true
-                    postVM.updatePostById(post: post, description: description, category: category){ success in
+                    postVM.updatePost(post: post, description: description, category: category){ success in
                         dismiss()
                     }
                 } label: {
