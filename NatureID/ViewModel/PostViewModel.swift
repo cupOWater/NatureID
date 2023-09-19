@@ -13,7 +13,7 @@ class PostViewModel : ObservableObject {
     @Published var posts = [Post]()
     @Published var post = Post()
     private var db = Firestore.firestore()
-        
+    
     // Create new post function
     func createPost(desription: String, category: String, image: UIImage, userId: String, completion: @escaping (String?) -> Void){
         var newPost = Post()
@@ -77,8 +77,8 @@ class PostViewModel : ObservableObject {
         db.collection("posts").document(id)
             .addSnapshotListener { documentSnapshot, error in
                 guard let document = documentSnapshot else {
-                print("Error fetching document: \(error!)")
-                return
+                    print("Error fetching document: \(error!)")
+                    return
                 }
                 
                 do {
@@ -155,7 +155,96 @@ class PostViewModel : ObservableObject {
             completion(false)
         }
     }
-    //add voted user
+    //add up voted users
+    func addUpVotedUser(user:User, commentId:String,completion: @escaping (Bool) -> Void){
+        var commentToUpdate = self.post.comments.first{$0.id == commentId}
+        commentToUpdate?.upVotedUsers?.append(user)
+        if let i = self.post.comments.firstIndex(where: {$0.id == commentId}){
+            self.post.comments[i] = commentToUpdate!
+            do {
+                try db.collection("posts").document(self.post.id).setData(from: self.post) { error in
+                    if(error != nil){
+                        print(error!)
+                        completion(false)
+                        return
+                    }else {
+                        completion(true)
+                    }
+                }
+            } catch {
+                print(error)
+                completion(false)
+            }
+        }
+    }
+    //add down voted users
+    func addDownVotedUser(user:User, commentId:String,completion: @escaping (Bool) -> Void){
+        var commentToUpdate = self.post.comments.first{$0.id == commentId}
+        commentToUpdate?.downVotedUsers?.append(user)
+        if let i = self.post.comments.firstIndex(where: {$0.id == commentId}){
+            self.post.comments[i] = commentToUpdate!
+            do {
+                try db.collection("posts").document(self.post.id).setData(from: self.post) { error in
+                    if(error != nil){
+                        print(error!)
+                        completion(false)
+                        return
+                    }else {
+                        completion(true)
+                    }
+                }
+            } catch {
+                print(error)
+                completion(false)
+            }
+        }
+    }
+    // remove up voted users
+    func removeUpVotedUser(user:User, commentId:String,completion: @escaping (Bool) -> Void){
+        var commentToUpdate = self.post.comments.first{$0.id == commentId}
+        var newVotedUserList = commentToUpdate?.upVotedUsers?.filter{$0.id != user.id}
+        commentToUpdate?.upVotedUsers = newVotedUserList
+        if let i = self.post.comments.firstIndex(where: {$0.id == commentId}){
+            self.post.comments[i] = commentToUpdate!
+            do {
+                try db.collection("posts").document(self.post.id).setData(from: self.post) { error in
+                    if(error != nil){
+                        print(error!)
+                        completion(false)
+                        return
+                    }else {
+                        completion(true)
+                    }
+                }
+            } catch {
+                print(error)
+                completion(false)
+            }
+        }
+    }
+    // remove up voted users
+    func removeDownVotedUser(user:User, commentId:String,completion: @escaping (Bool) -> Void){
+        var commentToUpdate = self.post.comments.first{$0.id == commentId}
+        var newVotedUserList = commentToUpdate?.downVotedUsers?.filter{$0.id != user.id}
+        commentToUpdate?.downVotedUsers = newVotedUserList
+        if let i = self.post.comments.firstIndex(where: {$0.id == commentId}){
+            self.post.comments[i] = commentToUpdate!
+            do {
+                try db.collection("posts").document(self.post.id).setData(from: self.post) { error in
+                    if(error != nil){
+                        print(error!)
+                        completion(false)
+                        return
+                    }else {
+                        completion(true)
+                    }
+                }
+            } catch {
+                print(error)
+                completion(false)
+            }
+        }
+    }
     // Update post by id
     func updatePostById(post: Post, description: String, category: String, completion: @escaping (Bool) -> Void) {
         var updatePost = post
@@ -191,3 +280,4 @@ class PostViewModel : ObservableObject {
         }
     }
 }
+

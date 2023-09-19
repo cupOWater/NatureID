@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct AddCommentView: View {
-    @State var comment : Comment
+    
     @State var commentText:String = ""
-    @StateObject var postVM : PostViewModel = PostViewModel()
+    @ObservedObject var postVM : PostViewModel
     var user : User = User()
     var body: some View {
         HStack{
@@ -36,6 +36,6 @@ struct AddCommentView: View {
 
 struct AddCommentView_Previews: PreviewProvider {
     static var previews: some View {
-        AddCommentView(comment: Comment())
+        AddCommentView(postVM:  PostViewModel())
     }
 }

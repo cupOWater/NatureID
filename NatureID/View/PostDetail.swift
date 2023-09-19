@@ -31,19 +31,25 @@ struct PostDetail: View {
         ZStack{
             Color("background")
                 .edgesIgnoringSafeArea(.all)
-            
-            ScrollView{
-                VStack{
-                    // MARK: POST - COMMENT
-                    PostItem(user: userVM.getUserById(id: postVM.post.userId),
-                             post: postVM.post,
-                             isShowMenu: (postVM.post.userId == session.user.id),
-                             isDetailed: true,
-                             isDeleting: $isDeleting,
-                             deletingPostId: $deletingId,
-                             userVM: userVM)
+            VStack{
+                ScrollView{
+                    VStack{
+                        // MARK: POST - COMMENT
+                        PostItem(user: userVM.getUserById(id: postVM.post.userId),
+                                 post: postVM.post,
+                                 isShowMenu: (postVM.post.userId == session.user.id),
+                                 isDetailed: true,
+                                 isDeleting: $isDeleting,
+                                 deletingPostId: $deletingId,
+                                 userVM: userVM)
+                    }
+                    ForEach(postVM.post.comments){comment in
+                        CommentView(postVM: postVM, comment: comment)
+                    }
                 }
+                AddCommentView(postVM: postVM)
             }
+            
             
             //MARK: - DELETE MODAL
             if(isDeleting){
