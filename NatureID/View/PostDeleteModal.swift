@@ -51,7 +51,7 @@ struct PostDeleteModal: View {
                                 .bold()
                                 .foregroundColor(.white)
                                 .frame(width: 120, height: 40)
-                                .background(Color("primary"))
+                                .background(.gray)
                                 .cornerRadius(20)
                         }
                         .disabled(isDeleted)
