@@ -30,3 +30,5 @@ struct ProfilePhotoStyle: ViewModifier {
             .shadow(radius: 5)
     }
 }
+
+

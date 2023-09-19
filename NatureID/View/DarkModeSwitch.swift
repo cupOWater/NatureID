@@ -12,46 +12,44 @@
 import SwiftUI
 
 struct DarkModeSwitch: View {
-    @AppStorage("isDarkMode") private var isDarkMode = false;
-
+    @EnvironmentObject var session : SessionManager
+    @Environment(\.colorScheme) var colorScheme
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 30)
-                .frame(width: 70, height: 35)
-                .foregroundColor(isDarkMode ? Color.gray : Color("skyBlue"))
-                .overlay(
-                    HStack {
-                        Image(systemName: "moon.fill")
-                            .foregroundColor(.white)
-                            .font(.system(size: 20))
-                        Spacer()
-                        
-                        Image(systemName: "sun.max.fill")
-                            .font(.system(size: 20))
-                            .foregroundColor(.yellow)
-                    }
-                        .padding(EdgeInsets(top: 0, leading: 15, bottom: 0, trailing: 15))
-                )
+                .frame(width: 50, height: 32)
+                .foregroundColor(colorScheme == .dark ? .blue : .yellow)
+                .opacity(0.3)
+                .animation(.easeIn(duration: 0.2), value: colorScheme)
             RoundedRectangle(cornerRadius: 30)
-                .fill(isDarkMode ? .yellow : .gray)
-                .frame(width: 35, height: 35)
-                .offset(x: isDarkMode ? 17.5 : -17.5)
-                .animation(.easeIn(duration: 0.2), value: isDarkMode)
+                .fill(colorScheme == .dark ? .blue : .yellow)
+                .frame(width: 27, height: 27)
+                .overlay{
+                    colorScheme == .dark ? Image(systemName: "moon.fill")
+                        .font(.system(size: 15))
+                        .foregroundColor(.white)
+                    :
+                    Image(systemName: "sun.max.fill")
+                        .font(.system(size: 20))
+                        .foregroundColor(.white)
+                }
+                .offset(x: colorScheme == .dark ? 9.5 : -9.5)
+                .animation(.easeIn(duration: 0.2), value: colorScheme)
             
         }
-//        .onAppear {
-//            isDarkMode = (colorScheme == .dark)
-//        }
         .onTapGesture {
-            isDarkMode.toggle()           
+            if(session.user.themeSetting == "Dark"){
+                session.updateUserTheme(theme: "Light")
+            }else {
+                session.updateUserTheme(theme: "Dark")
+            }
         }
-        .preferredColorScheme(isDarkMode ? .dark : .light)
-
     }
 }
 
 struct darkModeSwitch_Previews: PreviewProvider {
     static var previews: some View {
         DarkModeSwitch()
+            .environmentObject(SessionManager())
     }
 }
