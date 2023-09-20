@@ -26,8 +26,9 @@ struct PostDetail: View {
                 .edgesIgnoringSafeArea(.all)
             VStack{
                 ScrollView{
-                    VStack{
+//                    VStack{
                         // MARK: POST - COMMENT
+                        //Post
                         PostItem(user: userVM.getUserById(id: post.userId),
                              post: post,
                              isShowMenu: (post.userId == session.user.id),
@@ -36,12 +37,18 @@ struct PostDetail: View {
                              deletingPostId: $deletingId,
                              userVM: userVM,
                              postVM: postVM)
-                    }
-                    ForEach(postVM.post.comments){comment in
-                        CommentView(postVM: postVM, comment: comment)
-                    }
+                        
+                        //Comments
+                        ForEach(self.post.comments){comment in
+                            CommentView(postVM: postVM,
+                                        comment: comment,
+                                        post: self.post,
+                                        currentUser: session.user)
+                        }
+//                    }
                 }
-                AddCommentView(postVM: postVM)
+                //Comment add
+                AddCommentView(postVM: postVM, post: self.post)
             }
             
             

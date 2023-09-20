@@ -12,22 +12,32 @@ struct AddCommentView: View {
     
     @State var commentText : String = ""
     @ObservedObject var postVM : PostViewModel
+    
+    var post: Post
         
     var body: some View {
         HStack{
             TextField("Add comment",text: $commentText)
-                .textFieldStyle(.roundedBorder)
+                .padding(10)
+                .background(Color("textFieldBG"))
+                .cornerRadius(12)
+
+//                .overlay(RoundedRectangle(cornerRadius: 10))
+//                .textFieldStyle(.roundedBorder)
             Button{
-                postVM.addComment(content: commentText,
-                                  userId: session.user.id) {success in
+                postVM.addComment(post: post,
+                                  content: commentText,
+                                  userId: session.user.id!) {success in
                     if success{
                         print("comment added")
                     }
-                })
+                    commentText = ""
+                }
             }label:{
                 Text("Post")
                     .foregroundColor(.white)
-                    .padding(8)
+                    .padding(.horizontal, 6)
+                    .padding(10)
             }
             .background(Color("primary"))
             .cornerRadius(13)
@@ -38,6 +48,6 @@ struct AddCommentView: View {
 
 struct AddCommentView_Previews: PreviewProvider {
     static var previews: some View {
-        AddCommentView(postVM:  PostViewModel())
+        AddCommentView(postVM:  PostViewModel(), post: Post())
     }
 }

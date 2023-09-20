@@ -13,6 +13,6 @@ struct Comment : Codable,Identifiable {
     var createdAt : Date = Date.now
     var userId : String?
     var postId : String?
-    var upVotedUserIds = [String]()
-    var downVotedUserIds = [String]()
+    var upVotedUserIds : Set<String> = []
+    var downVotedUserIds : Set<String> = []
 }
