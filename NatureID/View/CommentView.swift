@@ -10,73 +10,78 @@ import UIKit
 
 struct CommentView: View {
     
-    @StateObject var commentVM : CommentViewModel = CommentViewModel()
-    @State var isVotedUp : Bool = false
-    @State var isVotedDown : Bool = false
+    @ObservedObject var postVM : PostViewModel
+    @EnvironmentObject var session : SessionManager
+    
+    var comment : Comment
+    var post: Post
+    var currentUser: User
     
     var body: some View {
         VStack(alignment: .leading){
             HStack{
-                Image("placeholder-person")
-                    .resizable()
-                    .cornerRadius(100)
-                    .frame(width: 32, height:32)
-                Text((commentVM.comment.user.userName))
+                AsyncImage(url: URL(string: session.user.photoUrl)){image in
+                    image
+                        .resizable()
+                        .cornerRadius(100)
+                        .frame(width: 32, height:32)
+                } placeholder: {
+                    Image("placeholder-person")
+                        .resizable()
+                        .cornerRadius(100)
+                        .frame(width: 32, height:32)
+                }
+                Text("\(session.user.userName)")
                     .foregroundColor(.gray)
                 Spacer()
-                Text("23/09/2023")
+                Text(comment.createdAt, format: .dateTime.day().month().year())
                     .foregroundColor(.gray)
             }
             .padding(.horizontal, 15.0)
             
-            Text("\(commentVM.comment.content!)")
+            Text(comment.content!)
                 .multilineTextAlignment(.leading)
                 .padding(.vertical, 3)
                 .padding(.horizontal, 18)
             
             HStack{
                 Spacer()
+                //MARK: - UP VOTE BTN
                 Button{
-                    if isVotedUp{
-                        commentVM.downVote()
-                        isVotedUp.toggle()
-                    }else{
-                        if isVotedDown{
-                            commentVM.upVote()
-                            isVotedDown.toggle()
-                        }
-                        commentVM.upVote()
-                        isVotedUp.toggle()
-                    }
+                    postVM.upvote(userId: session.user.id!, comment: self.comment, post: self.post)
                 }label:{
-                    Image(systemName: isVotedUp ? "hand.thumbsup.fill" : "hand.thumbsup")
-                        .foregroundColor(isVotedUp ? Color("primary") : .black)
+                    Image(systemName: postVM.checkUpvoteState(userId: session.user.id!, comment: self.comment) ? "hand.thumbsup.fill" : "hand.thumbsup")
+                        .foregroundColor(postVM.checkUpvoteState(userId: session.user.id!, comment: self.comment) ? Color("primary") : nil)
                 }
-                Text("\(commentVM.comment.vote)")
+                
+                Text("\(comment.upVotedUserIds.count - comment.downVotedUserIds.count)")
+                
+                //MARK: - DOWN VOTE BTN
                 Button{
-                    if isVotedDown{
-                        commentVM.upVote()
-                        isVotedDown.toggle()
-                    }else{
-                        if isVotedUp{
-                            commentVM.downVote()
-                            isVotedUp.toggle()
-                        }
-                        commentVM.downVote()
-                        isVotedDown.toggle()
-                    }
+                    postVM.downVote(userId: session.user.id!, comment: self.comment, post: self.post)
                 }label:{
-                    Image(systemName: isVotedDown ? "hand.thumbsdown.fill" : "hand.thumbsdown")
-                        .foregroundColor(isVotedDown ? Color("quaternary") : .black)
+                    Image(systemName: postVM.checkDownvoteState(userId: session.user.id!, comment: self.comment) ? "hand.thumbsdown.fill" : "hand.thumbsdown")
+                        .foregroundColor(postVM.checkDownvoteState(userId: session.user.id!, comment: self.comment) ? Color("quinary") : nil)
                 }
-            }.padding(.trailing, 15)
-               
+                
+            }
+            .padding(.trailing, 15)
+            .buttonStyle(PlainButtonStyle())
+
         }
+        .padding(.vertical)
+        .background(Color("post-background"))
+        .frame(maxWidth: 700)
+        .cornerRadius(10)
     }
 }
 
 struct CommentView_Previews: PreviewProvider {
     static var previews: some View {
-        CommentView()
+        CommentView(postVM: PostViewModel(),
+                    comment: Comment(),
+                    post: Post(),
+                    currentUser: User())
+        .environmentObject(SessionManager())
     }
 }

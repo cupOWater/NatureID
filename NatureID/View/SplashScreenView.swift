@@ -17,13 +17,13 @@ struct SplashScreenView: View {
             Color("primary")
                 .edgesIgnoringSafeArea(.all)
             
-            Image(systemName: "hare.fill")
+            Image("leaves")
                 .resizable()
                 .scaledToFit()
-                .frame(height: 100)
-                .foregroundColor(.white)
+                .frame(height: 400)
                 .scaleEffect(size)
                 .opacity(opacity)
+                .colorInvert()
         }
         .onAppear{
             withAnimation(.easeInOut(duration: 1)){
