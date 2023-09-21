@@ -15,7 +15,9 @@ struct CommentView: View {
     
     var comment : Comment
     var post: Post
-    var currentUser: User
+    
+    @Binding var isDeleting: Bool
+    @Binding var deletingCmtId: String
     
     var body: some View {
         VStack(alignment: .leading){
@@ -36,6 +38,28 @@ struct CommentView: View {
                 Spacer()
                 Text(comment.createdAt, format: .dateTime.day().month().year())
                     .foregroundColor(.gray)
+                
+                //Comment option menu
+                if(session.user.id! == comment.userId!){
+                    Menu {
+                        Button {
+                            deletingCmtId = comment.id
+                            isDeleting.toggle()
+                        } label: {
+                            Label("Delete", systemImage: "trash")
+                        }
+                    } label: {
+                        Image(systemName: "ellipsis")
+                            .rotationEffect(Angle(degrees: 90))
+                            .font(.title2)
+                            .padding(5)
+                            .padding(.vertical, 15)
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                } else{
+                    Text(session.user.id!)
+                    Text(comment.userId!)
+                }
             }
             .padding(.horizontal, 15.0)
             
@@ -53,9 +77,9 @@ struct CommentView: View {
                     Image(systemName: postVM.checkUpvoteState(userId: session.user.id!, comment: self.comment) ? "hand.thumbsup.fill" : "hand.thumbsup")
                         .foregroundColor(postVM.checkUpvoteState(userId: session.user.id!, comment: self.comment) ? Color("primary") : nil)
                 }
-                
+
                 Text("\(comment.upVotedUserIds.count - comment.downVotedUserIds.count)")
-                
+
                 //MARK: - DOWN VOTE BTN
                 Button{
                     postVM.downVote(userId: session.user.id!, comment: self.comment, post: self.post)
@@ -80,7 +104,8 @@ struct CommentView_Previews: PreviewProvider {
         CommentView(postVM: PostViewModel(),
                     comment: Comment(),
                     post: Post(),
-                    currentUser: User())
+                    isDeleting: .constant(false),
+                    deletingCmtId: .constant("test"))
         .environmentObject(SessionManager())
     }
 }

@@ -1,14 +1,16 @@
 //
-//  PostDeleteModal.swift
+//  CommentDeleteModal.swift
 //  NatureID
 //
-//  Created by Tran Trung on 17/09/2023.
+//  Created by Tran Trung on 21/09/2023.
 //
 
 import SwiftUI
 
-struct PostDeleteModal: View {
-    @Binding var postId: String
+struct CommentDeleteModal: View {
+    var post: Post
+    var commentId: String
+    
     @Binding var deleteConfirmModal: Bool
     @Binding var deleteConfirmAnimation: Bool
     
@@ -35,14 +37,13 @@ struct PostDeleteModal: View {
                 Spacer()
                 
                 VStack {
-                    Text("Do you really want to delete this post? This process cannot be undone")
+                    Text("Do you really want to delete this comment? This process cannot be undone")
                         .font(.system(.body, design: .rounded))
                         .multilineTextAlignment(.center)
-                        .padding(.horizontal, 18)
+                        .padding(.horizontal, 14)
                     
                     HStack{
                         Button {
-                            self.postId = ""
                             self.deleteConfirmModal.toggle()
                             self.deleteConfirmAnimation.toggle()
                         } label: {
@@ -60,7 +61,7 @@ struct PostDeleteModal: View {
                         .padding(.horizontal, 5)
                         
                         Button {
-                            postVM.deletePostById(postId: postId){ success in
+                            postVM.deleteComment(post: self.post, commentId: self.commentId){ success in
                                 self.deleteConfirmModal.toggle()
                                 self.deleteConfirmAnimation.toggle()
                             }
@@ -95,8 +96,8 @@ struct PostDeleteModal: View {
     }
 }
 
-struct PostDeleteModal_Previews: PreviewProvider {
+struct CommentDeleteModal_Previews: PreviewProvider {
     static var previews: some View {
-        PostDeleteModal(postId: .constant("test"), deleteConfirmModal: .constant(true), deleteConfirmAnimation: .constant(true), postVM: PostViewModel())
+        CommentDeleteModal(post: Post(), commentId: "test", deleteConfirmModal: .constant(true), deleteConfirmAnimation: .constant(true), postVM: PostViewModel())
     }
 }
