@@ -30,7 +30,7 @@ class ImageManager {
         
         let storageRef = storage.reference().child("image/" + imageName)
         
-        let resized = image.aspectFittedToHeight(300)
+        let resized = image.aspectFittedToHeight(720)
         let data = resized.jpegData(compressionQuality: 0.2)
         let metadata = StorageMetadata()
         metadata.contentType = "image/jpg"
