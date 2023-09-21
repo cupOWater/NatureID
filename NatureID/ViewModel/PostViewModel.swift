@@ -285,5 +285,66 @@ class PostViewModel : ObservableObject {
         }
         completion(false)
     }
+    
+    func checkUpvoteState(userId: String, comment: Comment) -> Bool{
+        if (comment.upVotedUserIds.first(where: {$0 == userId}) != nil){
+            return true
+        }
+        return false
+    }
+    
+    func checkDownvoteState(userId: String, comment: Comment) -> Bool{
+        if (comment.downVotedUserIds.first(where: {$0 == userId}) != nil){
+            return true
+        }
+        return false
+    }
+    
+    // func handle upvoteBtn
+    func upvote(userId: String, comment: Comment, post: Post){
+        let isVotedUp = checkUpvoteState(userId: userId, comment: comment)
+        let isVotedDown = checkDownvoteState(userId: userId, comment: comment)
+        
+        if isVotedUp{ //Case user voted up this cmt -> remove upvote
+            removeUpVotedUser(post: post,
+                                     userId: userId,
+                                     commentId: comment.id) {success in
+            }
+        }else if(!isVotedUp && isVotedDown) { //Case user voted down this cmt -> remove downvote, add upvote
+            removeDownAddUp(post: post,
+                                   userId: userId,
+                                   commentId: comment.id) {success in
+            }
+        }else{ //Case user not voted up this cmt -> add upvote
+            addUpVotedUser(post: post,
+                                  userId: userId,
+                                  commentId: comment.id) {success in
+            }
+        }
+    }
+    
+    
+    // func handle upvoteBtn
+    func downVote(userId: String, comment: Comment, post: Post){
+        let isVotedUp = checkUpvoteState(userId: userId, comment: comment)
+        let isVotedDown = checkDownvoteState(userId: userId, comment: comment)
+        
+        if isVotedDown{ //Case user voted down this cmt -> remove downvote
+            removeDownVotedUser(post: post,
+                                       userId: userId,
+                                       commentId: comment.id) {success in
+            }
+        }else if(!isVotedDown && isVotedUp){ //Case user voted up this cmt -> remove upvote, add downvote
+            removeUpAddDown(post: post,
+                                   userId: userId,
+                                   commentId: comment.id) {success in
+            }
+        }else{ //Case user not voted down this cmt -> add downvote
+            addDownVotedUser(post: post,
+                                    userId: userId,
+                                    commentId: comment.id) {success in
+            }
+        }
+    }
 }
 

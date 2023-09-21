@@ -32,12 +32,12 @@ struct LoginView: View {
                 }
                 
                 VStack {
-                    Image(systemName: "figure.roll")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 120)
-                    Text("NaturalID")
-                        .font(.largeTitle)
+                    LogoView()
+                        .frame(width: 300)
+                        .padding(.bottom, -135)
+                    Text("Natural ID")
+                        .font(.system(size: 50))
+                        .bold()
                     
                     TextField("Email", text: $email)
                         .modifier(TextFieldStyle())

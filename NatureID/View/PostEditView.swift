@@ -128,7 +128,7 @@ struct PostEditView: View {
             }
             .padding(.vertical)
             .background(Color("post-background"))
-            .frame(maxWidth: 500)
+            .frame(maxWidth: 700)
             .cornerRadius(10)
         }
     }

@@ -13,33 +13,9 @@ struct CommentView: View {
     @ObservedObject var postVM : PostViewModel
     @EnvironmentObject var session : SessionManager
     
-    @State var isVotedUp : Bool = false
-    @State var isVotedDown : Bool = false
-    @State var isVoteDisabled : Bool = false
-    
     var comment : Comment
     var post: Post
     var currentUser: User
-    
-    init(postVM: PostViewModel, comment: Comment, post: Post, currentUser: User) {
-        self._postVM = ObservedObject(wrappedValue: postVM)
-        self.comment = comment
-        self.post = post
-        self.currentUser = currentUser
-        
-        if comment.upVotedUserIds.first(where: {$0 == currentUser.id}) == nil {
-            self._isVotedUp = State(wrappedValue:false)
-        }else{
-            self._isVotedUp = State(wrappedValue:true)
-        }
-        
-        if comment.downVotedUserIds.first(where: {$0 == currentUser.id}) == nil {
-            self._isVotedDown = State(wrappedValue:false)
-        }else{
-            self._isVotedDown = State(wrappedValue:true)
-        }
-    }
-      
     
     var body: some View {
         VStack(alignment: .leading){
@@ -72,72 +48,21 @@ struct CommentView: View {
                 Spacer()
                 //MARK: - UP VOTE BTN
                 Button{
-                    isVoteDisabled = true
-                    if isVotedUp{ //Case user voted up this cmt -> remove upvote
-                        postVM.removeUpVotedUser(post: self.post,
-                                                 userId: session.user.id!,
-                                                 commentId: comment.id) {success in
-                            if (success) {isVotedUp.toggle()}
-                            isVoteDisabled = false
-                        }
-                    }else if(!isVotedUp && isVotedDown) { //Case user voted down this cmt -> remove downvote, add upvote
-                        postVM.removeDownAddUp(post: self.post,
-                                               userId: session.user.id!,
-                                               commentId: comment.id) {success in
-                            if (success) {
-                                isVotedUp.toggle()
-                                isVotedDown.toggle()
-                            }
-                            isVoteDisabled = false
-                        }
-                    }else{ //Case user not voted up this cmt -> add upvote
-                        postVM.addUpVotedUser(post: self.post,
-                                              userId: session.user.id!,
-                                              commentId: comment.id) {success in
-                            if (success) {isVotedUp.toggle()}
-                            isVoteDisabled = false
-                        }
-                    }
+                    postVM.upvote(userId: session.user.id!, comment: self.comment, post: self.post)
                 }label:{
-                    Image(systemName: isVotedUp ? "hand.thumbsup.fill" : "hand.thumbsup")
-                        .foregroundColor(isVotedUp ? Color("primary") : nil)
-                }.disabled(isVoteDisabled)
+                    Image(systemName: postVM.checkUpvoteState(userId: session.user.id!, comment: self.comment) ? "hand.thumbsup.fill" : "hand.thumbsup")
+                        .foregroundColor(postVM.checkUpvoteState(userId: session.user.id!, comment: self.comment) ? Color("primary") : nil)
+                }
                 
                 Text("\(comment.upVotedUserIds.count - comment.downVotedUserIds.count)")
                 
                 //MARK: - DOWN VOTE BTN
                 Button{
-                    isVoteDisabled = true
-                    if isVotedDown{ //Case user voted down this cmt -> remove downvote
-                        postVM.removeDownVotedUser(post: self.post,
-                                                   userId: session.user.id!,
-                                                   commentId: comment.id) {success in
-                            if (success) {isVotedDown.toggle()}
-                            isVoteDisabled = false
-                        }
-                    }else if(!isVotedDown && isVotedUp){ //Case user voted up this cmt -> remove upvote, add downvote
-                        postVM.removeUpAddDown(post: self.post,
-                                               userId: session.user.id!,
-                                               commentId: comment.id) {success in
-                            if (success) {
-                                isVotedUp.toggle()
-                                isVotedDown.toggle()
-                            }
-                            isVoteDisabled = false
-                        }
-                    }else{ //Case user not voted down this cmt -> add downvote
-                        postVM.addDownVotedUser(post: self.post,
-                                                userId: session.user.id!,
-                                                commentId: comment.id) {success in
-                            if (success) {isVotedDown.toggle()}
-                            isVoteDisabled = false
-                        }
-                    }
+                    postVM.downVote(userId: session.user.id!, comment: self.comment, post: self.post)
                 }label:{
-                    Image(systemName: isVotedDown ? "hand.thumbsdown.fill" : "hand.thumbsdown")
-                        .foregroundColor(isVotedDown ? Color("quaternary") : nil)
-                }.disabled(isVoteDisabled)
-                
+                    Image(systemName: postVM.checkDownvoteState(userId: session.user.id!, comment: self.comment) ? "hand.thumbsdown.fill" : "hand.thumbsdown")
+                        .foregroundColor(postVM.checkDownvoteState(userId: session.user.id!, comment: self.comment) ? Color("quinary") : nil)
+                }
             }
             .padding(.trailing, 15)
             .buttonStyle(PlainButtonStyle())
