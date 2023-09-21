@@ -20,10 +20,11 @@ struct SplashScreenView: View {
             Image("leaves")
                 .resizable()
                 .scaledToFit()
-                .frame(height: 400)
+                .frame(maxWidth: 400)
                 .scaleEffect(size)
                 .opacity(opacity)
                 .colorInvert()
+                .padding(.horizontal, 80)
         }
         .onAppear{
             withAnimation(.easeInOut(duration: 1)){
