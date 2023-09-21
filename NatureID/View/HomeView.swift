@@ -69,16 +69,21 @@ struct HomeView: View {
                     HStack{
                         Spacer()
                         Text("Unidentified")
+                            .fontWeight(.bold)
+                            .foregroundColor(Color("secondary"))
                         Button {
                             unidentifiedFilter.toggle()
                         } label: {
                             Image(systemName: unidentifiedFilter ? "checkmark.square" : "square")
-                                .foregroundColor(Color("quaternary"))
+                                .foregroundColor(Color("secondary"))
                                 .font(.system(size: 30))
                                 .bold()
                         }
+                        .padding(.leading, -5)
                         .padding(.trailing, 18)
-                    }.padding(.bottom, -6)
+                    }
+                    .frame(maxWidth: 700)
+                    .padding(.bottom)
                     
                     //Post List
                     ForEach(postFilter()) { post in
@@ -93,7 +98,9 @@ struct HomeView: View {
                         .padding(.bottom, 8)
                     }
                     .buttonStyle(PlainButtonStyle())
-                }.padding(.bottom, 60)
+                }
+                .frame(maxWidth: .infinity)
+                .padding(.bottom, 60)
             }
             
             //MARK: - DELETE MODAL

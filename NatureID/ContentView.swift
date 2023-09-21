@@ -44,7 +44,7 @@ struct ContentView: View {
                     // MARK: Nav Buttons
                     ZStack {
                         
-                        RoundedRectangle(cornerRadius: 20)
+                        RoundedRectangle(cornerRadius: 30)
                             .fill(
                                 Color("primary")
                             )
@@ -87,10 +87,10 @@ struct ContentView: View {
                                                 .fontWeight(.bold)
                                                 .foregroundColor(Color("primary"))
                                         }
-                                    }
-                                    .offset(y: -14)
-                                    .scaleEffect(1.5)
+                                    }          
                             }
+                            .offset(y: -14)
+                            .scaleEffect(1.5)
                             
                             Spacer()
                             
@@ -101,11 +101,11 @@ struct ContentView: View {
                             // Change personal details, theme mode, logout
                             NavbarButton(tag: $viewSelection, tagName: "Setting", imgSysName: "gearshape")
                         }
-                        .padding(.top, 14)
+                        .padding(.vertical, 14)
                         .padding(.horizontal, 30)
                     }
-                    .padding(.bottom, 20)
-                    .frame(maxWidth: 500, maxHeight: 5)
+                    .padding(.bottom, 10)
+                    .frame(maxWidth: 500, maxHeight: 23)
                 }
             }
         }

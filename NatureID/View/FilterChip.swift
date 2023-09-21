@@ -16,10 +16,10 @@ struct FilterChip: View {
         Text(value).lineLimit(1)
             .frame(minWidth: 50, maxWidth: 120)
             .fontWeight(.medium)
-            .foregroundColor(!isSelected ? Color("quinary") : .white)
+            .foregroundColor(!isSelected ? Color("primary") : .white)
             .padding(.vertical, 6)
             .padding(.horizontal, 10)
-            .background(isSelected ? Color("quinary") : Color("quaternary"))
+            .background(isSelected ? Color("primary") : Color("tertiary"))
             .cornerRadius(10)
             .overlay(
                 RoundedRectangle(cornerRadius: 10)

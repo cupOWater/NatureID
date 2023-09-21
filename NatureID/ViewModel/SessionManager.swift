@@ -23,9 +23,9 @@ class SessionManager : ObservableObject{
             if let user = user {
                 self.getUser(id: user.uid)
             }else {
-                self.user = User()
                 
                 self.isLoading = false
+                self.user = User()
             }
         }
     }
