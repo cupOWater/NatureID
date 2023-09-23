@@ -19,28 +19,54 @@ struct PostItem: View {
     @ObservedObject var userVM: UserViewModel
     @ObservedObject var postVM: PostViewModel
     
+    var canViewUser = true
+    
     var body: some View {
         ZStack{
             VStack{
                 //MARK: - POST HEADER
                 HStack{
                     //Post's user img - name
-                    AsyncImage(url: URL(string: user.photoUrl)){image in
-                        image
-                            .resizable()
-                            .clipShape(Circle())
-                            .frame(width: 50, height: 50)
-                            .scaledToFit()
-                    } placeholder: {
-                        Image("placeholder-person")
-                            .resizable()
-                            .clipShape(Circle())
-                            .frame(width: 50, height: 50)
-                            .scaledToFit()
+                    if(canViewUser){
+                        NavigationLink {
+                            UserView(postVM : postVM, userVM : userVM, user : user)
+                        } label : {
+                            AsyncImage(url: URL(string: user.photoUrl)){image in
+                                image
+                                    .resizable()
+                                    .clipShape(Circle())
+                                    .frame(width: 50, height: 50)
+                                    .scaledToFit()
+                            } placeholder: {
+                                Image("placeholder-person")
+                                    .resizable()
+                                    .clipShape(Circle())
+                                    .frame(width: 50, height: 50)
+                                    .scaledToFit()
+                            }
+                            
+                            Text(user.userName)
+                                .font(.headline)
+                        }
+                    }else {
+                        AsyncImage(url: URL(string: user.photoUrl)){image in
+                            image
+                                .resizable()
+                                .clipShape(Circle())
+                                .frame(width: 50, height: 50)
+                                .scaledToFit()
+                        } placeholder: {
+                            Image("placeholder-person")
+                                .resizable()
+                                .clipShape(Circle())
+                                .frame(width: 50, height: 50)
+                                .scaledToFit()
+                        }
+                        
+                        Text(user.userName)
+                            .font(.headline)
                     }
                     
-                    Text(user.userName)
-                        .font(.headline)
                     Spacer()
                     if(post.isIdentified){
                         Image(systemName: "checkmark.seal")

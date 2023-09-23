@@ -139,7 +139,7 @@ struct UserView: View {
                                  isDetailed: false,
                                  isDeleting: $isDeleting,
                                  deletingPostId: $deletingId,
-                                 userVM: userVM, postVM: postVM)
+                                 userVM: userVM, postVM: postVM, canViewUser : false)
                         .padding(.bottom, 8)
                     }
                     .buttonStyle(PlainButtonStyle())
