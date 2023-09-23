@@ -165,7 +165,7 @@ class PostViewModel : ObservableObject {
     func addComment(post: Post, content: String, userId: String, completion: @escaping (Bool) -> Void){
         var updatePost = post
 
-        let newComment = Comment(content: content, postId: post.id)
+        let newComment = Comment(content: content, userId: userId, postId: post.id)
         updatePost.comments.append(newComment)
         savePost(postToSave: updatePost){ result in
             completion(result)
@@ -187,7 +187,6 @@ class PostViewModel : ObservableObject {
                 completion(result)
             }
         }
-        completion(false)
     }
     
     //add down voted users
@@ -205,7 +204,6 @@ class PostViewModel : ObservableObject {
                 completion(result)
             }
         }
-        completion(false)
     }
     
     // remove up voted users
@@ -224,7 +222,6 @@ class PostViewModel : ObservableObject {
                 completion(result)
             }
         }
-        completion(false)
     }
     
     // remove down voted users
@@ -243,7 +240,6 @@ class PostViewModel : ObservableObject {
                 completion(result)
             }
         }
-        completion(false)
     }
     
     // remove downVote -> add upVote
@@ -263,7 +259,6 @@ class PostViewModel : ObservableObject {
                 completion(result)
             }
         }
-        completion(false)
     }
     
     // remove upVote -> add downVote
@@ -283,7 +278,6 @@ class PostViewModel : ObservableObject {
                 completion(result)
             }
         }
-        completion(false)
     }
     
     func checkUpvoteState(userId: String, comment: Comment) -> Bool{
@@ -323,7 +317,6 @@ class PostViewModel : ObservableObject {
         }
     }
     
-    
     // func handle upvoteBtn
     func downVote(userId: String, comment: Comment, post: Post){
         let isVotedUp = checkUpvoteState(userId: userId, comment: comment)
@@ -344,6 +337,16 @@ class PostViewModel : ObservableObject {
                                     userId: userId,
                                     commentId: comment.id) {success in
             }
+        }
+    }
+    
+    // func delete comment
+    func deleteComment(post: Post, commentId: String, completion: @escaping (Bool) -> Void){
+        var updatePost = post
+        updatePost.comments = updatePost.comments.filter{$0.id != commentId}
+        
+        savePost(postToSave: updatePost){ result in
+            completion(result)
         }
     }
 }

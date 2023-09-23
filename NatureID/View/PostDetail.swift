@@ -14,11 +14,26 @@ struct PostDetail: View {
     @ObservedObject var postVM: PostViewModel
     @ObservedObject var userVM: UserViewModel
     
+    //Delete post states
     @State var isDeleting = false
     @State var deletingId = ""
     @State var deleteModalAnimation = false
     
+    //Delete comment states
+    @State var isDeletingCmt = false
+    @State var deletingCmtId = ""
+    @State var deleteCmtModalAnimation = false
+    
     var post: Post
+    
+    //Func to sort comment by vote number descending
+    func sortComment(comments: [Comment]) -> [Comment]{
+        var sortedCommentList = comments
+        sortedCommentList.sort{
+            ($0.upVotedUserIds.count - $0.downVotedUserIds.count) > ($1.upVotedUserIds.count - $1.downVotedUserIds.count)
+        }
+        return sortedCommentList
+    }
     
     var body: some View {
         ZStack{
@@ -26,7 +41,6 @@ struct PostDetail: View {
                 .edgesIgnoringSafeArea(.all)
             VStack{
                 ScrollView{
-//                    VStack{
                         // MARK: POST - COMMENT
                         //Post
                         PostItem(user: userVM.getUserById(id: post.userId),
@@ -39,7 +53,7 @@ struct PostDetail: View {
                              postVM: postVM)
                         
                         //Comments
-                        ForEach(self.post.comments){comment in
+                    ForEach(sortComment(comments: self.post.comments)){comment in
                             CommentView(postVM: postVM,
                                         comment: comment,
                                         post: self.post,
@@ -47,14 +61,13 @@ struct PostDetail: View {
                                         isDeleting: $isDeletingCmt,
                                         deletingCmtId: $deletingCmtId)
                         }
-//                    }
                 }
                 //Comment add
                 AddCommentView(postVM: postVM, post: self.post)
             }
             
             
-            //MARK: - DELETE MODAL
+            //MARK: - DELETE POST MODAL
             if(isDeleting){
                 PostDeleteModal(postId: $deletingId,
                                 deleteConfirmModal: $isDeleting,
@@ -65,6 +78,15 @@ struct PostDetail: View {
                             dismiss()
                         }
                     }
+            }
+            
+            //MARK: - DELETE COMMENT MODAL
+            if(isDeletingCmt){
+                CommentDeleteModal(post: self.post,
+                                   commentId: deletingCmtId,
+                                   deleteConfirmModal: $isDeletingCmt,
+                                   deleteConfirmAnimation: $deleteCmtModalAnimation,
+                                   postVM: postVM)
             }
         }
     }

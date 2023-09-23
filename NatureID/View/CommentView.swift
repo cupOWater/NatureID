@@ -75,9 +75,9 @@ struct CommentView: View {
                     Image(systemName: postVM.checkUpvoteState(userId: session.user.id!, comment: self.comment) ? "hand.thumbsup.fill" : "hand.thumbsup")
                         .foregroundColor(postVM.checkUpvoteState(userId: session.user.id!, comment: self.comment) ? Color("primary") : nil)
                 }
-                
+
                 Text("\(comment.upVotedUserIds.count - comment.downVotedUserIds.count)")
-                
+
                 //MARK: - DOWN VOTE BTN
                 Button{
                     postVM.downVote(userId: session.user.id!, comment: self.comment, post: self.post)

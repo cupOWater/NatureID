@@ -34,7 +34,7 @@ struct LoginView: View {
                 VStack {
                     LogoView()
                         .frame(width: 300)
-                        .padding(.bottom, -135)
+                        .padding(.bottom, -30)
                     Text("Natural ID")
                         .font(.system(size: 50))
                         .bold()

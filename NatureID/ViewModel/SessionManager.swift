@@ -79,9 +79,17 @@ class SessionManager : ObservableObject{
         isLoading = true
         auth.signIn(withEmail: email, password: password) { authResult, error in
             self.isLoading = false
-            if(error != nil){
-                print(error!)
-                completion(error!.localizedDescription)
+            if let error = error{
+                let nsError = error as NSError
+                
+                switch nsError.code {
+                case AuthErrorCode.wrongPassword.rawValue:
+                    completion("Invalid password")
+                case AuthErrorCode.internalError.rawValue:
+                    completion("You may have the wrong login credential")
+                default:
+                    completion(error.localizedDescription)
+                }
                 return
             }
             if authResult != nil {
