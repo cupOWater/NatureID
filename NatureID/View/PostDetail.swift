@@ -43,7 +43,9 @@ struct PostDetail: View {
                             CommentView(postVM: postVM,
                                         comment: comment,
                                         post: self.post,
-                                        currentUser: session.user)
+                                        user: userVM.getUserById(id: comment.userId!),
+                                        isDeleting: $isDeletingCmt,
+                                        deletingCmtId: $deletingCmtId)
                         }
 //                    }
                 }

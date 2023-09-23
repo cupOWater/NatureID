@@ -118,31 +118,29 @@ struct UserEditView: View {
                             }
                         }
                     }label: {
-                        Text("Save")
-                            .font(.system(size: 25))
-                            .fontWeight(.bold)
-                            .foregroundColor(.white)
-                            .padding(.vertical, 20)
-                            .padding(.horizontal, 30)
-                            .background{
-                                Capsule()
-                                    .fill(Color("primary"))
-                            }
+                        ZStack{
+                            Capsule()
+                                .fill(Color("primary"))
+                                .frame(width: 120, height: 50)
+                            Text("Save")
+                                .font(.system(size: 25))
+                                .fontWeight(.bold)
+                                .foregroundColor(.white)
+                        }
                     }
                     
                     Button{
                         dismiss()
                     }label: {
-                        Text("Cancel")
-                            .font(.system(size: 25))
-                            .fontWeight(.bold)
-                            .foregroundColor(.white)
-                            .padding(.vertical, 20)
-                            .padding(.horizontal, 30)
-                            .background{
-                                Capsule()
-                                    .fill(Color(.gray))
-                            }
+                        ZStack{
+                            Capsule()
+                                .fill(.gray)
+                                .frame(width: 120, height: 50)
+                            Text("Cancel")
+                                .font(.system(size: 25))
+                                .fontWeight(.bold)
+                                .foregroundColor(.white)
+                        }
                     }
                 }
                 .opacity(session.isLoading ? 0.5 : 1)

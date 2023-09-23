@@ -15,12 +15,15 @@ struct CommentView: View {
     
     var comment : Comment
     var post: Post
-    var currentUser: User
+    var user: User
+    
+    @Binding var isDeleting: Bool
+    @Binding var deletingCmtId: String
     
     var body: some View {
         VStack(alignment: .leading){
             HStack{
-                AsyncImage(url: URL(string: session.user.photoUrl)){image in
+                AsyncImage(url: URL(string: user.photoUrl)){image in
                     image
                         .resizable()
                         .cornerRadius(100)
@@ -31,11 +34,30 @@ struct CommentView: View {
                         .cornerRadius(100)
                         .frame(width: 32, height:32)
                 }
-                Text("\(session.user.userName)")
+                Text("\(user.userName)")
                     .foregroundColor(.gray)
                 Spacer()
                 Text(comment.createdAt, format: .dateTime.day().month().year())
                     .foregroundColor(.gray)
+                
+                //Comment option menu
+                if(session.user.id! == comment.userId!){
+                    Menu {
+                        Button {
+                            deletingCmtId = comment.id
+                            isDeleting.toggle()
+                        } label: {
+                            Label("Delete", systemImage: "trash")
+                        }
+                    } label: {
+                        Image(systemName: "ellipsis")
+                            .rotationEffect(Angle(degrees: 90))
+                            .font(.title2)
+                            .padding(5)
+                            .padding(.vertical, 15)
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                }
             }
             .padding(.horizontal, 15.0)
             
@@ -80,7 +102,9 @@ struct CommentView_Previews: PreviewProvider {
         CommentView(postVM: PostViewModel(),
                     comment: Comment(),
                     post: Post(),
-                    currentUser: User())
+                    user: User(),
+                    isDeleting: .constant(false),
+                    deletingCmtId: .constant("test"))
         .environmentObject(SessionManager())
     }
 }

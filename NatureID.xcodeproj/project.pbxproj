@@ -168,12 +168,14 @@
 			children = (
 				28B0FF412AB44628007DCE13 /* AboutView.swift */,
 				E8C5BD652AB4502F0098D14D /* AddCommentView.swift */,
+				E8A6854B2ABC6C4A0007D2B9 /* CommentDeleteModal.swift */,
 				10F6E54E2AB359C400216103 /* CommentView.swift */,
 				E8C5BD632AB449640098D14D /* DarkModeSwitch.swift */,
 				E8BB31AC2AB748150075D203 /* FilterChip.swift */,
 				E859EA7C2AB5973B009EFB16 /* HomeView.swift */,
 				1F7C20252AB5B1D4008132FF /* LoadingView.swift */,
 				1FB0F8692AB1EBBF004AB459 /* LoginView.swift */,
+				B4FA712E2ABC2AB400DC46AC /* LogoView.swift */,
 				1FB0F84D2AB03457004AB459 /* NavbarButton.swift */,
 				E8BB31A82AB6EB610075D203 /* PostDeleteModal.swift */,
 				E859EA7E2AB5E448009EFB16 /* PostDetail.swift */,
@@ -186,7 +188,6 @@
 				1FB0F8532AB06CA7004AB459 /* SplashScreenView.swift */,
 				1FB0F8742AB56AF5004AB459 /* UserEditView.swift */,
 				1FB0F86B2AB2F154004AB459 /* UserView.swift */,
-				B4FA712E2ABC2AB400DC46AC /* LogoView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
