@@ -1,10 +1,15 @@
-//
-//  NatureIDApp.swift
-//  NatureID
-//
-//  Created by MacNCheese on 12/09/2023.
-//
-//  https://designcode.io/swiftui-handbook-conditional-modifier
+/*
+  RMIT University Vietnam
+  Course: COSC2659 iOS Development
+  Semester: 2023B
+  Assessment: Assignment 3
+  Author: Huynh Ky Thanh
+  ID: 3884734
+  Created date: 12/09/2023
+  Last modified: 24/09/2023
+  Acknowledgement: https://designcode.io/swiftui-handbook-conditional-modifier
+*/
+
 import SwiftUI
 import FirebaseCore
 

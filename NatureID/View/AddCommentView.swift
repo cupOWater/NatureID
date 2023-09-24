@@ -1,9 +1,14 @@
-//
-//  AddCommentView.swift
-//  NatureID
-//
-//  Created by Tran Trung on 15/09/2023.
-//
+/*
+  RMIT University Vietnam
+  Course: COSC2659 iOS Development
+  Semester: 2023B
+  Assessment: Assignment 3
+  Author: Ho Tran Minh Khoi
+  ID: 3877653
+  Created date: 21/09/2023
+  Last modified: 24/09/2023
+  Acknowledgement:
+*/
 
 import SwiftUI
 

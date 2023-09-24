@@ -1,11 +1,14 @@
-//
-//  RegisterView.swift
-//  NatureID
-//
-//  Created by MacNCheese on 13/09/2023.
-//
-
-// https://www.hackingwithswift.com/quick-start/swiftui/how-to-let-users-select-pictures-using-photospicker
+/*
+  RMIT University Vietnam
+  Course: COSC2659 iOS Development
+  Semester: 2023B
+  Assessment: Assignment 3
+  Author: Huynh Ky Thanh
+  ID: 3884734
+  Created date: 13/09/2023
+  Last modified: 24/09/2023
+  Acknowledgement: https://www.hackingwithswift.com/quick-start/swiftui/how-to-let-users-select-pictures-using-photospicker
+*/
 
 import SwiftUI
 import FirebaseAuth

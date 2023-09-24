@@ -2,11 +2,12 @@
   RMIT University Vietnam
   Course: COSC2659 iOS Development
   Semester: 2023B
-  Assessment: Assignment 2
+  Assessment: Assignment 3
   Author: Tran Quoc Trung
   ID: 3891724
-  Created  date: 15/08/2023
-  Last modified: 04/09/2023
+  Created date: 15/09/2023
+  Last modified: 24/09/2023
+  Acknowledgement:
 */
 
 import SwiftUI

@@ -1,9 +1,14 @@
-//
-//  SettingView.swift
-//  NatureID
-//
-//  Created by MacNCheese on 17/09/2023.
-//
+/*
+  RMIT University Vietnam
+  Course: COSC2659 iOS Development
+  Semester: 2023B
+  Assessment: Assignment 3
+  Author: Tran Minh Khoi
+  ID: 3916827
+  Created date: 17/09/2023
+  Last modified: 24/09/2023
+  Acknowledgement:
+*/
 
 import SwiftUI
 

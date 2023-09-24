@@ -1,9 +1,14 @@
-//
-//  LogoView.swift
-//  NatureID
-//
-//  Created by Trung Tran Quoc on 21/09/2023.
-//
+/*
+  RMIT University Vietnam
+  Course: COSC2659 iOS Development
+  Semester: 2023B
+  Assessment: Assignment 3
+  Author: Tran Quoc Trung
+  ID: 3891724
+  Created date: 21/09/2023
+  Last modified: 24/09/2023
+  Acknowledgement:
+*/
 
 import SwiftUI
 
